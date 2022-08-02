@@ -1,0 +1,7 @@
+/config
+/build
+/node_modules
+gulpfile.js
+server.js
+/public
+*.ts

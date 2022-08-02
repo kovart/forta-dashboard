@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta
+      name="application-name"
+      content="<%= htmlWebpackPlugin.options.title %>"
+    />
+    <meta
+      name="apple-mobile-web-app-title"
+      content="<%= htmlWebpackPlugin.options.title %>"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="theme-color" content="#000000">
+  </head>
+  <body>
+    <% if (compilation.assets["sprite.svg"]) { %>
+    <div
+      id="svg-icons-container"
+      style="position: absolute; width: 0; height: 0; overflow: hidden"
+    >
+      <%= compilation.assets["sprite.svg"].source() %>
+    </div>
+    <% } %>
+    <div id="root"></div>
+  </body>
+</html>

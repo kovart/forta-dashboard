@@ -1,0 +1,48 @@
+{
+  "env": {
+    "es6": true,
+    "node": true,
+    "browser": true
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 2020
+  },
+  "plugins": ["react", "import", "react-hooks"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:react-hooks/recommended"
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/resolver": {
+      "eslint-import-resolver-custom-alias": {
+        "alias": {
+          "@assets": "./src/assets",
+          "@constants": "./src/constants",
+          "@components": "./src/components",
+          "@pages": "./src/pages",
+          "@utils": "./src/utils",
+          "@store": "./src/store",
+          "@hooks": "./src/hooks"
+        },
+        "extensions": [".js", ".jsx", ".json"]
+      }
+    }
+  },
+  "rules": {
+    "semi": [2, "always"],
+    "no-console": "error",
+    "react-hooks/exhaustive-deps": 0,
+    "arrow-body-style": ["error", "as-needed"],
+    "react/jsx-curly-brace-presence": "error",
+    "import/no-unresolved": [2, { "caseSensitive": true }],
+    "import/order": ["error", { "newlines-between": "always" }]
+  }
+}

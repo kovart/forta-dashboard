@@ -1,0 +1,42 @@
+{
+  "plugins": ["stylelint-prettier", "stylelint-order"],
+  "rules": {
+    "max-nesting-depth": 4,
+    "selector-max-id": 1,
+    "order/order": [
+      "dollar-variables",
+      "custom-properties",
+      "at-variables",
+      {
+        "type": "at-rule",
+        "name": "import"
+      },
+      {
+        "type": "at-rule",
+        "name": "include"
+      },
+      {
+        "type": "at-rule",
+        "name": "extend"
+      },
+      {
+        "type": "at-rule",
+        "name": "mixin"
+      },
+      {
+        "type": "at-rule",
+        "name": "for"
+      },
+      "declarations",
+      "rules",
+      "at-rules",
+      "less-mixins"
+    ],
+    "at-rule-empty-line-before": [
+      "always",
+      {
+        "except": ["blockless-after-same-name-blockless", "first-nested"]
+      }
+    ]
+  }
+}

@@ -1,0 +1,60 @@
+@import 'src/assets/styles/variables';
+@import 'src/assets/styles/colors';
+@import 'src/assets/styles/mixins/remify';
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.static {
+  position: static;
+  height: 100%;
+  width: 100%;
+  min-height: 100px;
+}
+
+.absolute {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: $z-index-loader;
+}
+
+.fill {
+  background-color: $color-neutral-20;
+}
+
+.translucent {
+  background-color: transparentize($color-neutral-20, 0.25);
+}
+
+.asterisk {
+  pointer-events: none;
+  user-select: none;
+
+  &.md {
+    width: rem(64px);
+  }
+}
+
+.spinner {
+  animation: spin 1.4s ease-out infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(1turn);
+  }
+}

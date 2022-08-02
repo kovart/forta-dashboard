@@ -1,0 +1,29 @@
+@import '../variables';
+@import './remify';
+
+@mixin h2 {
+  font-weight: 600;
+  font-size: rem(24px);
+  font-style: normal;
+}
+
+@mixin body {
+  font-size: rem(15px);
+  line-height: 120%;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@mixin element-regular {
+  font-size: rem(17px);
+  line-height: 120px;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@mixin element-body {
+  font-size: rem(18px);
+  line-height: 120%;
+  font-weight: 500;
+  font-style: normal;
+}

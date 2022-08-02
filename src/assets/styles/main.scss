@@ -1,0 +1,31 @@
+@import 'variables';
+@import 'colors';
+@import 'normalize';
+@import 'fonts';
+@import 'mixins/remify';
+@import 'mixins/typography';
+
+html {
+  @include rem-baseline(100%);
+  background-color: $color-neutral-10;
+}
+
+body {
+  margin: 0;
+  overflow-y: scroll;
+  font-family: $font-main;
+  color: $color-neutral-99;
+}
+
+* {
+  -webkit-appearance: none !important;
+  box-sizing: border-box;
+}
+
+/*
+  This will hide the focus indicator if the element receives focus via the mouse,
+  but it will still show up on keyboard focus.
+*/
+.js-focus-visible :focus:not(.focus-visible) {
+  outline: none;
+}
