@@ -1,0 +1,17 @@
+@use 'sass:color';
+
+@import 'src/assets/styles/colors';
+
+@mixin hover {
+  background-color: color.adjust($color-neutral-90, $alpha: -0.8);
+}
+
+@mixin checked {
+  border: 1px solid $color-accent-blue-1;
+  background-color: $color-accent-blue-1;
+}
+
+@mixin disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

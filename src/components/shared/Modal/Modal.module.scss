@@ -1,0 +1,85 @@
+@use 'sass:color';
+
+@import 'src/assets/styles/variables';
+@import 'src/assets/styles/mixins/typography';
+@import 'src/assets/styles/mixins/transitions';
+@import 'src/assets/styles/mixins/remify';
+
+.root {
+  --border-radius: #{rem(8px)};
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: calc(100% - 20px);
+  border-radius: var(--border-radius);
+  background-color: $color-neutral-20;
+  outline: none;
+  z-index: $z-index-modal;
+  max-height: 90vh;
+}
+
+.overlay {
+  @include transition-medium();
+
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: $z-index-modal;
+  background-color: color.adjust($color-neutral-10, $alpha: -0.1);
+}
+
+// SIZES
+// --------
+
+.md {
+  max-width: rem(540px);
+}
+
+// PADDING
+// --------
+
+.p-sm {
+}
+
+// ANIMATION
+// --------------
+
+.overlay {
+  @include transition-medium();
+
+  opacity: 0;
+
+  &:global {
+    &.ReactModal__Overlay--after-open {
+      opacity: 1;
+    }
+
+    &.ReactModal__Overlay--before-close {
+      opacity: 0;
+    }
+  }
+}
+
+.root {
+  @include transition-medium();
+
+  opacity: 0;
+  transform: scale(0.9);
+
+  &:global {
+    &.ReactModal__Content--after-open {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    &.ReactModal__Content--before-close {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+  }
+}

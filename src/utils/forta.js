@@ -12,8 +12,15 @@ class FortaExplorer {
     });
   }
 
-  async getAlerts({ startDate, endDate, botIds = [], severities = [] }) {
-    const query = `{
+  async getAlerts({
+    startDate,
+    endDate,
+    chainId,
+    botIds = [],
+    severities = [],
+    limit = Infinity
+  }) {
+    const query = `query fetchAlerts($input: AlertsInput) {
        alerts(input: $input) {
           pageInfo {
             hasNextPage
@@ -23,7 +30,9 @@ class FortaExplorer {
             }
           }
           alerts {
+            alertId
             createdAt
+            hash
             name
             protocol
             findingType
@@ -49,30 +58,44 @@ class FortaExplorer {
         }
       }`;
 
-    const variables = {
-      input: {
-        blockDateRange: {
-          startDate: startDate,
-          endDate: endDate
-        },
-        first: 20_000,
-        severities: severities,
-        bots: botIds
-      }
+    const input = {
+      first: Math.min(1000, limit),
+      severities: severities,
+      bots: botIds,
+      chainId: chainId
     };
 
-    let result = [];
+    if (startDate || endDate) {
+      input.blockDateRange = {};
+      if (startDate) input.blockDateRange.startDate = startDate;
+      if (endDate) input.blockDateRange.endDate = endDate;
+    }
+
+    let items = [];
     let pageInfo = null;
-    while (!pageInfo || pageInfo.hasNextPage) {
+    while ((!pageInfo || pageInfo.hasNextPage) && items.length < limit) {
       const response = await this.#request(query, {
-        ...variables,
-        after: pageInfo?.endCursor
+        input: {
+          ...input,
+          after: pageInfo?.endCursor
+        }
       });
-      result.push(...response.alerts);
+      items.push(...response.alerts);
       pageInfo = response.pageInfo;
     }
 
-    return result;
+    // normalize addresses
+    items.forEach(
+      (item) =>
+        (item.addresses = item.addresses?.map((a) => {
+          if (a.slice(0, 2) !== '0x') {
+            a = '0x' + a;
+          }
+          return a.toLowerCase();
+        }))
+    );
+
+    return items;
   }
 
   async #request(queryString, variables) {
@@ -81,9 +104,10 @@ class FortaExplorer {
       variables: variables
     };
 
-    const { data, errors } = await this.api.post(this.url, query);
+    const response = await this.api.post(this.url, query);
+    const { alerts, errors } = response.data.data;
     if (errors) return Promise.reject(errors);
-    return data;
+    return alerts;
   }
 }
 

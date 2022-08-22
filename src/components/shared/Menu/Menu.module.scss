@@ -1,0 +1,17 @@
+@import 'src/assets/styles/colors';
+@import 'src/assets/styles/mixins/remify';
+
+.menu {
+  padding: rem(8px) 0;
+  background-color: $color-neutral-15;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  box-shadow: 0px 4px 14px 3px rgba(0, 0, 0, 0.3);
+  border-radius: rem(4px);
+}
+
+.separator {
+  height: 1px;
+  width: 100%;
+  background-color: $color-neutral-25;
+  margin: rem(8px) 0;
+}

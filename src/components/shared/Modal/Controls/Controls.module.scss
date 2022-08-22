@@ -1,0 +1,20 @@
+@import 'src/assets/styles/mixins/remify';
+
+.root {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(16px);
+  margin: rem(24px);
+
+  &.row {
+    flex-direction: row;
+
+    > * {
+      flex: 1;
+    }
+  }
+
+  .secondaryButton {
+    background-color: $color-neutral-30;
+  }
+}

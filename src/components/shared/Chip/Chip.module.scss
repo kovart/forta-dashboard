@@ -1,0 +1,80 @@
+@import 'src/assets/styles/colors';
+@import 'src/assets/styles/mixins/remify';
+@import 'src/assets/styles/mixins/transitions';
+
+.root {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  gap: 8px;
+  color: $color-neutral-70;
+
+  &.outline {
+    border: 1px solid $color-neutral-30;
+    border-radius: rem(4px);
+  }
+
+  .content {
+    font-size: rem(13px);
+    font-weight: 500;
+  }
+
+  .removeButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    cursor: pointer;
+    padding: rem(2px) rem(4px);
+    margin: rem(-2px) rem(-4px);
+    background: none;
+
+    .circle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: rem(16px);
+      height: rem(16px);
+      color: $color-neutral-70;
+      background-color: rgba(255, 255, 255, 0.09);
+      border-radius: 50%;
+    }
+
+    .svg {
+      width: rem(13px);
+      height: rem(13px);
+    }
+
+    &:hover {
+      .circle {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: $color-neutral-99;
+      }
+    }
+  }
+
+  &.clickable {
+    cursor: pointer;
+
+    &:hover {
+      border-color: $color-accent-blue-1;
+      background-color: rgba(255, 255, 255, 0.04);
+    }
+
+    &:active {
+      transition: background-color 0.2s ease;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  &.checked {
+    background-color: rgba(83, 162, 255, 0.13);
+    border-color: $color-accent-blue-1;
+  }
+
+  &.empty {
+    color: $color-neutral-40;
+  }
+}

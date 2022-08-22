@@ -10,6 +10,7 @@ module.exports = {
   entry: paths.entry,
   mode: 'development',
   target: 'web',
+  devtool: 'source-map',
   devServer: {
     host,
     hot: true,

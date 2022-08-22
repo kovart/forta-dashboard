@@ -1,0 +1,44 @@
+@use 'sass:color';
+@use './Mark.mixins' as Mark;
+
+@import 'src/assets/styles/variables';
+@import 'src/assets/styles/colors';
+@import 'src/assets/styles/mixins/transitions';
+@import 'src/assets/styles/mixins/remify';
+
+.root {
+  @include transition-medium();
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: rem(20px);
+  width: rem(20px);
+  flex-shrink: 0;
+  border: 1px solid $color-neutral-90;
+  background-color: transparent;
+
+  .icon {
+    color: $color-neutral-90;
+  }
+
+  &:hover:not(.checked):not(.disabled) {
+    @include Mark.hover();
+  }
+}
+
+.checked {
+  @include Mark.checked();
+}
+
+.checkbox {
+  border-radius: rem(4px);
+}
+
+.radio {
+  border-radius: 50%;
+}
+
+.disabled {
+  @include Mark.disabled();
+}

@@ -1,0 +1,99 @@
+@import 'src/assets/styles/mixins/remify';
+@import 'src/assets/styles/mixins/transitions';
+
+.root {
+  position: relative;
+}
+
+.body {
+  display: flex;
+  align-items: center;
+  padding: rem(7px) rem(12px);
+  padding-right: rem(32px);
+  border-radius: rem(6px);
+  color: $color-neutral-70;
+  border: 1px solid $color-neutral-30;
+
+  &:not(.disabled) {
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.04);
+      border-color: $color-accent-blue-1;
+    }
+
+    &:active {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  &.checked {
+    background-color: rgba(83, 162, 255, 0.13);
+    border-color: $color-accent-blue-1;
+
+    &:hover {
+      background-color: rgba(83, 162, 255, 0.13);
+    }
+  }
+}
+
+.icon {
+  width: rem(16px);
+  height: rem(16px);
+  margin-right: rem(8px);
+}
+
+.address {
+  background: none;
+  border: 0;
+  padding: rem(2px) rem(2px);
+  font-weight: 500;
+  font-size: rem(13px);
+  line-height: 120%;
+  margin: 0;
+  border-radius: rem(2px);
+
+  &:focus-visible {
+    outline: 1px solid $color-accent-blue-1;
+  }
+}
+
+.indicator {
+  display: flex;
+  align-items: center;
+  min-width: rem(24px);
+  margin-left: rem(8px);
+
+  .transactionCount {
+    padding: rem(1px) rem(6px);
+    font-weight: 500;
+    font-size: rem(13px);
+    border-radius: rem(18px);
+    color: $color-neutral-15;
+    background-color: grey;
+  }
+
+  .contract {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: rem(22px);
+    height: rem(18px);
+    border-radius: rem(4px);
+    color: $color-neutral-10;
+    background: $color-accent-yellow;
+  }
+}
+
+.moreButton {
+  position: absolute;
+  top: 50%;
+  right: rem(4px);
+  transform: translateY(-50%);
+  width: rem(28px);
+  height: rem(28px);
+
+  &:not(:hover) {
+    background-color: transparent;
+  }
+}

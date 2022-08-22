@@ -1,0 +1,168 @@
+@use 'sass:color';
+
+@import 'src/assets/styles/variables';
+@import 'src/assets/styles/colors';
+@import 'src/assets/styles/mixins/typography';
+@import 'src/assets/styles/mixins/transitions';
+@import 'src/assets/styles/mixins/remify';
+
+$padding: rem(9px) rem(10px);
+
+.root {
+  @include transition-medium();
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  text-decoration: none;
+  cursor: pointer;
+  border: 0;
+  gap: rem(8px);
+  flex-shrink: 0;
+  box-sizing: border-box;
+  appearance: none !important; // for Safari
+
+  .value {
+    white-space: normal;
+  }
+
+  .icon,
+  .spinner {
+    line-height: 0.75em;
+    vertical-align: -45%;
+    flex-shrink: 0;
+  }
+
+  .icon {
+    width: rem(14px);
+    height: rem(14px);
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0px 0 1px $color-focus;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+  }
+}
+
+.primary {
+  @include element-lg();
+
+  color: $color-neutral-99;
+  background-color: $color-accent-blue-2;
+  padding: $padding;
+  border-radius: rem(4px);
+  outline: none !important;
+
+  &:hover:not(:disabled) {
+    box-shadow: 0 2px 20px color.adjust($color-accent-blue-2, $alpha: -0.4);
+  }
+
+  &:active:not(:disabled) {
+    background-color: color.adjust($color-accent-blue-2, $lightness: 4%);
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0px 0 1px $color-neutral-100;
+  }
+}
+
+.secondary {
+  @include element-lg();
+
+  color: $color-neutral-90;
+  background-color: $color-neutral-20;
+  padding: $padding;
+  border-radius: rem(4px);
+  outline: none !important;
+
+  &:hover:not(:disabled) {
+    box-shadow: 0 0px 0 1px $color-accent-blue-2;
+  }
+
+  &:active:not(:disabled) {
+    background-color: color.adjust($color-neutral-20, $lightness: 8%);
+  }
+}
+
+.outline {
+  @include element-lg();
+
+  color: $color-neutral-70;
+  background-color: transparent;
+  padding: $padding;
+  border: 1px solid $color-neutral-50;
+  border-radius: rem(4px);
+  outline: none !important;
+  box-sizing: content-box;
+
+  &:hover:not(:disabled) {
+    color: $color-neutral-90;
+    background-color: color.adjust($color-neutral-90, $alpha: -0.9);
+  }
+
+  &:active:not(:disabled) {
+    color: $color-neutral-10;
+    background-color: $color-neutral-90;
+  }
+
+  &:focus-visible {
+    color: $color-neutral-90;
+    border-color: $color-focus;
+  }
+}
+
+.icon-base {
+  padding: 0;
+  background: transparent;
+  color: $color-neutral-90;
+  width: rem(24px);
+  height: rem(24px);
+  border-radius: rem(2px);
+
+  .icon {
+    width: rem(24px);
+    height: rem(24px);
+  }
+
+  &:hover:not(:disabled) {
+    color: color.adjust($color-neutral-90, $lightness: -14%);
+  }
+
+  &:active:not(:disabled) {
+    color: $color-accent-blue-2;
+  }
+
+  &:focus-visible {
+    outline: none;
+    border-color: $color-focus;
+  }
+}
+
+.icon-md {
+  @extend .secondary;
+
+  width: rem(36px);
+  height: rem(36px);
+  padding: 0;
+  border-radius: rem(4px);
+  color: $color-neutral-90;
+
+  .icon {
+    width: rem(18px);
+    height: rem(18px);
+  }
+}
+
+.inline {
+  display: inline-flex;
+}
+
+.fluid {
+  width: 100%;
+  max-width: 100%;
+}

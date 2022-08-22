@@ -1,0 +1,11 @@
+$icon-base-size: 1rem;
+
+.icon {
+  width: $icon-base-size;
+  height: $icon-base-size;
+
+  /* we use both "color" and "fill" properties because some svg icons don't contain the "fill" attribute
+    and hence svgo doesn't add "currentColor" attribute to them */
+  color: inherit;
+  fill: currentColor;
+}

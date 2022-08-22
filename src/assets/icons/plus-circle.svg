@@ -1,19 +1,5 @@
-<svg width="30" height="31" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g filter="url(#filter0_d_70_979)">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M15 3C10.0294 3 6 7.02944 6 12C6 16.9706 10.0294 21 15 21C19.9706 21 24 16.9706 24 12C24 7.02944 19.9706 3 15 3ZM4 12C4 5.92487 8.92487 1 15 1C21.0751 1 26 5.92487 26 12C26 18.0751 21.0751 23 15 23C8.92487 23 4 18.0751 4 12Z" fill="black"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M15 7C15.5523 7 16 7.44772 16 8V16C16 16.5523 15.5523 17 15 17C14.4477 17 14 16.5523 14 16V8C14 7.44772 14.4477 7 15 7Z" fill="black"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M10 12C10 11.4477 10.4477 11 11 11H19C19.5523 11 20 11.4477 20 12C20 12.5523 19.5523 13 19 13H11C10.4477 13 10 12.5523 10 12Z" fill="black"/>
-</g>
-<defs>
-<filter id="filter0_d_70_979" x="-1" y="0" width="32" height="32" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feOffset dy="4"/>
-<feGaussianBlur stdDeviation="2"/>
-<feComposite in2="hardAlpha" operator="out"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_70_979"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_70_979" result="shape"/>
-</filter>
-</defs>
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3ZM1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12Z" fill="currentColor"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M12 7C12.5523 7 13 7.44772 13 8V16C13 16.5523 12.5523 17 12 17C11.4477 17 11 16.5523 11 16V8C11 7.44772 11.4477 7 12 7Z" fill="currentColor"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 11.4477 7.44772 11 8 11H16C16.5523 11 17 11.4477 17 12C17 12.5523 16.5523 13 16 13H8C7.44772 13 7 12.5523 7 12Z" fill="currentColor"/>
 </svg>

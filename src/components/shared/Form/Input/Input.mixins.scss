@@ -1,0 +1,100 @@
+@use 'sass:color';
+
+@import 'src/assets/styles/variables';
+@import 'src/assets/styles/mixins/typography';
+@import 'src/assets/styles/mixins/transitions';
+@import 'src/assets/styles/mixins/remify';
+
+$border-radius: 4px;
+$padding-x: 10px;
+$padding-y: 10px;
+$height: 44px;
+
+$border-default-light: 1px solid $color-neutral-10;
+$border-focus-light: 1px solid $color-focus;
+$border-default-dark: 1px solid $color-neutral-20;
+$border-focus-dark: 1px solid $color-focus;
+
+@mixin text-color($color) {
+  color: $color;
+  // fix text color on Safari
+  -webkit-text-fill-color: $color;
+}
+
+@mixin box {
+  @include element-lg();
+
+  width: 100%;
+  padding: rem($padding-y) rem($padding-x);
+  height: rem($height);
+  box-sizing: border-box;
+}
+
+@mixin box-style-base() {
+  @include transition-medium();
+
+  font-family: $font-main;
+  border-radius: rem($border-radius);
+  outline: none;
+}
+
+@mixin box-style-light {
+  @include box-style-base();
+  @include text-color($color-neutral-20);
+
+  background-color: $color-neutral-99;
+  border: $border-default-light;
+}
+
+@mixin box-style-dark {
+  @include box-style-base();
+  @include text-color($color-neutral-90);
+
+  background-color: $color-neutral-15;
+  border: $border-default-dark;
+}
+
+@mixin placeholder-base() {
+  @include element-lg();
+
+  font-family: $font-main;
+}
+
+@mixin placeholder-light {
+  @include placeholder-base();
+  @include text-color($color-neutral-50);
+}
+
+@mixin placeholder-dark {
+  @include placeholder-base();
+  @include text-color($color-neutral-40);
+}
+
+@mixin icon-light {
+  color: $color-neutral-20;
+}
+
+@mixin icon-dark {
+  color: $color-neutral-90;
+}
+
+@mixin hover {
+  box-shadow: 0 16px 24px -12px color.adjust($color-neutral-99, $alpha: -0.92);
+}
+
+@mixin focus {
+  outline: none;
+  border: 1px solid $color-accent-blue-2;
+  caret-color: $color-accent-blue-2;
+}
+
+@mixin disabled {
+  opacity: 0.4;
+}
+
+@mixin invalid {
+  @include text-color($color-accent-red);
+
+  border: 1px solid $color-accent-red !important;
+  caret-color: $color-accent-red !important;
+}

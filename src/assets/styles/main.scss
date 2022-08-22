@@ -1,6 +1,5 @@
 @import 'variables';
 @import 'colors';
-@import 'normalize';
 @import 'fonts';
 @import 'mixins/remify';
 @import 'mixins/typography';
@@ -8,6 +7,7 @@
 html {
   @include rem-baseline(100%);
   background-color: $color-neutral-10;
+  color-scheme: dark;
 }
 
 body {

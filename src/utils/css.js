@@ -1,5 +1,15 @@
-export const CssColors = {
-  // You can insert color variables from './variables.scss' here
+export const CSS_COLOR = {
+  accentPink: '#793BCA',
+  accentBlue1: '#6855FA',
+  accentBlue2: '#2172E5',
+  accentYellow: '#F0C11A',
+  accentRed: '#B91C1C',
+  accentGreen: '#4B945F',
+  accentOrange: '#d97706',
+
+  neutral50: '#A7A7A7',
+  neutral90: '#E9E9E9',
+  neutral99: '#F5F5F5'
 };
 
 export const CssBreakpoints = {

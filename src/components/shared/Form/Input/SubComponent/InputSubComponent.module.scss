@@ -1,0 +1,29 @@
+@use '../Input.mixins' as Input;
+
+@import 'src/assets/styles/mixins/remify';
+
+.root {
+  position: absolute;
+  top: 0;
+  height: Input.$height;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 100%;
+}
+
+.right {
+  right: 0;
+}
+
+.left {
+  left: 0;
+}
+
+.noMouse {
+  pointer-events: none;
+}

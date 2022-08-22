@@ -1,5 +1,6 @@
 const routes = {
   index: '/',
+  uiKit: '/ui-kit',
   pageNotFound: '/404'
 };
 

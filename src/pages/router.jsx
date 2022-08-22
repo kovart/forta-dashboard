@@ -1,13 +1,13 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
+import UiKitPage from '@pages/ui-kit';
 import routes from '@constants/routes';
-import DashboardPage from '@pages/dashboard';
 
 const AppRouter = () => (
   <BrowserRouter>
     <Routes>
-      <Route path={routes.index} element={<DashboardPage />} />
+      <Route path={routes.index} element={<UiKitPage />} />
     </Routes>
   </BrowserRouter>
 );

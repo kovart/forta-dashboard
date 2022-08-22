@@ -1,0 +1,76 @@
+@import 'src/assets/styles/variables';
+@import 'src/assets/styles/mixins/remify';
+
+.root {
+  position: relative;
+
+  .button {
+    background-color: transparent;
+  }
+}
+
+:global {
+  .flatpickr-calendar {
+    color: $color-neutral-70;
+    background-color: $color-neutral-20;
+    box-shadow: none;
+
+    .flatpickr-month {
+      background-color: $color-neutral-20;
+      border-radius: rem(6px);
+    }
+
+    .flatpickr-monthDropdown-months {
+      background-color: unset;
+
+      .flatpickr-monthDropdown-month {
+        background-color: $color-neutral-20;
+      }
+    }
+
+    .flatpickr-weekdays {
+      margin-top: rem(8px);
+    }
+
+    .flatpickr-weekday {
+      background-color: transparent;
+      padding: rem(2px);
+      color: $color-neutral-50;
+
+      &:first-child {
+        border-top-left-radius: rem(4px);
+        border-bottom-left-radius: rem(4px);
+      }
+
+      &:last-child {
+        border-top-right-radius: rem(4px);
+        border-bottom-right-radius: rem(4px);
+      }
+    }
+
+    .flatpickr-day {
+      border: 1px solid transparent;
+
+      &.today {
+        border-color: $color-accent-green;
+
+        &:not(.flatpickr-disabled) {
+          color: $color-neutral-60;
+        }
+      }
+
+      &:hover {
+        background-color: $color-neutral-30;
+      }
+
+      &.selected {
+        background-color: $color-accent-blue-2;
+        border-color: transparent;
+      }
+    }
+  }
+
+  .flatpickr-calendar.inline {
+    top: rem(8px);
+  }
+}

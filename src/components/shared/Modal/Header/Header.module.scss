@@ -1,0 +1,25 @@
+@import 'src/assets/styles/colors';
+@import 'src/assets/styles/mixins/remify';
+@import 'src/assets/styles/mixins/typography';
+
+.root {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(16px);
+  justify-content: space-between;
+  align-items: center;
+  background-color: $color-neutral-25;
+  padding: rem(24px) rem(24px);
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+}
+
+.title {
+  @include h3();
+
+  text-align: left;
+  margin-top: 0;
+  margin-bottom: 0;
+  color: $color-neutral-70;
+  white-space: pre-line;
+}

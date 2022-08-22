@@ -1,0 +1,118 @@
+@use 'sass:color';
+
+@import 'src/assets/styles/colors';
+@import 'src/assets/styles/mixins/remify';
+@import 'src/assets/styles/mixins/typography';
+@import 'src/assets/styles/mixins/transitions';
+
+.root {
+  position: relative;
+  background-color: $color-neutral-15;
+  border-radius: rem(8px);
+  width: 100%;
+
+  &.red {
+    box-shadow: 0px 10px 40px 20px rgba(185, 28, 28, 0.1);
+  }
+
+  ul,
+  li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.header {
+  padding: rem(32px) rem(24px);
+
+  .heading {
+    display: flex;
+    align-items: center;
+
+    .title {
+      @include h2();
+
+      margin-top: 0;
+      margin-bottom: 0;
+      color: $color-neutral-90;
+      margin-right: rem(16px);
+    }
+
+    .badge {
+      @include element-lg();
+
+      font-weight: 500;
+      margin-right: rem(16px);
+      border-radius: rem(6px);
+      padding: rem(6px) rem(10px);
+
+      &.yellow {
+        color: $color-neutral-15;
+        background-color: $color-accent-yellow;
+      }
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: rem(8px);
+      margin-left: auto;
+    }
+  }
+
+  .addresses {
+    display: flex;
+    flex-wrap: wrap;
+    gap: rem(12px);
+    margin-top: rem(24px);
+  }
+}
+
+.infoPanel {
+  @include body();
+
+  display: flex;
+  align-items: center;
+  gap: rem(10px);
+  padding: rem(0px) rem(24px) rem(14px);
+  color: $color-neutral-70;
+}
+
+.body {
+  position: relative;
+  min-height: rem(250px);
+  padding-bottom: rem(24px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+  .alerts {
+    .alert {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: -1px;
+    }
+  }
+
+  .emptyState {
+    max-width: rem(500px);
+    margin: 0 auto;
+    padding: rem(50px) 0;
+    text-align: center;
+    color: $color-neutral-60;
+
+    .title {
+      @include h4();
+      color: $color-neutral-40;
+    }
+  }
+}
+
+.footer {
+  padding: rem(32px) rem(32px) 0;
+  text-align: center;
+
+  .loadMoreButton {
+    max-width: rem(200px);
+    width: 100%;
+  }
+}

@@ -1,0 +1,33 @@
+@import 'src/assets/styles/variables';
+@import 'src/assets/styles/mixins/transitions';
+@import 'src/assets/styles/mixins/remify';
+
+.root {
+  visibility: hidden;
+  pointer-events: none;
+  z-index: $z-index-modal + 1;
+
+  &.open {
+    visibility: visible;
+    pointer-events: auto;
+  }
+}
+
+.content {
+  @include transition-medium();
+
+  margin: 0;
+  opacity: 0;
+  transform: translateY(-8px);
+  background-color: $color-neutral-15;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  box-shadow: 0px 4px 14px 5px rgba(0, 0, 0, 0.2);
+  overflow: auto;
+  border-radius: rem(4px);
+  max-height: 100%;
+
+  &.open {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

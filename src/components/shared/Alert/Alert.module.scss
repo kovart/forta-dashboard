@@ -1,0 +1,150 @@
+@use 'sass:color';
+
+@import 'src/assets/styles/mixins/typography';
+@import 'src/assets/styles/mixins/line-clamp';
+@import 'src/assets/styles/mixins/transitions';
+
+.root {
+}
+
+.header {
+  position: relative;
+  display: grid;
+  align-items: center;
+  padding: rem(10px) rem(24px);
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-gap: rem(8px * 5);
+  min-height: rem(52px);
+  font-size: rem(14px);
+  font-weight: 400;
+  line-height: 124%;
+
+  .severity {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    left: 0px;
+    width: 4px;
+    background-color: $color-neutral-25;
+
+    &.low {
+      background-color: $color-accent-green;
+    }
+    &.info {
+      background-color: $color-neutral-30;
+    }
+    &.medium {
+      background-color: #dc8017;
+    }
+    &.high {
+      background-color: #b91c1c;
+    }
+    &.critical {
+      background-color: $color-accent-pink;
+    }
+  }
+
+  .name {
+    color: #b49d9d;
+    word-break: break-word;
+  }
+
+  .description {
+    color: $color-neutral-70;
+    word-break: break-word;
+  }
+
+  .meta {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: rem(16px);
+
+    .stage {
+      flex-shrink: 0;
+    }
+
+    .date {
+      text-align: right;
+      white-space: pre-line;
+      color: $color-neutral-50;
+      margin-left: auto;
+    }
+
+    .moreButton {
+      opacity: 0;
+      background-color: transparent;
+      margin-right: rem(-16px);
+
+      svg {
+        @include transition-slow();
+      }
+
+      &.expanded {
+        svg {
+          transform: rotate(-180deg);
+        }
+      }
+    }
+  }
+
+  &:not(.expanded) {
+    .name,
+    .description {
+      @include line-clamp(2, 15px);
+    }
+  }
+
+  &:hover {
+    background-color: rgba(199, 211, 255, 0.05);
+
+    .moreButton {
+      opacity: 1;
+    }
+  }
+}
+
+.collapse {
+  @include transition-slow();
+
+  opacity: 1;
+
+  &[aria-hidden='true'] {
+    opacity: 0.25;
+  }
+}
+
+.body {
+  color: $color-neutral-50;
+  padding: rem(14px) rem(18px) rem(24px);
+  background-color: rgba(199, 211, 255, 0.03);
+
+  ul,
+  li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .metadata {
+    @include element-lg();
+
+    word-break: break-word;
+    white-space: pre-wrap;
+    line-height: 130%;
+  }
+
+  .addresses {
+    display: flex;
+    flex-wrap: wrap;
+    gap: rem(12px);
+    margin-top: rem(14px);
+  }
+
+  .projects {
+    display: flex;
+    flex-wrap: wrap;
+    gap: rem(12px);
+    margin-top: rem(28px);
+  }
+}

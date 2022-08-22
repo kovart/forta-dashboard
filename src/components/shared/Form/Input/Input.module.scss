@@ -1,0 +1,81 @@
+@import 'src/assets/styles/variables';
+@import 'src/assets/styles/mixins/transitions';
+@import 'Input.mixins';
+
+.root {
+  display: block;
+
+  .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: rem(18px);
+    margin: 0 rem(10px);
+  }
+
+  .button {
+    background-color: transparent;
+  }
+
+  &.light {
+    .icon {
+      @include icon-light();
+    }
+  }
+
+  &.dark {
+    .icon {
+      @include icon-dark();
+    }
+  }
+}
+
+.wrapper {
+  position: relative;
+}
+
+.components {
+  // style for injected components
+}
+
+.input {
+  @include box();
+  @include box-style-base();
+
+  &.light {
+    @include box-style-light();
+
+    color-scheme: light;
+
+    &::placeholder {
+      @include placeholder-light();
+    }
+  }
+
+  &.dark {
+    @include box-style-dark();
+
+    color-scheme: dark;
+
+    &::placeholder {
+      @include placeholder-dark();
+    }
+  }
+
+  &:hover:not(:disabled) {
+    @include hover();
+  }
+
+  &:focus {
+    @include focus();
+  }
+
+  &:disabled {
+    @include disabled();
+  }
+
+  &.invalid {
+    @include invalid();
+  }
+}

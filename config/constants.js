@@ -1,6 +1,6 @@
 const path = require('path');
 
-const PROJECT_NAME = 'Forta Dashboard'
+const PROJECT_NAME = 'Forta Dashboard';
 
 const paths = {
   entry: path.resolve(__dirname, '../src/pages/app.jsx'),

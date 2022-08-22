@@ -1,25 +1,25 @@
 /* eslint-disable no-console */
 import { IS_DEVELOPMENT } from '@constants/common';
 
-const LoggerRaw = {
+class GlobalLogger {
   log(...args) {
     console.log(...args);
-  },
+  }
   info(...args) {
     console.info(...args);
-  },
+  }
   warn(...args) {
     console.warn(...args);
-  },
+  }
   error(...args) {
     console.error(...args);
-  },
+  }
   debug(...args) {
     console.error(...args);
   }
-};
+}
 
-const Logger = new Proxy(LoggerRaw, {
+const logger = new Proxy(new GlobalLogger(), {
   get: function (target, name) {
     if (!IS_DEVELOPMENT) {
       return () => {};
@@ -28,4 +28,4 @@ const Logger = new Proxy(LoggerRaw, {
   }
 });
 
-export default Logger;
+export default logger;

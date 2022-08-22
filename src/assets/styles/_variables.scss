@@ -1,11 +1,12 @@
+@import 'colors';
+
 $rem-baseline: 16px;
 
-$container-width: 1440px;
+$container-width: 1356px;
 
 $xs-max: 575px !default;
 $sm-max: 768px !default;
 $md-max: 992px !default;
-
 $lg-max: 1339px !default;
 $xl-max: 1920px !default;
 
@@ -33,10 +34,7 @@ $breakpoint-up-prefixes-map: (
   xl: $breakpoint-xl-up
 );
 
-$gutter: 24px !default;
 $spacer: 8px;
-
-$content-well-max-width: 1294px !default; // Container width
 
 $font-main: 'neuehaas', Arial, Helvetica, sans-serif;
 

@@ -1,0 +1,27 @@
+@import 'src/assets/styles/mixins/remify';
+
+.root {
+  margin: 0 0 rem(32px) 0;
+
+  .title {
+    margin-top: 0;
+    margin-bottom: rem(16px);
+  }
+
+  .body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: rem(16px) rem(8px);
+  }
+
+  &.row .body {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  &.column .body {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

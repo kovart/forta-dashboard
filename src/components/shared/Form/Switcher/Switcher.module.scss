@@ -1,0 +1,44 @@
+@import 'src/assets/styles/colors';
+@import 'src/assets/styles/mixins/transitions';
+@import 'src/assets/styles/mixins/remify';
+
+.root {
+  display: inline-flex;
+  padding: rem(4px);
+  border-radius: rem(6px);
+  background-color: $color-neutral-15;
+  border: 1px solid rgba(255, 255, 255, 0.015);
+}
+
+.option {
+  @include transition-fast();
+
+  font-size: rem(14px);
+  font-weight: 500;
+  padding: rem(9px);
+  min-width: rem(120px);
+  border-radius: rem(4px);
+  color: $color-neutral-50;
+  text-align: center;
+  border: 1px solid transparent;
+  background-color: transparent;
+  cursor: pointer;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    height: 0;
+    width: 0;
+    visibility: hidden;
+  }
+
+  &:hover {
+    color: $color-neutral-70;
+  }
+
+  &.active {
+    color: $color-neutral-90;
+    background-color: $color-neutral-20;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+  }
+}

@@ -1,0 +1,56 @@
+@import 'src/assets/styles/mixins/remify';
+@import 'src/assets/styles/mixins/typography';
+
+.container {
+  padding: rem(16px);
+}
+
+.row {
+  margin-bottom: rem(24px);
+}
+
+.subtitle {
+  @include h4();
+
+  margin-top: 0;
+  margin-bottom: rem(16px);
+}
+
+.dates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(24px);
+
+  :global {
+    .flatpickr-calendar {
+      background-color: transparent;
+    }
+  }
+}
+
+.duration {
+  color: $color-neutral-50;
+  font-weight: normal;
+}
+
+.shortcuts {
+  display: flex;
+  flex-direction: row;
+  gap: rem(8px);
+  margin-bottom: rem(16px);
+  overflow-x: auto;
+  padding: rem(1px);
+}
+
+.controls {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+  gap: rem(12px);
+  margin-top: rem(16px);
+
+  .applyButton {
+    width: 100%;
+    max-width: rem(120px);
+  }
+}

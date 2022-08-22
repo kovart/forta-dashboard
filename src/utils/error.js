@@ -52,9 +52,11 @@ export function getErrorMessage(error) {
 }
 
 export function handleGlobalError(error, options) {
+  const { toaster = true } = options;
+
   Logger.error(error);
 
-  if (options.toaster) {
+  if (toaster) {
     const message = getErrorMessage(error);
     toast(message, { type: 'error' });
   }

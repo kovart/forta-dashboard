@@ -1,0 +1,34 @@
+@import 'src/assets/styles/mixins/remify';
+@import 'src/assets/styles/mixins/typography';
+
+.root {
+  @include element-md();
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: rem(10px) rem(18px);
+  gap: rem(12px);
+  width: 100%;
+  color: $color-neutral-60;
+
+  &:disabled {
+    color: $color-neutral-40;
+  }
+
+  &:not(:disabled) {
+    cursor: pointer;
+
+    &:hover {
+      background-color: $color-neutral-25;
+    }
+
+    &:active {
+      background-color: $color-neutral-30;
+    }
+
+    &.selected {
+      background-color: $color-accent-blue-1;
+    }
+  }
+}

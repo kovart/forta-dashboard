@@ -1,0 +1,11 @@
+@import 'src/assets/styles/colors';
+@import 'src/assets/styles/mixins/remify';
+
+.root {
+  padding: rem(24px);
+  color: $color-neutral-70;
+  white-space: pre-line;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
