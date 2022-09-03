@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import dayjs from 'dayjs';
 import { UnmountClosed as CollapseContainer } from 'react-collapse';
-import pluralize from 'pluralize';
 
 import styles from './Alert.module.scss';
 
@@ -27,33 +26,12 @@ function Alert({
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const formattedDate = useMemo(() => {
-    const now = dayjs();
-    const date = dayjs(alert.createdAt);
-    const days = now.diff(date, 'day');
-    const hours = now.diff(date, 'hour') - days * 24;
-    const minutes = now.diff(date, 'minute') - days * 24 * 60 - hours * 60;
-    const seconds = Math.max(
-      1,
-      now.diff(date, 'second') -
-        days * 24 * 60 * 60 -
-        hours * 60 * 60 -
-        minutes * 60
-    );
-
-    return (
-      [
-        [days, 'day'],
-        [hours, 'hr'],
-        [minutes, 'min'],
-        [seconds, 'sec']
-      ]
-        .filter((v) => v[0] > 0)
-        .slice(0, 2)
-        .map((v) => v[0] + ' ' + pluralize(v[1], v[0]))
-        .join(' ') + ' ago'
-    );
-  }, [alert]);
+  const formattedDate = useMemo(
+    () =>
+      // TODO add year if more than 1 years ago
+      dayjs(alert.createdAt).format('DD MMM HH:mm:ss'),
+    [alert]
+  );
 
   // Forta Explorer often responds with duplicated projects
   const projects = useMemo(() => {

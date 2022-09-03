@@ -20,16 +20,26 @@ import {
   SYSTEM_DATE_FORMAT
 } from '@constants/common';
 import { POPOVER_PLACEMENT } from '@components/shared/Popover/Popover';
-import { FilterLockType, FilterType } from '@constants/types';
+import {
+  FilterLockType,
+  FilterPermanentElementsType,
+  FilterType
+} from '@constants/types';
 
-function FilterForm({ values, locked = {}, onSubmit, className }) {
+function FilterForm({
+  values,
+  locked = {},
+  permanent = {},
+  editable = true,
+  onSubmit,
+  className
+}) {
   const { data } = useContext(AppContext);
   const { chainId, addresses = [], startDate, endDate, stagePreset } = values;
   const { addresses: lockedAddresses = [] } = locked;
   const {
     stagePresets: { forta: fortaStagePresets }
   } = data;
-  const isEditable = typeof onSubmit === 'function';
 
   function handleChange(patchObj) {
     onSubmit({ ...values, ...patchObj });
@@ -52,95 +62,107 @@ function FilterForm({ values, locked = {}, onSubmit, className }) {
   return (
     <form className={cn(styles.root, className)}>
       <div className={styles.chips}>
-        <Menu
-          preferredWidth={150}
-          placement={POPOVER_PLACEMENT.bottomStart}
-          renderElement={({ ref, toggle }) => (
-            <Chip
-              ref={ref}
-              icon={{ symbol: IconSymbols.Zap, color: CSS_COLOR.accentYellow }}
-              onClick={isEditable && toggle}
-            >
-              {CHAIN_NAMES[chainId]}
-            </Chip>
-          )}
-        >
-          {Object.values(CHAIN).map((chainId) => (
-            <Menu.Item
-              key={chainId}
-              selected={values.chainId === chainId}
-              onClick={() => handleChange({ chainId })}
-            >
-              {CHAIN_NAMES[chainId]}
-            </Menu.Item>
-          ))}
-        </Menu>
-        <Period
-          value={[startDate, endDate]}
-          maxDate={dayjs().format(SYSTEM_DATE_FORMAT)}
-          renderElement={({ ref, toggle }) => (
-            <Chip
-              ref={ref}
-              empty={!startDate && !endDate}
-              removable={startDate || endDate}
-              icon={{
-                symbol: IconSymbols.Calendar,
-                color: CSS_COLOR.accentBlue2
-              }}
-              onClick={toggle}
-              onRemove={() =>
-                handleChange({
-                  startDate: null,
-                  endDate: null
-                })
-              }
-            >
-              {periodFormattedValue}
-            </Chip>
-          )}
-          onChange={(e) =>
-            handleChange({
-              startDate: e.target.value[0],
-              endDate: e.target.value[1]
-            })
-          }
-        />
-        <Menu
-          placement={POPOVER_PLACEMENT.bottomStart}
-          renderElement={({ ref, toggle }) => (
-            <Chip
-              ref={ref}
-              empty={!stagePreset}
-              removable={stagePreset}
-              startIcon={{
-                symbol: IconSymbols.Tool,
-                color: CSS_COLOR.accentGreen
-              }}
-              endIcon={{ symbol: IconSymbols.ChevronDown }}
-              onRemove={() => handleChange({ stagePreset: null })}
-              onClick={isEditable && toggle}
-            >
-              {stagePreset ? stagePreset.label : 'Stages'}
-            </Chip>
-          )}
-        >
-          {fortaStagePresets.map((preset) => (
-            <Menu.Item
-              key={preset.label}
-              selected={preset.value === stagePreset}
-              onClick={() => handleChange({ stagePreset: preset })}
-            >
-              {preset.label}
-            </Menu.Item>
-          ))}
-          <Menu.Separator />
-          <Menu.Item
-            icon={IconSymbols.Edit}
-            onClick={() => alert('Not implemented yet')}
+        {(permanent.chain || values.chainId) && (
+          <Menu
+            preferredWidth={125}
+            placement={POPOVER_PLACEMENT.bottomStart}
+            renderElement={({ ref, toggle }) => (
+              <Chip
+                ref={ref}
+                clickable={editable}
+                icon={{
+                  symbol: IconSymbols.Zap,
+                  color: CSS_COLOR.accentYellow
+                }}
+                onClick={toggle}
+              >
+                {CHAIN_NAMES[chainId]}
+              </Chip>
+            )}
           >
-            Create preset
-          </Menu.Item>
-        </Menu>
+            {Object.values(CHAIN).map((chainId) => (
+              <Menu.Item
+                key={chainId}
+                selected={values.chainId === chainId}
+                onClick={() => handleChange({ chainId })}
+              >
+                {CHAIN_NAMES[chainId]}
+              </Menu.Item>
+            ))}
+          </Menu>
+        )}
+        {(permanent.period || values.startDate || values.endDate) && (
+          <Period
+            value={[startDate, endDate]}
+            maxDate={dayjs().format(SYSTEM_DATE_FORMAT)}
+            renderElement={({ ref, toggle }) => (
+              <Chip
+                ref={ref}
+                empty={!startDate && !endDate}
+                clickable={editable}
+                removable={!!(startDate || endDate)}
+                icon={{
+                  symbol: IconSymbols.Calendar,
+                  color: CSS_COLOR.accentBlue2
+                }}
+                onClick={toggle}
+                onRemove={() =>
+                  handleChange({
+                    startDate: null,
+                    endDate: null
+                  })
+                }
+              >
+                {periodFormattedValue}
+              </Chip>
+            )}
+            onChange={(e) =>
+              handleChange({
+                startDate: e.target.value[0],
+                endDate: e.target.value[1]
+              })
+            }
+          />
+        )}
+        {(permanent.stagePreset || values.stagePreset) && (
+          <Menu
+            placement={POPOVER_PLACEMENT.bottomStart}
+            renderElement={({ ref, toggle }) => (
+              <Chip
+                ref={ref}
+                empty={!stagePreset}
+                removable={!!stagePreset}
+                clickable={editable}
+                startIcon={{
+                  symbol: IconSymbols.Tool,
+                  color: CSS_COLOR.accentGreen
+                }}
+                endIcon={{ symbol: IconSymbols.ChevronDown }}
+                onRemove={() => handleChange({ stagePreset: null })}
+                onClick={toggle}
+              >
+                {stagePreset ? stagePreset.name : 'Stages'}
+              </Chip>
+            )}
+          >
+            {fortaStagePresets.map((preset) => (
+              <Menu.Item
+                key={preset.name}
+                selected={preset.name === stagePreset?.name}
+                onClick={() => handleChange({ stagePreset: preset })}
+              >
+                {preset.name}
+              </Menu.Item>
+            ))}
+            <Menu.Separator />
+            <Menu.Item
+              icon={IconSymbols.Edit}
+              onClick={() => alert('Not implemented yet')}
+            >
+              Create preset
+            </Menu.Item>
+          </Menu>
+        )}
         <Button
           type="button"
           variant="secondary"
@@ -170,7 +192,7 @@ function FilterForm({ values, locked = {}, onSubmit, className }) {
                 chainId={chainId}
                 address={address}
                 checked={true}
-                disabled={!isEditable || lockedAddresses.includes(address)}
+                disabled={!editable || lockedAddresses.includes(address)}
                 onCheckedChange={() =>
                   handleChange({
                     addresses: addresses.filter((a) => a !== address)
@@ -188,6 +210,8 @@ function FilterForm({ values, locked = {}, onSubmit, className }) {
 FilterForm.propTypes = {
   values: FilterType.isRequired,
   locked: FilterLockType,
+  permanent: FilterPermanentElementsType,
+  editable: PropTypes.bool,
   onSubmit: PropTypes.func,
   className: PropTypes.string
 };

@@ -1,10 +1,10 @@
 @import 'src/assets/styles/mixins/remify';
 
 .root {
-  height: rem(44px);
+  display: inline-flex;
+  text-decoration: none;
 
   img {
     object-fit: contain;
-    height: 100%;
   }
 }

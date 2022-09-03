@@ -26,8 +26,8 @@ function UiKitPage() {
       <UiKitSwitcher />
       <UiKitMenu />
       <UiKitModal />
-      <UiKitAlertGroup />
       <UiKitFilterForm />
+      <UiKitAlertGroup />
     </div>
   );
 }

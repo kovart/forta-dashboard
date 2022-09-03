@@ -31,9 +31,10 @@ function AppContextProvider({ children }) {
         max: 1000,
         ttl: 1000 * 60 * 15 /* 15min */,
         updateAgeOnGet: true,
-        fetchMethod: async (address, chainId) => {
+        fetchMethod: async (key) => {
+          const [address, chainId] = key.split('.');
           let transactionCount, isContract;
-          const provider = providersCache.get(chainId);
+          const provider = await providersCache.fetch(chainId);
           isContract = (await provider.getCode(address)) !== '0x';
           if (!isContract) {
             transactionCount = await provider.getTransactionCount(address);
@@ -50,21 +51,12 @@ function AppContextProvider({ children }) {
 
   const context = useMemo(
     () => ({
-      getProvider: (chainId) => providersCache.get(chainId),
+      getProvider: (chainId) => providersCache.fetch(chainId),
       getAddressMeta: (address, chainId) =>
-        addressesCache.get(address, chainId),
+        addressesCache.fetch(address + '.' + chainId),
       data: {
         stagePresets: {
-          forta: [
-            {
-              label: 'Forta DeFi Kit',
-              value: FortaDeFiKit
-            },
-            {
-              label: 'Forta Governance Kit',
-              value: FortaGovernanceKit
-            }
-          ],
+          forta: [FortaDeFiKit, FortaGovernanceKit],
           // not implemented yet
           user: []
         }

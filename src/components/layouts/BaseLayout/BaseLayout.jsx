@@ -3,23 +3,17 @@ import PropTypes from 'prop-types';
 
 import styles from './BaseLayout.module.scss';
 
-import Logo from '@components/shared/Logo/Logo';
+import Header from '@components/shared/Header/Header';
 
-const BaseLayout = ({ children, renderHeaderPanel = () => {} }) => (
+const BaseLayout = ({ children }) => (
   <div className={styles.root}>
-    <header className={styles.header}>
-      <Logo />
-      {renderHeaderPanel && (
-        <div className={styles.headerPanel}>{renderHeaderPanel()}</div>
-      )}
-    </header>
+    <Header />
     <main className={styles.main}>{children}</main>
   </div>
 );
 
 BaseLayout.propTypes = {
-  children: PropTypes.any,
-  renderHeaderPanel: PropTypes.func
+  children: PropTypes.any
 };
 
 export default BaseLayout;

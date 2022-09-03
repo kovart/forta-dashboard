@@ -13,28 +13,33 @@ import UiKitSection from '@components/partials/ui-kit/Section/Section';
 import AlertGroup from '@components/shared/AlertGroup/AlertGroup';
 import Checkbox from '@components/shared/Form/Checkbox/Checkbox';
 import { IconSymbols } from '@components/shared/Icon/Icon.utils';
-import { STAGE_COLOR } from '@constants/stages';
+import { FortaDeFiKit } from '@constants/stages';
+import { CHAIN } from '@constants/common';
+
+const initialParameters = {
+  chainId: CHAIN.avalanche,
+  addresses: ['0x1041e66182c892d2ba9666f43c1c73c0ab8f5d09'],
+  startDate: null,
+  endDate: null,
+  projects: [],
+  severities: [],
+  alertIds: {
+    include: [],
+    exclude: []
+  },
+  botIds: {
+    include: [],
+    exclude: []
+  },
+  stagePreset: FortaDeFiKit
+};
 
 function UiKitAlertGroup() {
+  const [filter, setFilter] = useState(initialParameters);
   const [isLargeDataset, setIsLargeDataset] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
   const [canLoadMore, setCanLoadMore] = useState(true);
-
-  const [filter] = useState({
-    stagePreset: [
-      {
-        color: STAGE_COLOR.blue,
-        label: 'Stage 1',
-        alertIds: [mockAlert2.alertId]
-      },
-      {
-        color: STAGE_COLOR.orange,
-        label: 'Stage 2',
-        alertIds: [mockAlert5.alertId]
-      }
-    ]
-  });
 
   const alerts = useMemo(() => {
     if (isEmpty) {
@@ -96,6 +101,7 @@ function UiKitAlertGroup() {
         loading={isLoading}
         badge={{ label: '2 STAGES', variant: 'yellow' }}
         alerts={alerts}
+        shouldShowFilter={true}
         filter={filter}
         canLoadMore={!isEmpty && canLoadMore}
         actions={[
@@ -106,16 +112,9 @@ function UiKitAlertGroup() {
           {
             icon: IconSymbols.Save,
             title: 'Save'
-          },
-          {
-            icon: IconSymbols.Cross,
-            title: 'Remove'
-          },
-          {
-            icon: IconSymbols.MoreVertical,
-            title: 'More'
           }
         ]}
+        onFilterChange={setFilter}
       />
     </UiKitSection>
   );

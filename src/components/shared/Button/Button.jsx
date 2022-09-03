@@ -37,7 +37,10 @@ const Button = React.forwardRef(function Button(
   let Element = isLinkComponent ? Link : 'button';
   let componentProps = { ...props };
 
-  if (icon && !startIcon && !endIcon) startIcon = icon;
+  if (icon && !startIcon && !endIcon) {
+    startIcon = icon;
+    loadingPosition = 'start';
+  }
   if (typeof startIcon === 'string') {
     startIcon = { symbol: startIcon };
   }

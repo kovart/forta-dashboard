@@ -41,13 +41,9 @@ export const FilterType = PropTypes.shape({
   chainId: PropTypes.number,
   startDate: PropTypes.string,
   endDate: PropTypes.string,
+  description: PropTypes.string,
   addresses: PropTypes.arrayOf(PropTypes.string),
-  projects: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      name: PropTypes.string
-    })
-  ),
+  projectIds: PropTypes.arrayOf(PropTypes.string),
   alertIds: PropTypes.shape({
     include: PropTypes.arrayOf(PropTypes.string),
     exclude: PropTypes.arrayOf(PropTypes.string)
@@ -57,9 +53,18 @@ export const FilterType = PropTypes.shape({
     exclude: PropTypes.arrayOf(PropTypes.string)
   }),
   severities: PropTypes.arrayOf(PropTypes.oneOf(Object.values(SEVERITY))),
-  stagePreset: PropTypes.arrayOf(StageType)
+  stagePreset: PropTypes.shape({
+    name: PropTypes.string,
+    stages: PropTypes.arrayOf(StageType)
+  })
 });
 
 export const FilterLockType = PropTypes.shape({
   addresses: PropTypes.arrayOf(PropTypes.string)
+});
+
+export const FilterPermanentElementsType = PropTypes.shape({
+  chain: PropTypes.bool,
+  period: PropTypes.bool,
+  stagePreset: PropTypes.bool
 });

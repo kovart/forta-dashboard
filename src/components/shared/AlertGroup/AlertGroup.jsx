@@ -10,7 +10,12 @@ import Loader from '@components/shared/Loader/Loader';
 import Icon, { IconSymbols } from '@components/shared/Icon/Icon';
 import FilterForm from '@components/shared/FormModules/FilterForm/FilterForm';
 import Fade from '@components/shared/Transitions/Fade/Fade';
-import { AlertType, FilterLockType, FilterType } from '@constants/types';
+import {
+  AlertType,
+  FilterLockType,
+  FilterPermanentElementsType,
+  FilterType
+} from '@constants/types';
 import UfoImage from '@assets/images/ufo.svg';
 
 function AlertGroup({
@@ -18,12 +23,15 @@ function AlertGroup({
   badge,
   variant = 'red',
   alerts = [],
+  totalAlerts = alerts.length,
   actions = [],
   filter,
-  locked = {},
+  filterLocked = {},
+  filterVisible = false,
+  filterEditable = true,
+  filterPermanentElements = {},
   loading = false,
   loadingMore = false,
-  shouldShowFilter = false,
   canLoadMore = false,
   onLoadMore,
   onFilterChange,
@@ -54,30 +62,37 @@ function AlertGroup({
                   icon={action.icon}
                   title={action.title}
                   onClick={action.onClick}
+                  disabled={action.disabled}
+                  loading={action.loading}
                 />
               </li>
             ))}
           </ul>
         </div>
-        {shouldShowFilter && (
+        {filterVisible && (
           <FilterForm
             values={filter}
-            locked={locked}
+            locked={filterLocked}
+            editable={filterEditable}
+            permanent={filterPermanentElements}
             onSubmit={onFilterChange}
+            className={styles.filters}
           />
         )}
       </div>
       {alerts.length > 0 && (
         <div className={styles.infoPanel}>
           <Icon symbol={IconSymbols.Sort} size={24} />
-          <span>Latest 25 from a total of 95 alerts</span>
+          <span>
+            Latest {alerts.length} from a total of {totalAlerts} alerts
+          </span>
         </div>
       )}
       <div className={styles.body}>
         {alerts.length > 0 && (
           <ul className={styles.alerts}>
             {alerts.map((alert, i) => {
-              const stage = (stagePreset || []).find((stage) =>
+              const stage = (stagePreset?.stages || []).find((stage) =>
                 stage.alertIds.includes(alert.alertId)
               );
 
@@ -88,7 +103,7 @@ function AlertGroup({
                     stage={stage}
                     checkedAddresses={filter.addresses}
                     checkedProjects={filter.projects}
-                    lockedAddresses={locked.addresses}
+                    lockedAddresses={filterLocked.addresses}
                     onCheckedProjectsChange={
                       onFilterChange &&
                       ((projects) => handleChange({ projects }))
@@ -154,12 +169,18 @@ AlertGroup.propTypes = {
     PropTypes.shape({
       icon: PropTypes.string,
       title: PropTypes.string,
+      loading: PropTypes.bool,
+      disabled: PropTypes.bool,
       onClick: PropTypes.func
     })
   ),
   locked: FilterLockType,
-  shouldShowFilter: PropTypes.bool,
+  filterVisible: PropTypes.bool,
+  filterLocked: FilterLockType,
+  filterEditable: PropTypes.bool,
+  filterPermanentElements: FilterPermanentElementsType,
   loading: PropTypes.bool,
+  totalAlerts: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   loadingMore: PropTypes.bool,
   canLoadMore: PropTypes.bool,
   onLoadMore: PropTypes.func,

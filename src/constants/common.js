@@ -12,16 +12,6 @@ export const TIME_FORMAT = 'HH:mm';
 export const DATE_TIME_FORMAT = `${TIME_FORMAT} ${SYSTEM_DATE_FORMAT}`;
 export const DATE_TIME_FORMAT_SHORT = `${TIME_FORMAT} ${APP_DATE_FORMAT}`;
 
-export const DASHBOARD_MODE = {
-  list: 'LIST',
-  groups: 'GROUPS'
-};
-
-export const DASHBOARD_MODE_NAMES = {
-  [DASHBOARD_MODE.list]: 'All alerts',
-  [DASHBOARD_MODE.groups]: 'Group mode'
-};
-
 export const FINDING = {
   unknown: 'UNKNOWN_TYPE',
   exploit: 'EXPLOIT',

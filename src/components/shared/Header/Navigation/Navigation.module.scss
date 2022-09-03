@@ -1,0 +1,46 @@
+@import 'src/assets/styles/colors';
+@import 'src/assets/styles/mixins/remify';
+@import 'src/assets/styles/mixins/transitions';
+
+.root {
+  ul,
+  li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: rem(20px);
+  }
+
+  .navLink {
+    @include transition-fast();
+
+    text-decoration: none;
+    font-size: rem(15px);
+    font-weight: 600;
+    color: $color-neutral-40;
+
+    &:hover {
+      color: $color-neutral-50;
+    }
+
+    &.active {
+      position: relative;
+      color: $color-neutral-99;
+
+      &:after {
+        position: absolute;
+        content: '';
+        bottom: rem(-4px);
+        left: 0;
+        width: 100%;
+        height: rem(2px);
+        background-color: $color-neutral-99;
+      }
+    }
+  }
+}

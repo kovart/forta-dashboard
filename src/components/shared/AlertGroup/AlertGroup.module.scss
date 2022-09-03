@@ -3,11 +3,11 @@
 @import 'src/assets/styles/colors';
 @import 'src/assets/styles/mixins/remify';
 @import 'src/assets/styles/mixins/typography';
-@import 'src/assets/styles/mixins/transitions';
 
 .root {
   position: relative;
-  background-color: $color-neutral-15;
+  background-color: $color-neutral-10;
+  border: 1px solid $color-neutral-30;
   border-radius: rem(8px);
   width: 100%;
 
@@ -62,10 +62,7 @@
     }
   }
 
-  .addresses {
-    display: flex;
-    flex-wrap: wrap;
-    gap: rem(12px);
+  .filters {
     margin-top: rem(24px);
   }
 }

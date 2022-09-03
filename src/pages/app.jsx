@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -18,10 +19,21 @@ dayjs.extend(duration);
 dayjs.extend(relativeTime);
 setAppElement('#root');
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false
+    }
+  }
+});
+
 const App = () => (
   <AppContextProvider>
-    <AppRouter />
-    <ToastContainer position="bottom-right" />
+    <QueryClientProvider client={queryClient}>
+      <AppRouter />
+      <ToastContainer position="bottom-right" />{' '}
+    </QueryClientProvider>
   </AppContextProvider>
 );
 

@@ -12,13 +12,14 @@ const Chip = React.forwardRef(function Chip(
     startIcon,
     endIcon,
     variant = 'outline',
-    empty = false,
-    children,
-    removable = !!onRemove,
-    disabled,
-    checked,
     onRemove,
     onClick,
+    empty = false,
+    removable = !!onRemove,
+    clickable = !!onClick,
+    disabled,
+    checked,
+    children,
     className
   },
   ref
@@ -38,13 +39,13 @@ const Chip = React.forwardRef(function Chip(
       role={onClick ? 'button' : undefined}
       tabIndex={onClick ? 0 : undefined}
       className={cn(styles.root, className, styles[variant], {
-        [styles.clickable]: onClick,
+        [styles.clickable]: clickable,
         [styles.removable]: removable,
         [styles.disabled]: disabled,
         [styles.checked]: checked,
         [styles.empty]: empty
       })}
-      onClick={onClick}
+      onClick={clickable ? onClick : undefined}
     >
       {startIcon && (
         <Icon
@@ -88,7 +89,8 @@ Chip.propTypes = {
   endIcon: IconType,
   className: PropTypes.string,
   children: PropTypes.any,
-  removable: PropTypes.oneOfType([PropTypes.bool, PropTypes.any]),
+  removable: PropTypes.bool,
+  clickable: PropTypes.bool,
   checked: PropTypes.bool,
   empty: PropTypes.bool,
   disabled: PropTypes.bool,

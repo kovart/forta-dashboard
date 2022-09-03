@@ -1,4 +1,5 @@
 import { SEVERITY } from '@constants/common';
+import { FortaDeFiKit, FortaGovernanceKit } from '@constants/stages';
 
 export const mockAlert1 = {
   createdAt: '2022-08-21T21:48:19.444701411Z',
@@ -38,7 +39,7 @@ export const mockAlert1 = {
       website: null
     }
   ],
-  alertId: 'BAL-4'
+  alertId: FortaDeFiKit.stages[0].alertIds[0]
 };
 
 export const mockAlert2 = {
@@ -103,7 +104,7 @@ export const mockAlert3 = {
   name: 'Minimum Account Balance',
   protocol: 'ethereum',
   findingType: 'SUSPICIOUS',
-  alertId: 'FORTA-0',
+  alertId: FortaGovernanceKit.stages[0].alertIds[0],
   source: {
     transactionHash: '',
     block: {
@@ -202,7 +203,7 @@ export const mockAlert5 = {
       '0x32b57e401547dc5e96b124c8aba9c3fa8584534d4568e5e54cfcc326698dbd86'
   },
   projects: null,
-  alertId: 'ICE-PHISHING-PREV-APPROVED-TRANSFERED'
+  alertId: FortaGovernanceKit.stages[0].alertIds[0]
 };
 
 export const mockAlert6 = {
