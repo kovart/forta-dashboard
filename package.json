@@ -16,7 +16,7 @@
   },
   "lint-staged": {
     "*.{js,jsx}": [
-      "npm run lint:js --fix",
+      "npm run lint:js:fix",
       "npm run format"
     ],
     "*.{scss,css}": [
