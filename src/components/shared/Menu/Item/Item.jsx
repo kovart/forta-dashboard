@@ -27,6 +27,8 @@ function MenuItem({
     props.href = href;
     props.target = '_blank';
     props.rel = 'noreferrer noopener';
+  } else {
+    props.type = 'button';
   }
 
   if (icon && !startIcon && !endIcon) {
