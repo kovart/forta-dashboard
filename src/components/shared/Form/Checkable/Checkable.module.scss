@@ -1,0 +1,62 @@
+@use '../Mark/Mark.mixins' as Mark;
+
+@import 'src/assets/styles/variables';
+@import 'src/assets/styles/mixins/remify';
+@import 'src/assets/styles/mixins/transitions';
+@import 'src/assets/styles/mixins/typography';
+
+.root {
+  @include element-lg();
+
+  position: relative;
+  display: inline-flex;
+  cursor: pointer;
+  user-select: none;
+  color: $color-neutral-70;
+
+  &:hover:not(.disabled):not(.checked) {
+    .mark {
+      @include Mark.hover();
+    }
+  }
+
+  &:focus-visible {
+    outline: 1px solid $color-focus;
+  }
+}
+
+.input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+  visibility: hidden;
+
+  &:focus:not(:checked) {
+    + .mark {
+      @include Mark.hover();
+    }
+  }
+}
+
+.mark {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.content {
+  padding-top: rem(2px);
+  padding-right: rem(30px);
+}
+
+.checked {
+  color: $color-neutral-90;
+}
+
+.disabled {
+  color: $color-neutral-50;
+  cursor: auto;
+}

@@ -58,7 +58,7 @@ function Address({
         <span className={styles.address}>{address}</span>
         <span className={styles.indicator}>
           {!meta && <Spinner size="xs" />}
-          <Fade visible={meta}>
+          <Fade visible={!!meta}>
             {isContract ? (
               <div className={styles.contract} title="Smart contract">
                 <Icon symbol={IconSymbols.Code} size={15} />

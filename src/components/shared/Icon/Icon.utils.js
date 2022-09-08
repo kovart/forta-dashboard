@@ -17,6 +17,7 @@ import EyeOff from '@assets/icons/eye-off.svg';
 import MoreVertical from '@assets/icons/more-vertical.svg';
 import Code from '@assets/icons/code.svg';
 import ArrowRight from '@assets/icons/arrow-right.svg';
+import ArrowLeft from '@assets/icons/arrow-left.svg';
 import AtSign from '@assets/icons/at-sign.svg';
 import Bell from '@assets/icons/bell.svg';
 import Box from '@assets/icons/box.svg';
@@ -34,9 +35,12 @@ import Save from '@assets/icons/save.svg';
 import Sort from '@assets/icons/sort.svg';
 import Star from '@assets/icons/star.svg';
 import Terminal from '@assets/icons/terminal.svg';
+import Share from '@assets/icons/share.svg';
+import Share2 from '@assets/icons/share-2.svg';
 
 export const IconSymbols = {
   ArrowRight,
+  ArrowLeft,
   AtSign,
   Bell,
   Box,
@@ -71,7 +75,9 @@ export const IconSymbols = {
   Eye,
   EyeOff,
   MoreVertical,
-  Code
+  Code,
+  Share,
+  Share2
 };
 
 const prepare = (symbol) => symbol?.url.split('#')[1];

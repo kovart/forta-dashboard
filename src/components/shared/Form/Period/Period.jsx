@@ -67,24 +67,36 @@ function Period({
               variant="secondary"
               onClick={() =>
                 setTempValue([
-                  dayjs().subtract(1, 'week').format(SYSTEM_DATE_FORMAT),
+                  dayjs().subtract(1, 'day').format(SYSTEM_DATE_FORMAT),
                   null
                 ])
               }
             >
-              From one week ago
+              2 days
             </Button>
             <Button
               type="button"
               variant="secondary"
               onClick={() =>
                 setTempValue([
-                  dayjs().subtract(1, 'month').format(SYSTEM_DATE_FORMAT),
+                  dayjs().subtract(2, 'day').format(SYSTEM_DATE_FORMAT),
                   null
                 ])
               }
             >
-              From one month ago
+              3 days
+            </Button>
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={() =>
+                setTempValue([
+                  dayjs().subtract(7, 'day').format(SYSTEM_DATE_FORMAT),
+                  null
+                ])
+              }
+            >
+              7 days
             </Button>
           </div>
         </div>

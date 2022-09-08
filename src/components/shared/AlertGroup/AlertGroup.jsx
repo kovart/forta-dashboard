@@ -17,13 +17,14 @@ import {
   FilterType
 } from '@constants/types';
 import UfoImage from '@assets/images/ufo.svg';
+import useStageKit from '@hooks/useStageKit';
 
 function AlertGroup({
   title,
   badge,
   variant = 'red',
   alerts = [],
-  totalAlerts = alerts.length,
+  totalAlerts = { value: alerts.length },
   actions = [],
   filter,
   filterLocked = {},
@@ -38,7 +39,7 @@ function AlertGroup({
   className,
   ...props
 }) {
-  const { stagePreset } = filter;
+  const stageKit = useStageKit(filter.stageKit);
 
   function handleChange(patchObj) {
     onFilterChange({ ...filter, ...patchObj });
@@ -75,7 +76,7 @@ function AlertGroup({
             locked={filterLocked}
             editable={filterEditable}
             permanent={filterPermanentElements}
-            onSubmit={onFilterChange}
+            onChange={onFilterChange}
             className={styles.filters}
           />
         )}
@@ -84,7 +85,11 @@ function AlertGroup({
         <div className={styles.infoPanel}>
           <Icon symbol={IconSymbols.Sort} size={24} />
           <span>
-            Latest {alerts.length} from a total of {totalAlerts} alerts
+            Latest {alerts.length} from a total of{' '}
+            {totalAlerts.relation === 'gte'
+              ? `${totalAlerts.value}+`
+              : totalAlerts.value}{' '}
+            alerts
           </span>
         </div>
       )}
@@ -92,7 +97,7 @@ function AlertGroup({
         {alerts.length > 0 && (
           <ul className={styles.alerts}>
             {alerts.map((alert, i) => {
-              const stage = (stagePreset?.stages || []).find((stage) =>
+              const stage = (stageKit?.stages || []).find((stage) =>
                 stage.alertIds.includes(alert.alertId)
               );
 
@@ -180,7 +185,10 @@ AlertGroup.propTypes = {
   filterEditable: PropTypes.bool,
   filterPermanentElements: FilterPermanentElementsType,
   loading: PropTypes.bool,
-  totalAlerts: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  totalAlerts: PropTypes.shape({
+    value: PropTypes.number,
+    relation: PropTypes.string
+  }),
   loadingMore: PropTypes.bool,
   canLoadMore: PropTypes.bool,
   onLoadMore: PropTypes.func,

@@ -46,3 +46,9 @@ export function scrollToElement(id, yOffset) {
 
   window.scrollTo({ top, behavior: 'smooth' });
 }
+
+export function simplifyAddress(value) {
+  value = value.replace('0x', '');
+
+  return '0x' + value.slice(0, 4) + '…' + value.slice(-6);
+}

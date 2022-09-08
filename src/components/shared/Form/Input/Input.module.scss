@@ -16,6 +16,11 @@
 
   .button {
     background-color: transparent;
+
+    svg {
+      width: rem(20px);
+      height: rem(20px);
+    }
   }
 
   &.light {

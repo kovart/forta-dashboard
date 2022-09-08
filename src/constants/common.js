@@ -4,13 +4,11 @@ export const MAINNET_RPC_URL = process.env.MAINNET_RPC_URL;
 
 export const PROJECT_NAME = 'Forta Dashboard';
 
-export const SESSION_KEY = '__session__';
+export const DB_VERSION = 1;
+export const DB_NAME = 'forta-explorer';
 
 export const SYSTEM_DATE_FORMAT = 'YYYY-MM-DD';
 export const APP_DATE_FORMAT = 'DD/MM/YYYY';
-export const TIME_FORMAT = 'HH:mm';
-export const DATE_TIME_FORMAT = `${TIME_FORMAT} ${SYSTEM_DATE_FORMAT}`;
-export const DATE_TIME_FORMAT_SHORT = `${TIME_FORMAT} ${APP_DATE_FORMAT}`;
 
 export const FINDING = {
   unknown: 'UNKNOWN_TYPE',
@@ -20,6 +18,7 @@ export const FINDING = {
   info: 'INFO'
 };
 
+// the order is important
 export const SEVERITY = {
   critical: 'CRITICAL', // Exploitable vulnerabilities, massive impact on users/funds
   high: 'HIGH', // Exploitable under more specific conditions, significant impact on users/funds
@@ -51,4 +50,22 @@ export const CHAIN_NAMES = {
 
 export const CHAIN_RPC_URL = {
   [CHAIN.mainnet]: MAINNET_RPC_URL
+};
+
+import EthereumImage from '@assets/images/chains/ethereum.jpg';
+import ArbirtrumImage from '@assets/images/chains/arbitrum.jpg';
+import AvalancheImage from '@assets/images/chains/avalanche.jpg';
+import BscImage from '@assets/images/chains/bsc.jpg';
+import FantomImage from '@assets/images/chains/fantom.jpg';
+import OptimismImage from '@assets/images/chains/optimism.jpg';
+import PolygonImage from '@assets/images/chains/polygon.jpg';
+
+export const CHAIN_IMAGE = {
+  [CHAIN.mainnet]: EthereumImage,
+  [CHAIN.arbitrium]: ArbirtrumImage,
+  [CHAIN.avalanche]: AvalancheImage,
+  [CHAIN.bsc]: BscImage,
+  [CHAIN.fantom]: FantomImage,
+  [CHAIN.optimism]: OptimismImage,
+  [CHAIN.polygon]: PolygonImage
 };

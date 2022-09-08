@@ -1,12 +1,12 @@
 import { useMemo } from 'react';
 import { useInfiniteQuery } from 'react-query';
 
-import explorer from '@utils/explorer';
+import forta from '@utils/forta';
 
 const fetchQuery = ({ queryKey, pageParam }) => {
   const [
     ,
-    limit,
+    first,
     chainId,
     startDate,
     endDate,
@@ -16,8 +16,8 @@ const fetchQuery = ({ queryKey, pageParam }) => {
     severities
   ] = queryKey;
 
-  return explorer.getData({
-    limit,
+  return forta.getAlerts({
+    first,
     addresses,
     botIds,
     startDate,
@@ -29,18 +29,19 @@ const fetchQuery = ({ queryKey, pageParam }) => {
   });
 };
 
-function useExplorerQuery({ filter, limit = 20 }) {
+function useExplorerQuery({ filter, enabled, first = 20 }) {
   const {
     data,
     fetchNextPage,
     refetch,
+    isFetched,
     isFetching,
     isFetchingNextPage,
     hasNextPage
   } = useInfiniteQuery(
     [
       'forta-alerts',
-      limit,
+      first,
       filter.chainId,
       filter.startDate,
       filter.endDate,
@@ -55,7 +56,8 @@ function useExplorerQuery({ filter, limit = 20 }) {
         lastPage.pageInfo.hasNextPage ? lastPage.pageInfo.endCursor : undefined,
       keepPreviousData: true,
       retryDelay: 15,
-      retry: 3
+      retry: 3,
+      enabled: enabled
     }
   );
 
@@ -67,7 +69,7 @@ function useExplorerQuery({ filter, limit = 20 }) {
     const items = [];
 
     data.pages.forEach((pageResponse) =>
-      items.push(...explorer.prepareData(pageResponse))
+      items.push(...forta.prepareAlertsResponse(pageResponse))
     );
 
     return items;
@@ -82,6 +84,7 @@ function useExplorerQuery({ filter, limit = 20 }) {
     data,
     alerts,
     totalAlerts,
+    isFetched,
     isFetching,
     isFetchingNextPage,
     hasNextPage,

@@ -1,0 +1,33 @@
+@import 'src/assets/styles/mixins/remify';
+@import 'src/assets/styles/mixins/typography';
+
+.root {
+  margin-bottom: rem(72px);
+
+  .title {
+    @include h2();
+
+    color: $color-neutral-90;
+    margin-top: 0;
+    margin-bottom: rem(18px);
+  }
+
+  .description {
+    @include body();
+
+    color: $color-neutral-60;
+    margin-top: 0;
+    margin-bottom: rem(32px);
+  }
+
+  .form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: rem(8px);
+
+    .submitButton {
+      max-width: rem(120px);
+      width: 100%;
+    }
+  }
+}

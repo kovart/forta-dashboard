@@ -17,7 +17,7 @@
   background-color: $color-neutral-20;
   outline: none;
   z-index: $z-index-modal;
-  max-height: 90vh;
+  max-height: 80vh;
 }
 
 .overlay {
@@ -35,6 +35,10 @@
 
 // SIZES
 // --------
+
+.sm {
+  max-width: rem(380px);
+}
 
 .md {
   max-width: rem(540px);

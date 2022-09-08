@@ -1,0 +1,44 @@
+@use '../../../shared/Form/Input/Input.mixins' as Input;
+
+@import 'src/assets/styles/mixins/remify';
+@import 'src/assets/styles/mixins/typography';
+
+.root {
+  .body {
+    min-height: rem(250px);
+  }
+
+  .list {
+    margin: 0;
+    margin-top: rem(8px);
+    padding: 0;
+    list-style: none;
+
+    .item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0;
+      padding: rem(12px) 0;
+      border-bottom: 1px solid Input.$color-neutral-30;
+
+      .address {
+        @include body();
+
+        text-overflow: ellipsis;
+        overflow: hidden;
+        font-weight: 500;
+        color: Input.$color-neutral-50;
+      }
+
+      .removeButton {
+        background-color: Input.$color-neutral-25;
+      }
+    }
+  }
+
+  .addButton {
+    height: rem(Input.$height - 14);
+    margin-right: rem(8px);
+  }
+}

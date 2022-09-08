@@ -49,7 +49,7 @@ const Modal = (props) => {
 
 Modal.propTypes = {
   open: PropTypes.bool.isRequired,
-  size: PropTypes.oneOf(['md']),
+  size: PropTypes.oneOf(['sm', 'md']),
   padding: PropTypes.oneOf(['sm']),
   actions: PropTypes.arrayOf(
     PropTypes.shape({
@@ -59,8 +59,6 @@ Modal.propTypes = {
       primary: PropTypes.bool
     })
   ),
-  title: PropTypes.string,
-  alignment: PropTypes.oneOf(['left', 'center']),
   closable: PropTypes.bool,
   hasCloseButton: PropTypes.bool,
   children: PropTypes.node.isRequired,

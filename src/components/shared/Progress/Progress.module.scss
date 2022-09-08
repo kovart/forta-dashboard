@@ -1,0 +1,55 @@
+@import 'src/assets/styles/colors';
+@import 'src/assets/styles/mixins/typography';
+
+.root {
+  .text {
+    @include body();
+
+    display: flex;
+    color: $color-neutral-40;
+    margin-bottom: rem(12px);
+
+    .icon {
+      margin-right: rem(8px);
+      flex-shrink: 0;
+    }
+  }
+
+  .indicatorBar {
+    width: 100%;
+    height: rem(10px);
+    border-radius: rem(2px);
+    background-color: $color-neutral-20;
+  }
+
+  .progressBar {
+    height: 100%;
+    border-radius: rem(2px);
+    transition: 0.3s width ease;
+    overflow: hidden;
+    position: relative;
+
+    .shimmer {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      transform: translateX(-100%);
+      background-image: linear-gradient(
+        90deg,
+        rgba(#fff, 0) 0,
+        rgba(#fff, 0.3) 20%,
+        rgba(#fff, 0.5) 60%,
+        rgba(#fff, 0)
+      );
+      animation: shimmer 1.5s infinite ease;
+
+      @keyframes shimmer {
+        100% {
+          transform: translateX(100%);
+        }
+      }
+    }
+  }
+}

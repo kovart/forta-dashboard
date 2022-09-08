@@ -86,12 +86,12 @@ function Alert({
       >
         {alert.metadata && (
           <div className={styles.metadata}>
-            {JSON.stringify(alert.metadata, null, 4)}
+            {JSON.stringify(alert.metadata, null, 4).replace(/\\"/g, '"')}
           </div>
         )}
-        {alert.addresses?.length > 0 && (
+        {alert.addresses.size > 0 && (
           <ul className={styles.addresses}>
-            {alert.addresses.map((address) => {
+            {[...alert.addresses].map((address) => {
               const isChecked = checkedAddresses.includes(address);
               return (
                 <li key={address}>

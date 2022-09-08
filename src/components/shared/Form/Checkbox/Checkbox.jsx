@@ -52,6 +52,7 @@ Checkbox.propTypes = {
   invalid: PropTypes.bool,
   checked: PropTypes.bool,
   onChange: PropTypes.func,
+
   className: PropTypes.string
 };
 

@@ -67,7 +67,7 @@ const Input = forwardRef(function Input(
         <InputButton>
           <Button
             type="button"
-            variant="icon-md"
+            variant="icon-base"
             icon={shouldRevealPassword ? IconSymbols.EyeOff : IconSymbols.Eye}
             onClick={() => setShouldRevealPassword((v) => !v)}
             className={styles.button}
@@ -84,7 +84,7 @@ const Input = forwardRef(function Input(
         <InputButton>
           <Button
             type="button"
-            variant="icon-md"
+            variant="icon-base"
             icon={IconSymbols.Cross}
             onClick={() => props.onChange({ target: { name, value: '' } })}
             className={styles.button}

@@ -1,0 +1,41 @@
+@import 'src/assets/styles/colors';
+@import 'src/assets/styles/mixins/remify';
+@import 'src/assets/styles/mixins/typography';
+@import 'src/assets/styles/mixins/line-clamp';
+
+.root {
+  .id {
+    @include body();
+    @include line-clamp(1, 14px);
+
+    color: $color-neutral-40;
+  }
+
+  .name {
+    @include h5();
+    @include line-clamp(1, 14px);
+
+    color: $color-neutral-90;
+    margin-top: rem(4px);
+  }
+
+  .description {
+    @include body();
+    @include line-clamp(2, 14px);
+
+    margin-top: rem(8px);
+    color: $color-neutral-50;
+  }
+
+  .chains {
+    display: flex;
+    flex-wrap: wrap;
+    gap: rem(4px);
+    margin-top: rem(4px);
+
+    .chain {
+      border-radius: 50%;
+      height: rem(22px);
+    }
+  }
+}

@@ -3,7 +3,7 @@
 @import 'src/assets/styles/colors';
 
 @mixin hover {
-  background-color: color.adjust($color-neutral-90, $alpha: -0.8);
+  background-color: color.adjust($color-neutral-90, $alpha: -0.88);
 }
 
 @mixin checked {

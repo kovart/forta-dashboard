@@ -27,7 +27,7 @@ function UiKitFilterForm() {
 
   return (
     <UiKitSection title="Filter Form" direction="column">
-      <FilterForm values={values} editable={false} onSubmit={setValues} />
+      <FilterForm values={values} editable={false} onChange={setValues} />
     </UiKitSection>
   );
 }

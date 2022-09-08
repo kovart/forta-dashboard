@@ -25,6 +25,13 @@
   font-style: normal;
 }
 
+@mixin h5 {
+  font-size: rem(16px);
+  font-weight: 500;
+  line-height: 130%;
+  font-style: normal;
+}
+
 @mixin body {
   font-size: rem(14px);
   font-weight: 400;

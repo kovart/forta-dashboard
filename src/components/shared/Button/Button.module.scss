@@ -6,7 +6,8 @@
 @import 'src/assets/styles/mixins/transitions';
 @import 'src/assets/styles/mixins/remify';
 
-$padding: rem(9px) rem(10px);
+$padding: rem(10px);
+$height: rem(38px);
 
 .root {
   @include transition-medium();
@@ -57,6 +58,7 @@ $padding: rem(9px) rem(10px);
   padding: $padding;
   border-radius: rem(4px);
   outline: none !important;
+  height: rem($height);
 
   &:hover:not(:disabled) {
     box-shadow: 0 2px 20px color.adjust($color-accent-blue-2, $alpha: -0.4);
@@ -79,6 +81,7 @@ $padding: rem(9px) rem(10px);
   padding: $padding;
   border-radius: rem(4px);
   outline: none !important;
+  height: rem($height);
 
   &:hover:not(:disabled) {
     box-shadow: 0 0px 0 1px $color-accent-blue-2;
@@ -98,7 +101,7 @@ $padding: rem(9px) rem(10px);
   border: 1px solid $color-neutral-40;
   border-radius: rem(4px);
   outline: none !important;
-  box-sizing: content-box;
+  height: rem($height);
 
   &:hover:not(:disabled) {
     color: $color-neutral-90;
@@ -146,8 +149,8 @@ $padding: rem(9px) rem(10px);
 .icon-md {
   @extend .secondary;
 
-  width: rem(36px);
-  height: rem(36px);
+  width: rem(38px);
+  height: rem(38px);
   padding: 0;
   border-radius: rem(4px);
   color: $color-neutral-90;

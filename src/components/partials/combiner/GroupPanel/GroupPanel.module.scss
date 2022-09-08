@@ -1,0 +1,55 @@
+@import 'src/assets/styles/mixins/remify';
+@import 'src/assets/styles/mixins/typography';
+
+.root {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: rem(20px) rem(24px);
+  margin-bottom: rem(16px);
+  border: 1px solid $color-neutral-30;
+  border-radius: rem(8px);
+  gap: rem(16px);
+  max-width: rem(720px);
+  width: 100%;
+
+  .item {
+    display: flex;
+    align-items: center;
+
+    .label {
+      font-size: rem(16px);
+      font-weight: 400;
+      color: $color-neutral-50;
+      margin-right: rem(10px);
+    }
+
+    .value {
+      @include h3();
+
+      color: $color-neutral-70;
+    }
+
+    .actions {
+      display: flex;
+      gap: rem(8px);
+      margin-left: rem(24px);
+    }
+
+    &.group {
+      margin-right: auto;
+    }
+
+    &.stagesPassed {
+      .value {
+        color: $color-accent-yellow;
+      }
+    }
+  }
+
+  .sep {
+    height: rem(32px);
+    width: 1px;
+    background-color: $color-neutral-30;
+  }
+}

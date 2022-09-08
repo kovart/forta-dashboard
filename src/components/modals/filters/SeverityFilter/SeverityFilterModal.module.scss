@@ -1,0 +1,47 @@
+@import 'src/assets/styles/colors';
+@import 'src/assets/styles/mixins/remify';
+@import 'src/assets/styles/mixins/typography';
+
+.root {
+  .body {
+    padding-top: rem(8px);
+    padding-bottom: rem(8px);
+  }
+
+  .item {
+    @include body();
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: rem(10px) 0;
+    border-bottom: 1px solid $color-neutral-30;
+    width: 100%;
+  }
+
+  .severity {
+    font-weight: 500;
+    padding: rem(6px) rem(12px);
+    border-radius: rem(40px);
+    color: $color-neutral-99;
+
+    &.unknown {
+      background-color: $color-neutral-25;
+    }
+    &.low {
+      background-color: $color-accent-green;
+    }
+    &.info {
+      background-color: $color-neutral-30;
+    }
+    &.medium {
+      background-color: #dc8017;
+    }
+    &.high {
+      background-color: #b91c1c;
+    }
+    &.critical {
+      background-color: $color-accent-pink;
+    }
+  }
+}

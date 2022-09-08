@@ -22,7 +22,7 @@ export const AlertType = PropTypes.shape({
   severity: PropTypes.oneOf(Object.values(SEVERITY)),
   metadata: PropTypes.object,
   description: PropTypes.string,
-  addresses: PropTypes.arrayOf(PropTypes.string),
+  addresses: PropTypes.object, // Set
   projects: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
@@ -44,19 +44,10 @@ export const FilterType = PropTypes.shape({
   description: PropTypes.string,
   addresses: PropTypes.arrayOf(PropTypes.string),
   projectIds: PropTypes.arrayOf(PropTypes.string),
-  alertIds: PropTypes.shape({
-    include: PropTypes.arrayOf(PropTypes.string),
-    exclude: PropTypes.arrayOf(PropTypes.string)
-  }),
-  botIds: PropTypes.shape({
-    include: PropTypes.arrayOf(PropTypes.string),
-    exclude: PropTypes.arrayOf(PropTypes.string)
-  }),
+  alertIds: PropTypes.arrayOf(PropTypes.string),
+  botIds: PropTypes.arrayOf(PropTypes.string),
   severities: PropTypes.arrayOf(PropTypes.oneOf(Object.values(SEVERITY))),
-  stagePreset: PropTypes.shape({
-    name: PropTypes.string,
-    stages: PropTypes.arrayOf(StageType)
-  })
+  stageKit: PropTypes.string
 });
 
 export const FilterLockType = PropTypes.shape({
@@ -66,5 +57,5 @@ export const FilterLockType = PropTypes.shape({
 export const FilterPermanentElementsType = PropTypes.shape({
   chain: PropTypes.bool,
   period: PropTypes.bool,
-  stagePreset: PropTypes.bool
+  stageKit: PropTypes.bool
 });

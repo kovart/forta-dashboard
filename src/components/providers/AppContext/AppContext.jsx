@@ -4,7 +4,11 @@ import { ethers } from 'ethers';
 import LRU from 'lru-cache';
 
 import { CHAIN_RPC_URL } from '@constants/common';
-import { FortaDeFiKit, FortaGovernanceKit } from '@constants/stages';
+import {
+  FortaDeFiKit,
+  FortaGeneralKit,
+  FortaGovernanceKit
+} from '@constants/stages';
 
 export const AppContext = React.createContext({
   getProvider: () => null,
@@ -55,8 +59,8 @@ function AppContextProvider({ children }) {
       getAddressMeta: (address, chainId) =>
         addressesCache.fetch(address + '.' + chainId),
       data: {
-        stagePresets: {
-          forta: [FortaDeFiKit, FortaGovernanceKit],
+        stageKits: {
+          forta: [FortaGeneralKit, FortaDeFiKit, FortaGovernanceKit],
           // not implemented yet
           user: []
         }
