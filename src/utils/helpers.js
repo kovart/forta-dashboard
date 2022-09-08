@@ -1,5 +1,7 @@
 import mergeWith from 'lodash/mergeWith';
 import classNames from 'classnames';
+import { toast } from 'react-toastify';
+import copy from 'copy-to-clipboard';
 
 export function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -51,4 +53,9 @@ export function simplifyAddress(value) {
   value = value.replace('0x', '');
 
   return '0x' + value.slice(0, 4) + '…' + value.slice(-6);
+}
+
+export function copyToClipboard(text) {
+  copy(text);
+  toast('Copied', { type: 'success' });
 }

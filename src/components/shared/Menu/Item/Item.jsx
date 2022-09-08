@@ -10,12 +10,28 @@ import Icon from '@components/shared/Icon/Icon';
 
 function MenuItem({
   icon,
+  startIcon,
+  endIcon,
+  href,
   selected = false,
   children,
   onClick = () => {},
   className
 }) {
   const { shouldCloseOnClick, close } = useContext(MenuContext);
+
+  let Element = href ? 'a' : 'button';
+  let props = {};
+
+  if (href) {
+    props.href = href;
+    props.target = '_blank';
+    props.rel = 'noreferrer noopener';
+  }
+
+  if (icon && !startIcon && !endIcon) {
+    startIcon = icon;
+  }
 
   function handleClick() {
     onClick();
@@ -25,20 +41,23 @@ function MenuItem({
   }
 
   return (
-    <div
-      role="button"
-      tabIndex={0}
+    <Element
       className={cn(styles.root, className, { [styles.selected]: selected })}
       onClick={handleClick}
+      {...props}
     >
-      {icon && <Icon symbol={icon} className={styles.icon} />}
-      {children}
-    </div>
+      {startIcon && <Icon symbol={startIcon} className={styles.icon} />}
+      <span className={styles.content}>{children}</span>
+      {endIcon && <Icon symbol={endIcon} className={styles.icon} />}
+    </Element>
   );
 }
 
 MenuItem.propTypes = {
   icon: PropTypes.string,
+  startIcon: PropTypes.string,
+  endIcon: PropTypes.string,
+  href: PropTypes.string,
   selected: PropTypes.bool,
   children: PropTypes.any,
   className: PropTypes.string,

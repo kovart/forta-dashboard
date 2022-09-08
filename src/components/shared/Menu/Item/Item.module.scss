@@ -11,6 +11,9 @@
   gap: rem(12px);
   width: 100%;
   color: $color-neutral-60;
+  border: 0;
+  background-color: transparent;
+  text-decoration: none;
 
   &:disabled {
     color: $color-neutral-40;
@@ -30,5 +33,13 @@
     &.selected {
       background-color: $color-accent-blue-1;
     }
+  }
+
+  .icon {
+    flex-shrink: 0;
+  }
+
+  .content {
+    margin-right: auto;
   }
 }

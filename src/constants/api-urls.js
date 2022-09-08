@@ -1,11 +1,5 @@
 const apiBaseUrl = process.env.API_URL || '';
 
-const apiUrls = {
-  external: {
-    etherscan: {
-      address: (addr) => `https://etherscan.io/address/${addr}`
-    }
-  }
-};
+const apiUrls = {};
 
 export { apiUrls, apiBaseUrl };

@@ -37,8 +37,18 @@ import Star from '@assets/icons/star.svg';
 import Terminal from '@assets/icons/terminal.svg';
 import Share from '@assets/icons/share.svg';
 import Share2 from '@assets/icons/share-2.svg';
+import AlertCircle from '@assets/icons/alert-circle.svg';
+import ArrowUpRight from '@assets/icons/arrow-up-right.svg';
+import Clipboard from '@assets/icons/clipboard.svg';
+import Twitter from '@assets/icons/twitter.svg';
+import Crosshair from '@assets/icons/crosshair.svg';
 
 export const IconSymbols = {
+  AlertCircle,
+  ArrowUpRight,
+  Clipboard,
+  Twitter,
+  Crosshair,
   ArrowRight,
   ArrowLeft,
   AtSign,

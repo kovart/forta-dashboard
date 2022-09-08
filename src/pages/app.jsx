@@ -9,6 +9,7 @@ import { setAppElement } from 'react-modal';
 import { ToastContainer } from 'react-toastify';
 import 'focus-visible';
 import 'normalize.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 import AppContextProvider from '@components/providers/AppContext/AppContext';
 import AppRouter from '@pages/router';
@@ -32,7 +33,7 @@ const App = () => (
   <AppContextProvider>
     <QueryClientProvider client={queryClient}>
       <AppRouter />
-      <ToastContainer position="bottom-right" />{' '}
+      <ToastContainer theme="dark" position="top-right" />
     </QueryClientProvider>
   </AppContextProvider>
 );

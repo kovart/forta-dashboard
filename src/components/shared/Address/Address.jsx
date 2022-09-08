@@ -8,7 +8,11 @@ import Button from '@components/shared/Button/Button';
 import Icon, { IconSymbols } from '@components/shared/Icon/Icon';
 import Spinner from '@components/shared/Spinner/Spinner';
 import Fade from '@components/shared/Transitions/Fade/Fade';
+import Menu from '@components/shared/Menu/Menu';
 import { AppContext } from '@components/providers/AppContext/AppContext';
+import { POPOVER_PLACEMENT } from '@components/shared/Popover/Popover.utils';
+import { copyToClipboard } from '@utils/helpers';
+import routes from '@constants/routes';
 
 const getIndicatorColor = (transactionCount) => {
   if (transactionCount > 50) {
@@ -75,12 +79,45 @@ function Address({
           </Fade>
         </span>
       </div>
-      <Button
-        type="button"
-        variant="icon-md"
-        icon={{ symbol: IconSymbols.MoreVertical, size: 18 }}
-        className={styles.moreButton}
-      />
+      <Menu
+        placement={POPOVER_PLACEMENT.bottomEnd}
+        preferredWidth={180}
+        renderElement={({ ref, toggle }) => (
+          <Button
+            ref={ref}
+            type="button"
+            variant="icon-md"
+            icon={{ symbol: IconSymbols.MoreVertical, size: 18 }}
+            className={styles.moreButton}
+            onClick={toggle}
+          />
+        )}
+      >
+        <Menu.Item
+          startIcon={IconSymbols.ExternalLink}
+          href={routes.external.explorer[chainId](address)}
+        >
+          Explorer
+        </Menu.Item>
+        <Menu.Item
+          startIcon={IconSymbols.AlertCircle}
+          href={routes.external.chainabuse(address)}
+        >
+          Chainabuse
+        </Menu.Item>
+        <Menu.Item
+          startIcon={IconSymbols.Twitter}
+          href={routes.external.twitter(address)}
+        >
+          Twitter
+        </Menu.Item>
+        <Menu.Item
+          startIcon={IconSymbols.Clipboard}
+          onClick={() => copyToClipboard(address)}
+        >
+          Copy address
+        </Menu.Item>
+      </Menu>
     </div>
   );
 }
