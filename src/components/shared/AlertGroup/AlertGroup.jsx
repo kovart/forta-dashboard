@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
+import useInfiniteScroll from 'react-infinite-scroll-hook';
 
 import styles from './AlertGroup.module.scss';
 
@@ -35,12 +36,20 @@ function AlertGroup({
   loading = false,
   loadingMore = false,
   canLoadMore = false,
+  infiniteScroll = true,
   onLoadMore,
   onFilterChange,
   className,
   ...props
 }) {
   const stageKit = useStageKit(filter.stageKit);
+
+  const [sentryRef] = useInfiniteScroll({
+    loading: loading || loadingMore,
+    hasNextPage: canLoadMore,
+    onLoadMore: onLoadMore,
+    disabled: !infiniteScroll
+  });
 
   function handleChange(patchObj) {
     onFilterChange({ ...filter, ...patchObj });
@@ -134,6 +143,7 @@ function AlertGroup({
         {canLoadMore && (
           <div className={styles.footer}>
             <Button
+              ref={sentryRef}
               variant="outline"
               onClick={onLoadMore}
               className={styles.loadMoreButton}
@@ -187,6 +197,7 @@ AlertGroup.propTypes = {
     relation: PropTypes.string
   }),
   loadingMore: PropTypes.bool,
+  infiniteScroll: PropTypes.bool,
   canLoadMore: PropTypes.bool,
   onLoadMore: PropTypes.func,
   onFilterChange: PropTypes.func,
