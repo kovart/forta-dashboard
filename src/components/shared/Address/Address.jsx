@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
+import pluralize from 'pluralize';
 
 import styles from './Address.module.scss';
 
@@ -66,17 +67,20 @@ function Address({
           {!meta && <Spinner size="xs" />}
           <Fade visible={!!meta}>
             {isContract ? (
-              <div className={styles.contract} title="Smart contract">
-                <Icon symbol={IconSymbols.Code} size={15} />
-              </div>
+              <Tooltip title="Smart contract">
+                <div className={styles.contract}>
+                  <Icon symbol={IconSymbols.Code} size={15} />
+                </div>
+              </Tooltip>
             ) : (
-              <span
-                className={styles.transactionCount}
-                style={{ background: getIndicatorColor(transactionCount) }}
-                title={transactionCount}
-              >
-                {transactionCount > 99 ? '99+' : transactionCount}
-              </span>
+              <Tooltip title={pluralize('transaction', transactionCount, true)}>
+                <span
+                  className={styles.transactionCount}
+                  style={{ background: getIndicatorColor(transactionCount) }}
+                >
+                  {transactionCount > 99 ? '99+' : transactionCount}
+                </span>
+              </Tooltip>
             )}
           </Fade>
         </span>

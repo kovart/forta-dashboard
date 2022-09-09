@@ -25,7 +25,7 @@ function Tooltip({
 }
 
 Tooltip.propTypes = {
-  title: PropTypes.string,
+  title: PropTypes.string.isRequired,
   position: PropTypes.string,
   trigger: PropTypes.string,
   hideOnClick: PropTypes.bool,
