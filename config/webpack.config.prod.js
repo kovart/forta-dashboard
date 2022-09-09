@@ -66,7 +66,7 @@ module.exports = {
       patterns: [
         {
           from: 'public',
-          to: '[name].[ext]',
+          to: '[name][ext]',
           filter: (resourcePath) => {
             return !resourcePath.includes('index.html');
           }
