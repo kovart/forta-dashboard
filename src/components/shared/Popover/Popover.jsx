@@ -18,6 +18,7 @@ function Popover({
   open,
   anchorElRef,
   containerElRef,
+  strategy: strategyProp = 'absolute',
   children,
   placement = POPOVER_PLACEMENT.bottomStart,
   preferredWidth,
@@ -27,7 +28,7 @@ function Popover({
 }) {
   const contentRef = useRef();
   const { x, y, reference, floating, strategy } = useFloating({
-    strategy: 'fixed',
+    strategy: strategyProp,
     whileElementsMounted: autoUpdate,
     placement: placement,
     middleware: [
@@ -79,6 +80,7 @@ function Popover({
 Popover.propTypes = {
   open: PropTypes.bool,
   anchorElRef: PropTypes.any,
+  strategy: PropTypes.oneOf(['fixed', 'absolute']),
   containerElRef: PropTypes.object,
   placement: PropTypes.oneOf(Object.values(POPOVER_PLACEMENT)),
   preferredWidth: PropTypes.number,

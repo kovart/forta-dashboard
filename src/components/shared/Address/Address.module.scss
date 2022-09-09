@@ -2,17 +2,28 @@
 @import 'src/assets/styles/mixins/transitions';
 
 .root {
-  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: rem(6px);
+  border: 1px solid $color-neutral-30;
+
+  &.checked {
+    background-color: rgba(83, 162, 255, 0.13);
+    border-color: $color-accent-blue-1;
+
+    &:hover {
+      background-color: rgba(83, 162, 255, 0.13);
+    }
+  }
 }
 
 .body {
   display: flex;
   align-items: center;
-  padding: rem(7px) rem(12px);
-  padding-right: rem(32px);
-  border-radius: rem(6px);
+  padding: rem(7px) rem(4px) rem(7px) rem(12px);
   color: $color-neutral-70;
-  border: 1px solid $color-neutral-30;
+  background: transparent;
+  border: 0;
 
   &:not(.disabled) {
     cursor: pointer;
@@ -24,15 +35,6 @@
 
     &:active {
       background-color: rgba(255, 255, 255, 0.1);
-    }
-  }
-
-  &.checked {
-    background-color: rgba(83, 162, 255, 0.13);
-    border-color: $color-accent-blue-1;
-
-    &:hover {
-      background-color: rgba(83, 162, 255, 0.13);
     }
   }
 }
@@ -65,7 +67,7 @@
   margin-left: rem(8px);
 
   .transactionCount {
-    padding: rem(1px) rem(6px);
+    padding: rem(2px) rem(6px);
     font-weight: 500;
     font-size: rem(13px);
     border-radius: rem(18px);
@@ -85,13 +87,14 @@
   }
 }
 
+.actions {
+  margin-right: rem(2px);
+}
+
 .moreButton {
-  position: absolute;
-  top: 50%;
-  right: rem(4px);
-  transform: translateY(-50%);
   width: rem(28px);
-  height: rem(28px);
+  height: rem(32px);
+  border-radius: 0;
 
   &:not(:hover) {
     background-color: transparent;

@@ -9,6 +9,7 @@ import Icon, { IconSymbols } from '@components/shared/Icon/Icon';
 import Spinner from '@components/shared/Spinner/Spinner';
 import Fade from '@components/shared/Transitions/Fade/Fade';
 import Menu from '@components/shared/Menu/Menu';
+import Tooltip from '@components/shared/Tooltip/Tooltip';
 import { AppContext } from '@components/providers/AppContext/AppContext';
 import { POPOVER_PLACEMENT } from '@components/shared/Popover/Popover.utils';
 import { copyToClipboard } from '@utils/helpers';
@@ -44,13 +45,14 @@ function Address({
   }, []);
 
   return (
-    <div className={cn(styles.root, className)}>
-      <div
-        tabIndex={!disabled ? 0 : undefined}
-        role={!disabled ? 'button' : undefined}
+    <div
+      className={cn(styles.root, className, {
+        [styles.checked]: checked
+      })}
+    >
+      <button
         onClick={() => onCheckedChange(!checked)}
         className={cn(styles.body, {
-          [styles.checked]: checked,
           [styles.disabled]: disabled
         })}
       >
@@ -78,47 +80,52 @@ function Address({
             )}
           </Fade>
         </span>
+      </button>
+      <div className={styles.actions}>
+        <Menu
+          strategy="fixed"
+          preferredWidth={180}
+          placement={POPOVER_PLACEMENT.bottomEnd}
+          renderElement={({ ref, toggle }) => (
+            <Tooltip title="View options">
+              <Button
+                ref={ref}
+                type="button"
+                variant="icon-md"
+                icon={{ symbol: IconSymbols.MoreVertical, size: 18 }}
+                className={styles.moreButton}
+                onClick={toggle}
+              />
+            </Tooltip>
+          )}
+        >
+          <Menu.Item
+            startIcon={IconSymbols.ExternalLink}
+            href={routes.external.explorer[chainId].address(address)}
+          >
+            Explorer
+          </Menu.Item>
+          <Menu.Item
+            startIcon={IconSymbols.AlertCircle}
+            href={routes.external.chainabuse(address)}
+          >
+            Chainabuse
+          </Menu.Item>
+          <Menu.Item
+            startIcon={IconSymbols.Twitter}
+            href={routes.external.twitter(address)}
+          >
+            Twitter
+          </Menu.Item>
+          <Menu.Separator />
+          <Menu.Item
+            startIcon={IconSymbols.Clipboard}
+            onClick={() => copyToClipboard(address)}
+          >
+            Copy address
+          </Menu.Item>
+        </Menu>
       </div>
-      <Menu
-        placement={POPOVER_PLACEMENT.bottomEnd}
-        preferredWidth={180}
-        renderElement={({ ref, toggle }) => (
-          <Button
-            ref={ref}
-            type="button"
-            variant="icon-md"
-            icon={{ symbol: IconSymbols.MoreVertical, size: 18 }}
-            className={styles.moreButton}
-            onClick={toggle}
-          />
-        )}
-      >
-        <Menu.Item
-          startIcon={IconSymbols.ExternalLink}
-          href={routes.external.explorer[chainId](address)}
-        >
-          Explorer
-        </Menu.Item>
-        <Menu.Item
-          startIcon={IconSymbols.AlertCircle}
-          href={routes.external.chainabuse(address)}
-        >
-          Chainabuse
-        </Menu.Item>
-        <Menu.Item
-          startIcon={IconSymbols.Twitter}
-          href={routes.external.twitter(address)}
-        >
-          Twitter
-        </Menu.Item>
-        <Menu.Separator />
-        <Menu.Item
-          startIcon={IconSymbols.Clipboard}
-          onClick={() => copyToClipboard(address)}
-        >
-          Copy address
-        </Menu.Item>
-      </Menu>
     </div>
   );
 }

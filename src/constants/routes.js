@@ -13,14 +13,34 @@ const routes = {
       bot: (id) => `https://explorer.forta.network/bot/${id}`
     },
     explorer: {
-      [CHAIN.mainnet]: (addr) => `https://etherscan.io/address/${addr}`,
-      [CHAIN.bsc]: (addr) => `https://bscscan.com/address/${addr}`,
-      [CHAIN.polygon]: (addr) => `https://polygonscan.com/address/${addr}`,
-      [CHAIN.fantom]: (addr) => `https://ftmscan.com/address/${addr}`,
-      [CHAIN.optimism]: (addr) =>
-        `https://optimistic.etherscan.io/address/${addr}`,
-      [CHAIN.avalanche]: (addr) => `https://snowtrace.io/address/${addr}`,
-      [CHAIN.arbitrium]: (addr) => `https://arbiscan.io/address/${addr}`
+      [CHAIN.mainnet]: {
+        address: (addr) => `https://etherscan.io/address/${addr}`,
+        tx: (hash) => `https://etherscan.io/tx/${hash}`
+      },
+      [CHAIN.bsc]: {
+        address: (addr) => `https://bscscan.com/address/${addr}`,
+        tx: (hash) => `https://bscscan.com/tx/${hash}`
+      },
+      [CHAIN.polygon]: {
+        address: (addr) => `https://polygonscan.com/address/${addr}`,
+        tx: (hash) => `https://polygonscan.com/tx/${hash}`
+      },
+      [CHAIN.fantom]: {
+        address: (addr) => `https://ftmscan.com/address/${addr}`,
+        tx: (hash) => `https://ftmscan.com/tx/${hash}`
+      },
+      [CHAIN.optimism]: {
+        address: (addr) => `https://optimistic.etherscan.io/address/${addr}`,
+        tx: (hash) => `https://optimistic.etherscan.io/tx/${hash}`
+      },
+      [CHAIN.avalanche]: {
+        address: (addr) => `https://snowtrace.io/address/${addr}`,
+        tx: (hash) => `https://snowtrace.io/tx/${hash}`
+      },
+      [CHAIN.arbitrium]: {
+        address: (addr) => `https://arbiscan.io/address/${addr}`,
+        tx: (hash) => `https://arbiscan.io/tx/${hash}`
+      }
     },
     chainabuse: (addr) => `https://www.chainabuse.com/address/${addr}`,
     twitter: (addr) => `https://twitter.com/search?q=${addr}`

@@ -17,6 +17,7 @@ function Menu({
   placement,
   preferredWidth,
   maxHeight,
+  strategy,
   shouldCloseOnClick = true,
   renderElement,
   className
@@ -40,6 +41,7 @@ function Menu({
         })}
         <Popover
           open={isOpen}
+          strategy={strategy}
           anchorElRef={elementRef}
           containerElRef={containerRef}
           className={cn(styles.menu, className)}
@@ -65,6 +67,7 @@ Menu.propTypes = {
   renderElement: PropTypes.func.isRequired,
   placement: PropTypes.oneOf(Object.values(POPOVER_PLACEMENT)),
   shouldCloseOnClick: PropTypes.bool,
+  strategy: PropTypes.oneOf(['fixed', 'absolute']),
   preferredWidth: PropTypes.number,
   maxHeight: PropTypes.number,
   children: PropTypes.any,

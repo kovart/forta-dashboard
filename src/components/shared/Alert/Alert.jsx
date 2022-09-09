@@ -11,6 +11,7 @@ import Stage from '@components/shared/Stage/Stage';
 import Address from '@components/shared/Address/Address';
 import Menu from '@components/shared/Menu/Menu';
 import Chip from '@components/shared/Chip/Chip';
+import Tooltip from '@components/shared/Tooltip/Tooltip';
 import { IconSymbols } from '@components/shared/Icon/Icon';
 import {
   AlertType,
@@ -75,31 +76,41 @@ function Alert({
             preferredWidth={200}
             placement={POPOVER_PLACEMENT.bottomEnd}
             renderElement={({ ref, toggle }) => (
-              <Button
-                ref={ref}
-                variant="icon-md"
-                icon={IconSymbols.MoreVertical}
-                className={cn(styles.moreButton, {
-                  [styles.expanded]: isExpanded
-                })}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggle();
-                }}
-              />
+              <Tooltip title="View options">
+                <Button
+                  ref={ref}
+                  variant="icon-md"
+                  icon={IconSymbols.MoreVertical}
+                  className={cn(styles.moreButton, {
+                    [styles.expanded]: isExpanded
+                  })}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggle();
+                  }}
+                />
+              </Tooltip>
             )}
           >
             <Menu.Item
-              startIcon={IconSymbols.Eye}
+              startIcon={IconSymbols.CPU}
+              href={routes.external.forta.bot(alert.source.bot.id)}
+            >
+              View bot page
+            </Menu.Item>
+            <Menu.Item
+              startIcon={IconSymbols.AlertCircle}
               href={routes.external.forta.alert(alert.hash)}
             >
-              Alert details
+              View alert details
             </Menu.Item>
             <Menu.Item
               startIcon={IconSymbols.Clipboard}
-              href={routes.external.forta.bot(alert.source.bot.id)}
+              href={routes.external.explorer[alert.source.block.chainId]?.tx(
+                alert.source.transactionHash
+              )}
             >
-              Bot report page
+              View tx details
             </Menu.Item>
             <Menu.Separator />
             <Menu.Item
