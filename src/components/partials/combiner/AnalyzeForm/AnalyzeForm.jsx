@@ -71,7 +71,7 @@ AnalyzeForm.propTypes = {
   values: PropTypes.shape({
     startDate: PropTypes.string,
     endDate: PropTypes.string,
-    chainId: PropTypes.number,
+    chainId: PropTypes.string,
     stageKit: PropTypes.string
   }),
   submitting: PropTypes.bool,
