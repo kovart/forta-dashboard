@@ -42,6 +42,7 @@ import ArrowUpRight from '@assets/icons/arrow-up-right.svg';
 import Clipboard from '@assets/icons/clipboard.svg';
 import Twitter from '@assets/icons/twitter.svg';
 import Crosshair from '@assets/icons/crosshair.svg';
+import Link from '@assets/icons/link.svg';
 
 export const IconSymbols = {
   AlertCircle,
@@ -87,7 +88,8 @@ export const IconSymbols = {
   MoreVertical,
   Code,
   Share,
-  Share2
+  Share2,
+  Link
 };
 
 const prepare = (symbol) => symbol?.url.split('#')[1];

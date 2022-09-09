@@ -2,6 +2,7 @@ import mergeWith from 'lodash/mergeWith';
 import classNames from 'classnames';
 import { toast } from 'react-toastify';
 import copy from 'copy-to-clipboard';
+import queryString from 'query-string';
 
 export function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -55,9 +56,16 @@ export function simplifyAddress(value) {
   return '0x' + value.slice(0, 4) + '…' + value.slice(-6);
 }
 
-export function copyToClipboard(text) {
+export function copyToClipboard(text, { showToast = true } = {}) {
   copy(text);
-  toast('Copied', { type: 'success' });
+  if (showToast) {
+    toast('Copied', { type: 'success' });
+  }
 }
 
-export function stringifyQuery() {}
+export function generateLink(url, query) {
+  if (url.indexOf('http') === -1) {
+    url = new URL(url, window.location.origin).href;
+  }
+  return queryString.stringifyUrl({ url, query }, { arrayFormat: 'bracket' });
+}

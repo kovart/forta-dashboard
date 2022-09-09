@@ -7,7 +7,8 @@ import AlertGroup from '@components/shared/AlertGroup/AlertGroup';
 import useExplorerQuery from '@hooks/useExplorerQuery';
 import { CHAIN, SYSTEM_DATE_FORMAT } from '@constants/common';
 import { IconSymbols } from '@components/shared/Icon/Icon';
-import { scrollToElement } from '@utils/helpers';
+import { copyToClipboard, generateLink, scrollToElement } from '@utils/helpers';
+import routes from '@constants/routes';
 
 function ExplorerPage() {
   const [filter, setFilter] = useUrlState(
@@ -48,9 +49,11 @@ function ExplorerPage() {
         onClick: refetch
       },
       {
-        title: 'Share',
-        icon: IconSymbols.Share2,
-        onClick: () => alert('Not implemented yet')
+        title: 'Copy link',
+        icon: IconSymbols.Link,
+        onClick: () => {
+          copyToClipboard(generateLink(routes.index, filter));
+        }
       },
       {
         title: 'Save',

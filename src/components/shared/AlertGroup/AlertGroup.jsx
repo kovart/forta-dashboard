@@ -18,6 +18,7 @@ import {
 } from '@constants/types';
 import UfoImage from '@assets/images/ufo.svg';
 import useStageKit from '@hooks/useStageKit';
+import Tooltip from '@components/shared/Tooltip/Tooltip';
 
 function AlertGroup({
   title,
@@ -58,14 +59,18 @@ function AlertGroup({
           <ul className={styles.actions}>
             {actions.map((action) => (
               <li key={action.title}>
-                <Button
-                  variant="icon-md"
-                  icon={action.icon}
+                <Tooltip
                   title={action.title}
-                  onClick={action.onClick}
-                  disabled={action.disabled}
-                  loading={action.loading}
-                />
+                  hideOnClick={action.titleHideOnClick}
+                >
+                  <Button
+                    variant="icon-md"
+                    icon={action.icon}
+                    onClick={action.onClick}
+                    disabled={action.disabled}
+                    loading={action.loading}
+                  />
+                </Tooltip>
               </li>
             ))}
           </ul>

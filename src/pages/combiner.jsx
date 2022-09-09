@@ -20,10 +20,11 @@ import logger from '@utils/logger';
 import forta, { FortaExplorer } from '@utils/forta';
 import { AppContext } from '@components/providers/AppContext/AppContext';
 import db from '@utils/db';
-import { delay } from '@utils/helpers';
+import { copyToClipboard, delay, generateLink } from '@utils/helpers';
 import { CHAIN, SYSTEM_DATE_FORMAT } from '@constants/common';
 import { FortaGeneralKit } from '@constants/stages';
 import { IconSymbols } from '@components/shared/Icon/Icon.utils';
+import routes from '@constants/routes';
 
 const TRANSACTION_THRESHOLD = 75;
 
@@ -305,9 +306,11 @@ function CombinerPage() {
         onClick: refetch
       },
       {
-        title: 'Share',
-        icon: IconSymbols.Share2,
-        onClick: () => alert('Not implemented yet')
+        title: 'Copy link',
+        icon: IconSymbols.Link,
+        onClick: () => {
+          copyToClipboard(generateLink(routes.index, groupFilter));
+        }
       },
       {
         title: 'Save',
