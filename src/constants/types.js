@@ -41,7 +41,6 @@ export const FilterType = PropTypes.shape({
   chainId: PropTypes.number,
   startDate: PropTypes.string,
   endDate: PropTypes.string,
-  description: PropTypes.string,
   addresses: PropTypes.arrayOf(PropTypes.string),
   projectIds: PropTypes.arrayOf(PropTypes.string),
   alertIds: PropTypes.arrayOf(PropTypes.string),

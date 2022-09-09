@@ -111,6 +111,7 @@ function Address({
         >
           Twitter
         </Menu.Item>
+        <Menu.Separator />
         <Menu.Item
           startIcon={IconSymbols.Clipboard}
           onClick={() => copyToClipboard(address)}

@@ -35,7 +35,9 @@ function MenuItem({
     startIcon = icon;
   }
 
-  function handleClick() {
+  function handleClick(e) {
+    e.stopPropagation();
+
     onClick();
     if (shouldCloseOnClick) {
       close();

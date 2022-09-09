@@ -8,6 +8,10 @@ const routes = {
   uiKit: '/ui-kit',
   pageNotFound: '/404',
   external: {
+    forta: {
+      alert: (id) => `https://explorer.forta.network/alert/${id}`,
+      bot: (id) => `https://explorer.forta.network/bot/${id}`
+    },
     explorer: {
       [CHAIN.mainnet]: (addr) => `https://etherscan.io/address/${addr}`,
       [CHAIN.bsc]: (addr) => `https://bscscan.com/address/${addr}`,

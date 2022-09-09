@@ -26,7 +26,7 @@ function AlertGroup({
   alerts = [],
   totalAlerts = { value: alerts.length },
   actions = [],
-  filter,
+  filter = {},
   filterLocked = {},
   filterVisible = false,
   filterEditable = true,
@@ -106,17 +106,9 @@ function AlertGroup({
                   <Alert
                     alert={alert}
                     stage={stage}
-                    checkedAddresses={filter.addresses}
-                    checkedProjects={filter.projects}
-                    lockedAddresses={filterLocked.addresses}
-                    onCheckedProjectsChange={
-                      onFilterChange &&
-                      ((projects) => handleChange({ projects }))
-                    }
-                    onCheckedAddressesChange={
-                      onFilterChange &&
-                      ((addresses) => handleChange({ addresses }))
-                    }
+                    filter={filter}
+                    filterLocked={filterLocked}
+                    onFilterChange={(patchObj) => handleChange(patchObj)}
                   />
                 </li>
               );

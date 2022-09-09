@@ -9,19 +9,25 @@ import styles from './Alert.module.scss';
 import Button from '@components/shared/Button/Button';
 import Stage from '@components/shared/Stage/Stage';
 import Address from '@components/shared/Address/Address';
-import { IconSymbols } from '@components/shared/Icon/Icon';
-import { AlertType, StageType } from '@constants/types';
+import Menu from '@components/shared/Menu/Menu';
 import Chip from '@components/shared/Chip/Chip';
+import { IconSymbols } from '@components/shared/Icon/Icon';
+import {
+  AlertType,
+  FilterLockType,
+  FilterType,
+  StageType
+} from '@constants/types';
 import { CSS_COLOR } from '@utils/css';
+import { POPOVER_PLACEMENT } from '@components/shared/Popover/Popover.utils';
+import routes from '@constants/routes';
 
 function Alert({
   alert,
   stage,
-  lockedAddresses = [],
-  checkedAddresses = [],
-  checkedProjects = [],
-  onCheckedAddressesChange,
-  onCheckedProjectsChange,
+  filter,
+  filterLocked = {},
+  onFilterChange,
   className
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -46,11 +52,6 @@ function Alert({
     });
   }, []);
 
-  function handleMoreClick(e) {
-    e.stopPropagation();
-    alert('Not implemented yet');
-  }
-
   return (
     <div className={cn(styles.root, className)}>
       <div
@@ -70,14 +71,55 @@ function Alert({
           <div className={styles.date} title={alert.createdAt}>
             {formattedDate}
           </div>
-          <Button
-            variant="icon-md"
-            icon={IconSymbols.MoreVertical}
-            className={cn(styles.moreButton, {
-              [styles.expanded]: isExpanded
-            })}
-            onClick={handleMoreClick}
-          />
+          <Menu
+            preferredWidth={200}
+            placement={POPOVER_PLACEMENT.bottomEnd}
+            renderElement={({ ref, toggle }) => (
+              <Button
+                ref={ref}
+                variant="icon-md"
+                icon={IconSymbols.MoreVertical}
+                className={cn(styles.moreButton, {
+                  [styles.expanded]: isExpanded
+                })}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggle();
+                }}
+              />
+            )}
+          >
+            <Menu.Item
+              startIcon={IconSymbols.Eye}
+              href={routes.external.forta.alert(alert.hash)}
+            >
+              Alert details
+            </Menu.Item>
+            <Menu.Item
+              startIcon={IconSymbols.Clipboard}
+              href={routes.external.forta.bot(alert.source.bot.id)}
+            >
+              Bot report page
+            </Menu.Item>
+            <Menu.Separator />
+            <Menu.Item
+              startIcon={IconSymbols.EyeOff}
+              onClick={() => {
+                //   TODO Implement when backend is ready
+                window.alert('Not implemented yet');
+              }}
+            >
+              Mute this bot
+            </Menu.Item>
+            <Menu.Item
+              startIcon={IconSymbols.Filter}
+              onClick={() => {
+                onFilterChange({ ...filter, botIds: [alert.source.bot.id] });
+              }}
+            >
+              Filter by this bot
+            </Menu.Item>
+          </Menu>
         </div>
       </div>
       <CollapseContainer
@@ -92,20 +134,22 @@ function Alert({
         {alert.addresses.size > 0 && (
           <ul className={styles.addresses}>
             {[...alert.addresses].map((address) => {
-              const isChecked = checkedAddresses.includes(address);
+              const addresses = filter.addresses || [];
+              const isChecked = addresses.includes(address);
+              const isLocked = (filterLocked.addresses || []).includes(address);
               return (
                 <li key={address}>
                   <Address
                     chainId={alert.source.block.chainId}
-                    checked={isChecked}
                     address={address}
-                    disabled={lockedAddresses.includes(address)}
+                    checked={isChecked}
+                    disabled={isLocked}
                     onCheckedChange={() =>
-                      onCheckedAddressesChange(
-                        isChecked
-                          ? checkedAddresses.filter((a) => a !== address)
-                          : [...checkedAddresses, address]
-                      )
+                      onFilterChange({
+                        addresses: isChecked
+                          ? addresses.filter((a) => a !== address)
+                          : [...addresses, address]
+                      })
                     }
                   />
                 </li>
@@ -116,7 +160,8 @@ function Alert({
         {projects.length > 0 && (
           <ul className={styles.projects}>
             {projects.map((project) => {
-              const isChecked = checkedProjects.includes(project.id);
+              const projectIds = filter.projectIds || [];
+              const isChecked = projectIds.includes(project.id);
               return (
                 <li key={project.id}>
                   <Chip
@@ -127,14 +172,11 @@ function Alert({
                     }}
                     variant="outline"
                     onClick={() =>
-                      isChecked
-                        ? onCheckedProjectsChange(
-                            checkedProjects.filter((id) => id !== project.id)
-                          )
-                        : onCheckedProjectsChange([
-                            ...checkedProjects,
-                            project.id
-                          ])
+                      onFilterChange({
+                        projectIds: isChecked
+                          ? projectIds.filter((id) => id !== project.id)
+                          : [...projectIds, project.id]
+                      })
                     }
                   >
                     {project.name}
@@ -152,12 +194,10 @@ function Alert({
 Alert.propTypes = {
   alert: AlertType.isRequired,
   stage: StageType,
+  filter: FilterType.isRequired,
+  filterLocked: FilterLockType,
   className: PropTypes.string,
-  lockedAddresses: PropTypes.arrayOf(PropTypes.string),
-  checkedAddresses: PropTypes.arrayOf(PropTypes.string),
-  checkedProjects: PropTypes.arrayOf(PropTypes.string),
-  onCheckedAddressesChange: PropTypes.func,
-  onCheckedProjectsChange: PropTypes.func
+  onFilterChange: PropTypes.func
 };
 
 export default Alert;
