@@ -77,7 +77,7 @@ function SeverityFilterModal({
 
 SeverityFilterModal.propTypes = {
   open: PropTypes.bool,
-  severities: PropTypes.oneOf(Object.values(SEVERITY)),
+  severities: PropTypes.arrayOf(PropTypes.oneOf(Object.values(SEVERITY))),
   onClose: PropTypes.func,
   onSeveritiesChange: PropTypes.func,
   className: PropTypes.string
