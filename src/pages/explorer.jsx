@@ -1,5 +1,6 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import dayjs from 'dayjs';
+import useUrlState from '@ahooksjs/use-url-state';
 
 import BaseLayout from '@components/layouts/BaseLayout/BaseLayout';
 import AlertGroup from '@components/shared/AlertGroup/AlertGroup';
@@ -9,14 +10,21 @@ import { IconSymbols } from '@components/shared/Icon/Icon';
 import { scrollToElement } from '@utils/helpers';
 
 function ExplorerPage() {
-  const [filter, setFilter] = useState(() => ({
-    chainId: CHAIN.mainnet,
-    addresses: [],
-    startDate: dayjs().subtract(7, 'day').format(SYSTEM_DATE_FORMAT),
-    endDate: null,
-    severities: [],
-    stageKit: null
-  }));
+  const [filter, setFilter] = useUrlState(
+    () => ({
+      chainId: CHAIN.mainnet,
+      addresses: [],
+      botIds: [],
+      severities: [],
+      startDate: dayjs().subtract(7, 'day').format(SYSTEM_DATE_FORMAT),
+      endDate: null,
+      stageKit: null
+    }),
+    {
+      stringifyOptions: { arrayFormat: 'bracket' },
+      parseOptions: { arrayFormat: 'bracket' }
+    }
+  );
 
   const {
     alerts,

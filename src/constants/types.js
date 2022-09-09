@@ -38,7 +38,7 @@ export const StageType = PropTypes.shape({
 });
 
 export const FilterType = PropTypes.shape({
-  chainId: PropTypes.number,
+  chainId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   startDate: PropTypes.string,
   endDate: PropTypes.string,
   addresses: PropTypes.arrayOf(PropTypes.string),

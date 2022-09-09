@@ -1,6 +1,13 @@
-export const IS_DEVELOPMENT = process.env.NODE_ENV !== 'production';
 export const FORTA_API_URL = process.env.FORTA_API_URL;
 export const MAINNET_RPC_URL = process.env.MAINNET_RPC_URL;
+export const POLYGON_RPC_URL = process.env.POLYGON_RPC_URL;
+export const BSC_RPC_URL = process.env.BSC_RPC_URL;
+export const AVALANCHE_RPC_URL = process.env.AVALANCHE_RPC_URL;
+export const ARBITRUM_RPC_URL = process.env.ARBITRUM_RPC_URL;
+export const OPTIMISM_RPC_URL = process.env.OPTIMISM_RPC_URL;
+export const FANTOM_RPC_URL = process.env.FANTOM_RPC_URL;
+
+export const IS_DEVELOPMENT = process.env.NODE_ENV !== 'production';
 
 export const PROJECT_NAME = 'Forta Dashboard';
 
@@ -29,13 +36,13 @@ export const SEVERITY = {
 };
 
 export const CHAIN = {
-  mainnet: 1,
-  polygon: 137,
-  bsc: 56,
-  avalanche: 43114,
-  arbitrium: 42161,
-  optimism: 10,
-  fantom: 250
+  mainnet: '1',
+  polygon: '137',
+  bsc: '56',
+  avalanche: '43114',
+  arbitrium: '42161',
+  optimism: '10',
+  fantom: '250'
 };
 
 export const CHAIN_NAMES = {
@@ -49,7 +56,13 @@ export const CHAIN_NAMES = {
 };
 
 export const CHAIN_RPC_URL = {
-  [CHAIN.mainnet]: MAINNET_RPC_URL
+  [CHAIN.mainnet]: MAINNET_RPC_URL,
+  [CHAIN.polygon]: POLYGON_RPC_URL,
+  [CHAIN.bsc]: BSC_RPC_URL,
+  [CHAIN.avalanche]: AVALANCHE_RPC_URL,
+  [CHAIN.arbitrium]: ARBITRUM_RPC_URL,
+  [CHAIN.optimism]: OPTIMISM_RPC_URL,
+  [CHAIN.fantom]: FANTOM_RPC_URL
 };
 
 import EthereumImage from '@assets/images/chains/ethereum.jpg';

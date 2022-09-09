@@ -125,7 +125,7 @@ function Address({
 
 Address.propTypes = {
   address: PropTypes.string.isRequired,
-  chainId: PropTypes.number.isRequired,
+  chainId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   checked: PropTypes.bool.isRequired,
   className: PropTypes.string,
   disabled: PropTypes.bool,
