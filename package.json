@@ -58,6 +58,7 @@
     "overlayscrollbars-react": "^0.3.0",
     "pluralize": "^8.0.0",
     "prop-types": "^15.8.1",
+    "query-string": "^7.1.1",
     "range-interpolator": "^1.0.2",
     "react": "^18.2.0",
     "react-collapse": "^5.1.1",

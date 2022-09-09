@@ -160,7 +160,7 @@ AlertGroup.propTypes = {
     label: PropTypes.string.isRequired
   }),
   filter: FilterType.isRequired,
-  variant: PropTypes.oneOf(['red']).isRequired,
+  variant: PropTypes.oneOf(['red', 'blue']).isRequired,
   alerts: PropTypes.arrayOf(AlertType),
   actions: PropTypes.arrayOf(
     PropTypes.shape({

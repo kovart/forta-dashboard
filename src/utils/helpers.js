@@ -59,3 +59,5 @@ export function copyToClipboard(text) {
   copy(text);
   toast('Copied', { type: 'success' });
 }
+
+export function stringifyQuery() {}

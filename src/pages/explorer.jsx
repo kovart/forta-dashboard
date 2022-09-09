@@ -69,7 +69,7 @@ function ExplorerPage() {
     <BaseLayout>
       <AlertGroup
         id="alerts"
-        variant="red"
+        variant="blue"
         title="Alerts"
         alerts={alerts}
         totalAlerts={totalAlerts}
