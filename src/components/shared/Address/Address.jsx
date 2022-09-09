@@ -83,7 +83,6 @@ function Address({
       </button>
       <div className={styles.actions}>
         <Menu
-          strategy="fixed"
           preferredWidth={180}
           placement={POPOVER_PLACEMENT.bottomEnd}
           renderElement={({ ref, toggle }) => (
