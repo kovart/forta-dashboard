@@ -1,16 +1,14 @@
 import React from 'react';
 
-import UiKitMark from '@components/partials/ui-kit/Mark/Mark';
-import UiKitButton from '@components/partials/ui-kit/Button/Button';
-import UiKitInput from '@components/partials/ui-kit/Input/Input';
-import UiKitSelect from '@components/partials/ui-kit/Select/Select';
-import UiKitAddress from '@components/partials/ui-kit/Address/Address';
-import UiKitChip from '@components/partials/ui-kit/Chip/Chip';
-import UiKitSwitcher from '@components/partials/ui-kit/Switcher/Switcher';
-import UiKitMenu from '@components/partials/ui-kit/Menu/Menu';
-import UiKitModal from '@components/partials/ui-kit/Modal/Modal';
-import UiKitAlertGroup from '@components/partials/ui-kit/AlertGroup/AlertGroup';
-import UiKitFilterForm from '@components/partials/ui-kit/FilterForm/FilterForm';
+import UiKitMark from '@components/partials/ui-kit/Mark/UiKitMark';
+import UiKitButton from '@components/partials/ui-kit/Button/UiKitButton';
+import UiKitInput from '@components/partials/ui-kit/Input/UiKitInput';
+import UiKitSelect from '@components/partials/ui-kit/Select/UiKitSelect';
+import UiKitAddress from '@components/partials/ui-kit/Address/UiKitAddress';
+import UiKitChip from '@components/partials/ui-kit/Chip/UiKitChip';
+import UiKitSwitcher from '@components/partials/ui-kit/Switcher/UiKitSwitcher';
+import UiKitMenu from '@components/partials/ui-kit/Menu/UiKitMenu';
+import UiKitModal from '@components/partials/ui-kit/Modal/UiKitModal';
 
 function UiKitPage() {
   return (
@@ -26,8 +24,6 @@ function UiKitPage() {
       <UiKitSwitcher />
       <UiKitMenu />
       <UiKitModal />
-      <UiKitFilterForm />
-      <UiKitAlertGroup />
     </div>
   );
 }

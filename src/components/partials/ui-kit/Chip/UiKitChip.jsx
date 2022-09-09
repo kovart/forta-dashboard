@@ -1,6 +1,6 @@
 import React from 'react';
 
-import UiKitSection from '@components/partials/ui-kit/Section/Section';
+import UiKitSection from '@components/partials/ui-kit/Section/UiKitSection';
 import Chip from '@components/shared/Chip/Chip';
 import { IconSymbols } from '@components/shared/Icon/Icon';
 import { CSS_COLOR } from '@utils/css';

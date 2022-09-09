@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import UiKitSection from '@components/partials/ui-kit/Section/Section';
+import UiKitSection from '@components/partials/ui-kit/Section/UiKitSection';
 import Switcher from '@components/shared/Form/Switcher/Switcher';
 
 function UiKitSwitcher() {

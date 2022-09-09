@@ -1,6 +1,6 @@
 import React from 'react';
 
-import UiKitSection from '@components/partials/ui-kit/Section/Section';
+import UiKitSection from '@components/partials/ui-kit/Section/UiKitSection';
 import Address from '@components/shared/Address/Address';
 import { CHAIN } from '@constants/common';
 

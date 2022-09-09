@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-import styles from './Section.module.scss';
+import styles from './UiKitSection.module.scss';
 
 function UiKitSection({ title, direction = 'row', children, className }) {
   return (

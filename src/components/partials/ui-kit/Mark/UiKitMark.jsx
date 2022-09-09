@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Mark from '@components/shared/Form/Mark/Mark';
-import UiKitSection from '@components/partials/ui-kit/Section/Section';
+import UiKitSection from '@components/partials/ui-kit/Section/UiKitSection';
 
 function UiKitMark() {
   return (

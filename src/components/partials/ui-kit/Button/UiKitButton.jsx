@@ -1,6 +1,6 @@
 import React from 'react';
 
-import UiKitSection from '@components/partials/ui-kit/Section/Section';
+import UiKitSection from '@components/partials/ui-kit/Section/UiKitSection';
 import Button from '@components/shared/Button/Button';
 import { IconSymbols } from '@components/shared/Icon/Icon.utils';
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import UiKitSection from '@components/partials/ui-kit/Section/Section';
+import UiKitSection from '@components/partials/ui-kit/Section/UiKitSection';
 import Button from '@components/shared/Button/Button';
 import Modal from '@components/shared/Modal/Modal';
 

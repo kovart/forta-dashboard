@@ -1,8 +1,8 @@
 import React from 'react';
 
-import styles from './Select.module.scss';
+import styles from './UiKitSelect.module.scss';
 
-import UiKitSection from '@components/partials/ui-kit/Section/Section';
+import UiKitSection from '@components/partials/ui-kit/Section/UiKitSection';
 import Select from '@components/shared/Form/Select/Select';
 
 function UiKitSelect() {
