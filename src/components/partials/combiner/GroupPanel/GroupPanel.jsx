@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
@@ -17,6 +17,16 @@ function GroupPanel({
   className
 }) {
   stageKit = useStageKit(stageKit);
+  const { stageLabels, lastStageLabel } = useMemo(() => {
+    const order = stageKit.stages.map((s) => s.label);
+    const stageLabels = group.stageLabels.slice();
+    stageLabels.sort((s1, s2) => order.indexOf(s1) - order.indexOf(s2));
+
+    return {
+      stageLabels,
+      lastStageLabel: stageLabels[stageLabels.length - 1]
+    };
+  }, [group, stageKit]);
 
   return (
     <div className={cn(styles.root, className)}>
@@ -43,7 +53,7 @@ function GroupPanel({
       <div className={cn(styles.item, styles.stagesPassed)}>
         <div className={styles.label}>Stage passed</div>
         <div className={styles.value}>
-          {group.stages.length}/{stageKit.stages.length}
+          {stageLabels.length}/{stageKit.stages.length}
         </div>
       </div>
       <div className={styles.sep} />
@@ -53,11 +63,11 @@ function GroupPanel({
           className={styles.value}
           style={{
             color: stageKit.stages.find(
-              (stage) => stage.label === group.stages[group.stages.length - 1]
+              (stage) => stage.label === lastStageLabel
             )?.color
           }}
         >
-          {group.stages[group.stages.length - 1]}
+          {lastStageLabel}
         </div>
       </div>
     </div>
@@ -67,7 +77,7 @@ function GroupPanel({
 GroupPanel.propTypes = {
   groupIndex: PropTypes.number,
   group: PropTypes.shape({
-    stages: PropTypes.arrayOf(PropTypes.string)
+    stageLabels: PropTypes.arrayOf(PropTypes.string)
   }),
   stageKit: PropTypes.string,
   totalGroups: PropTypes.number,
