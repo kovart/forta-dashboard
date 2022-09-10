@@ -1,5 +1,8 @@
+const fs = require('fs');
 const path = require('path');
 
+const APP_DIRECTORY = fs.realpathSync(process.cwd());
+const HOMEPAGE = require(path.resolve(APP_DIRECTORY, 'package.json')).homepage;
 const PROJECT_NAME = 'Forta Dashboard';
 
 const paths = {
@@ -23,5 +26,7 @@ const host = process.env.HOST || 'localhost';
 module.exports = {
   host,
   paths,
-  PROJECT_NAME
+  HOMEPAGE,
+  PROJECT_NAME,
+  APP_DIRECTORY
 };

@@ -8,7 +8,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const aliases = require('./aliases');
-const { paths, PROJECT_NAME } = require('./constants');
+const { paths, PROJECT_NAME, HOMEPAGE } = require('./constants');
 
 module.exports = {
   entry: paths.entry,
@@ -19,7 +19,7 @@ module.exports = {
     path: paths.output,
     filename: 'bundle.[fullhash:6].js',
     chunkFilename: '[chunkhash].js',
-    publicPath: '/'
+    publicPath: HOMEPAGE
   },
   performance: {
     hints: false

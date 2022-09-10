@@ -132,14 +132,6 @@ module.exports = {
           spriteFilename: (svgPath) => `sprite${svgPath.substr(-4)}`,
           symbolId: (filePath) => path.basename(filePath).slice(0, -10)
         }
-      },
-      {
-        test: /\.(png|jpg|gif|woff|svg|woff2|eot|ttf|otf)$/,
-        exclude: path.resolve(process.cwd(), paths.icons),
-        type: 'asset/resource',
-        generator: {
-          filename: 'static/fonts/[name].[hash:8][ext]'
-        }
       }
     ]
   }
