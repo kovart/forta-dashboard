@@ -48,7 +48,8 @@ function AlertGroup({
     loading: loading || loadingMore,
     hasNextPage: canLoadMore,
     onLoadMore: onLoadMore,
-    disabled: !infiniteScroll
+    disabled: !infiniteScroll,
+    rootMargin: '0px 0px 400px 0px'
   });
 
   function handleChange(patchObj) {
