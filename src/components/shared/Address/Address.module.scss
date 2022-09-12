@@ -68,8 +68,10 @@
   margin-left: rem(8px);
 
   .transactionCount {
+    display: block;
     padding: rem(2px) rem(6px);
     min-width: rem(20px);
+    text-align: center;
     font-weight: 500;
     font-size: rem(13px);
     border-radius: rem(18px);

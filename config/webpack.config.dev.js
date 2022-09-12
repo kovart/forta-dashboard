@@ -132,14 +132,15 @@ module.exports = {
           spriteFilename: (svgPath) => `sprite${svgPath.substr(-4)}`,
           symbolId: (filePath) => path.basename(filePath).slice(0, -10)
         }
-      }, {
+      },
+      {
         test: /\.(png|svg|jpg|gif)$/,
         exclude: paths.icons,
         type: 'asset/resource',
         generator: {
           filename: 'static/media/[name].[hash:8][ext]'
         }
-      },
+      }
     ]
   }
 };
