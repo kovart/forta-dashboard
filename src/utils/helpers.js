@@ -63,7 +63,11 @@ export function copyToClipboard(text, { showToast = true } = {}) {
   }
 }
 
-export function generateLink(url, query) {
+export function stringifyQuery(obj) {
+  return queryString.stringify(obj, { arrayFormat: 'bracket' });
+}
+
+export function stringifyFullUrl(url, query) {
   if (url.indexOf('http') === -1) {
     url = new URL(url, window.location.origin).href;
   }

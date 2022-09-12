@@ -21,7 +21,6 @@ function UiKitAddress() {
         chainId={CHAIN.mainnet}
         address="0xeb467f831233c47b25877eaf895773c6031d7e71"
         checked={true}
-        disabled={true}
       />
     </UiKitSection>
   );

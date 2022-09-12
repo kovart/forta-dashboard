@@ -72,7 +72,7 @@
 }
 
 .infoPanel {
-  @include body();
+  @include body-md();
 
   display: flex;
   align-items: center;

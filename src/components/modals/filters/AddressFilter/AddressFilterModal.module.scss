@@ -23,7 +23,7 @@
       border-bottom: 1px solid Input.$color-neutral-30;
 
       .address {
-        @include body();
+        @include body-md();
 
         text-overflow: ellipsis;
         overflow: hidden;

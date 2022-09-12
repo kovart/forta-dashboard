@@ -1,0 +1,31 @@
+@use 'src/components/shared/Form/Input/Input.mixins' as Input;
+
+.root {
+  @include Input.box();
+  @include Input.box-style-base();
+  @include Input.box-style-dark();
+
+  height: unset;
+  resize: none;
+
+  &:hover {
+    @include Input.hover();
+  }
+
+  &:focus {
+    @include Input.focus();
+  }
+
+  &::placeholder {
+    @include Input.placeholder-base();
+    @include Input.placeholder-dark();
+  }
+
+  &:disabled {
+    @include Input.disabled();
+  }
+}
+
+.invalid {
+  @include Input.invalid();
+}

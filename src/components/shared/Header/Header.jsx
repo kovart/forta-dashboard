@@ -21,11 +21,7 @@ const items = [
   },
   {
     to: routes.watchlist,
-    label: 'Watchlist'
-  },
-  {
-    to: routes.findings,
-    label: 'Findings'
+    label: 'Watch list'
   }
 ];
 

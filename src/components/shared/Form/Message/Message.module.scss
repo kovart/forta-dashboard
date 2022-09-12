@@ -1,0 +1,24 @@
+@import 'src/assets/styles/variables';
+@import 'src/assets/styles/mixins/remify';
+@import 'src/assets/styles/mixins/typography';
+
+.root {
+  margin-top: rem(20px);
+  margin-bottom: rem(20px);
+}
+
+.message {
+  @include body-md();
+}
+
+.error {
+  color: $color-accent-red;
+}
+
+.center {
+  text-align: center;
+}
+
+.left {
+  text-align: left;
+}

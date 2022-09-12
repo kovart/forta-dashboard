@@ -8,7 +8,7 @@ import { IconSymbols } from '@components/shared/Icon/Icon.utils';
 import { CSS_COLOR } from '@utils/css';
 import { CHAIN, CHAIN_NAMES } from '@constants/common';
 
-function ChainChip({ editable, value, className, onChange }) {
+function ChainChip({ editable = false, value, className, onChange }) {
   return (
     <Menu
       preferredWidth={125}
@@ -21,7 +21,7 @@ function ChainChip({ editable, value, className, onChange }) {
             symbol: IconSymbols.Zap,
             color: CSS_COLOR.accentYellow
           }}
-          endIcon={{ symbol: IconSymbols.ChevronDown }}
+          endIcon={editable ? { symbol: IconSymbols.ChevronDown } : undefined}
           onClick={toggle}
           className={className}
         >

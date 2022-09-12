@@ -82,3 +82,11 @@ export const CHAIN_IMAGE = {
   [CHAIN.optimism]: OptimismImage,
   [CHAIN.polygon]: PolygonImage
 };
+
+export const GROUP_CATEGORY_OPTIONS = [
+  { label: 'Scam / Fishing', value: 'scam-fishing' },
+  { label: 'Vulnerability', value: 'vulnerability' },
+  { label: 'Exploit', value: 'exploit' },
+  { label: 'Suspicious', value: 'suspicious' },
+  { label: 'Unknown', value: 'unknown' }
+];

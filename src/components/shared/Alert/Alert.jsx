@@ -154,7 +154,7 @@ function Alert({
                     chainId={alert.source.block.chainId}
                     address={address}
                     checked={isChecked}
-                    disabled={isLocked}
+                    clickable={!isLocked}
                     onCheckedChange={() =>
                       onFilterChange({
                         addresses: isChecked

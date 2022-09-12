@@ -12,10 +12,12 @@ function ModalControls({ children, actions, alignment = 'row', className }) {
       {children}
       {actions.map((action) => (
         <Button
+          type={action.type}
           key={action.label}
           variant={action.primary ? 'primary' : 'secondary'}
-          onClick={action.onClick}
+          disabled={action.disabled}
           className={action.primary ? undefined : styles.secondaryButton}
+          onClick={action.onClick}
         >
           {action.label}
         </Button>

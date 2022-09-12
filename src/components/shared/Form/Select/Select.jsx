@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import ReactSelect from 'react-select';
@@ -41,6 +41,14 @@ function Select({
   useEffect(() => {
     setInputValue(value?.label || '');
   }, [value]);
+
+  // hack that allows to stylize fixed positioned menu
+  useLayoutEffect(() => {
+    if (!window.document.body.classList.contains(styles.global)) {
+      window.document.body.classList.add(styles.global);
+      return () => window.document.body.classList.remove(styles.global);
+    }
+  }, []);
 
   function handleSelect(props) {
     // 'props' can be null if select has been cleared

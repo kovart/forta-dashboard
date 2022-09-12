@@ -1,0 +1,23 @@
+@import 'src/assets/styles/colors';
+@import 'src/assets/styles/mixins/typography';
+@import 'src/assets/styles/mixins/remify';
+
+.root {
+  margin-bottom: rem(50px);
+  max-width: rem(604px);
+
+  .title {
+    @include h2();
+
+    color: $color-neutral-99;
+    margin: 0;
+    margin-bottom: rem(24px);
+  }
+
+  .lead {
+    @include body-lg();
+
+    color: $color-neutral-50;
+    margin-bottom: rem(24px);
+  }
+}

@@ -9,7 +9,7 @@
   }
 
   .item {
-    @include body();
+    @include body-md();
 
     display: flex;
     justify-content: space-between;

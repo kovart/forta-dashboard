@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import { SEVERITY } from '@constants/common';
+import { GROUP_CATEGORY_OPTIONS, SEVERITY } from '@constants/common';
 import { STAGE_COLOR } from '@constants/stages';
 
 export const AlertType = PropTypes.shape({
@@ -57,4 +57,15 @@ export const FilterPermanentElementsType = PropTypes.shape({
   chain: PropTypes.bool,
   period: PropTypes.bool,
   stageKit: PropTypes.bool
+});
+
+export const WatchGroupType = PropTypes.shape({
+  title: PropTypes.string,
+  description: PropTypes.string,
+  category: PropTypes.oneOf(GROUP_CATEGORY_OPTIONS.map((o) => o.value)),
+  filter: FilterType,
+  totalAlerts: PropTypes.shape({
+    value: PropTypes.number,
+    relation: PropTypes.string
+  })
 });

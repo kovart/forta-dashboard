@@ -1,0 +1,107 @@
+@import 'src/assets/styles/colors';
+@import 'src/assets/styles/mixins/remify';
+@import 'src/assets/styles/mixins/line-clamp';
+@import 'src/assets/styles/mixins/typography';
+
+.root {
+  position: relative;
+  background-color: $color-neutral-10;
+  border: 1px solid $color-neutral-30;
+  border-radius: rem(4px);
+  padding: rem(24px) rem(24px);
+}
+
+.category {
+  @include line-clamp(1, 20px);
+  @include h5();
+
+  color: $color-neutral-40;
+  max-width: rem(400px);
+}
+
+.title {
+  @include line-clamp(2, 24px);
+  @include h4();
+
+  margin-bottom: 0;
+  margin-top: rem(8px);
+  color: $color-accent-blue-1;
+  max-width: rem(600px);
+}
+
+// to avoid actions overlap
+.category,
+.title {
+  padding-right: rem(92px);
+}
+
+.description {
+  @include body-md();
+  @include line-clamp(4, 18px);
+
+  color: $color-neutral-50;
+  margin-top: rem(12px);
+  max-width: rem(600px);
+}
+
+.stats {
+  margin-top: rem(20px);
+
+  .alerts {
+    @include body-md();
+
+    display: inline-flex;
+    position: relative;
+    color: $color-neutral-50;
+    background-color: $color-neutral-20;
+    border-radius: rem(6px);
+    padding: rem(12px) rem(16px);
+
+    .value {
+      @include h3();
+
+      color: $color-neutral-90;
+      margin-right: 0.25em;
+    }
+
+    .badge {
+      position: absolute;
+      top: rem(-8px);
+      right: rem(-16px);
+      background-color: $color-neutral-70;
+      color: $color-neutral-15;
+      border-radius: rem(20px);
+      font-size: rem(14px);
+      font-weight: 600;
+      padding: rem(2px) rem(6px);
+    }
+  }
+}
+
+.filter {
+  display: flex;
+  flex-direction: column;
+  gap: rem(8px);
+  margin-top: rem(24px);
+  margin-left: rem(-24px);
+  margin-right: rem(-24px);
+  padding-top: rem(24px);
+  padding-left: rem(24px);
+  padding-right: rem(24px);
+  border-top: 1px solid $color-neutral-30;
+
+  .chips,
+  .addresses {
+    display: flex;
+    flex-wrap: wrap;
+    gap: rem(8px);
+  }
+}
+
+.actions {
+  display: flex;
+  position: absolute;
+  top: rem(24px);
+  right: rem(24px);
+  gap: rem(8px);
+}

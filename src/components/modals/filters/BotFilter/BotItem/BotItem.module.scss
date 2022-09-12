@@ -5,7 +5,7 @@
 
 .root {
   .id {
-    @include body();
+    @include body-md();
     @include line-clamp(1, 14px);
 
     color: $color-neutral-40;
@@ -20,7 +20,7 @@
   }
 
   .description {
-    @include body();
+    @include body-md();
     @include line-clamp(2, 14px);
 
     margin-top: rem(8px);

@@ -14,17 +14,18 @@ import AnalyzeForm from '@components/partials/combiner/AnalyzeForm/AnalyzeForm';
 import GroupPanel from '@components/partials/combiner/GroupPanel/GroupPanel';
 import Progress from '@components/shared/Progress/Progress';
 import AlertGroup from '@components/shared/AlertGroup/AlertGroup';
-import useExplorerQuery from '@hooks/useExplorerQuery';
-import logger from '@utils/logger';
-import forta, { FortaExplorer } from '@utils/forta';
+import SaveToWatchListModal from '@components/modals/SaveToWatchListModal/SaveToWatchListModal';
 import { AppContext } from '@components/providers/AppContext/AppContext';
 import db from '@utils/db';
 import {
   copyToClipboard,
   delay,
-  generateLink,
+  stringifyFullUrl,
   scrollToElement
 } from '@utils/helpers';
+import useExplorerQuery from '@hooks/useExplorerQuery';
+import logger from '@utils/logger';
+import forta, { FortaExplorer } from '@utils/forta';
 import { CHAIN, SYSTEM_DATE_FORMAT } from '@constants/common';
 import { FortaGeneralKit } from '@constants/stages';
 import { IconSymbols } from '@components/shared/Icon/Icon.utils';
@@ -47,13 +48,13 @@ function CombinerPage() {
     endDate: null,
     stageKit: FortaGeneralKit.key
   }));
-
   const [analysis, setAnalysis] = useState(null);
   const [groups, setGroups] = useState([]); // array
   const [groupIndex, setGroupIndex] = useState(0);
   const [groupFilter, setGroupFilter] = useState({}); // alerts filter
   const [progress, setProgress] = useState(null);
   const [isAnalysing, setIsAnalysing] = useState(false);
+  const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
   const group = useMemo(() => groups[groupIndex] || null, [groups, groupIndex]);
 
   const {
@@ -71,14 +72,14 @@ function CombinerPage() {
   useLayoutEffect(() => {
     (async () => {
       setIsAnalysing(true);
-      const analyses = await db.analyses.toArray();
+      const analyses = await db.combinerAnalyses.toArray();
       const lastAnalysis = analyses[analyses.length - 1];
       if (lastAnalysis) {
         setProgress({
           text: 'Restoring previous analysis',
           percent: 60
         });
-        const groups = await db.groups
+        const groups = await db.combinerGroups
           .where({ analysisId: lastAnalysis.id })
           .toArray();
         setAnalysis(lastAnalysis);
@@ -273,18 +274,22 @@ function CombinerPage() {
 
       setProgress({ text: 'Done', percent: 100 });
 
-      await db.transaction('rw', [db.analyses, db.groups], async () => {
-        await db.analyses.clear();
-        await db.groups.clear();
+      await db.transaction(
+        'rw',
+        [db.combinerAnalyses, db.combinerGroups],
+        async () => {
+          await db.combinerAnalyses.clear();
+          await db.combinerGroups.clear();
 
-        const analysisId = await db.analyses.add({
-          chainId,
-          startDate,
-          endDate,
-          stageKit: stageKit.key
-        });
-        db.groups.bulkAdd(groups.map((g) => ({ ...g, analysisId })));
-      });
+          const analysisId = await db.combinerAnalyses.add({
+            chainId,
+            startDate,
+            endDate,
+            stageKit: stageKit.key
+          });
+          db.combinerGroups.bulkAdd(groups.map((g) => ({ ...g, analysisId })));
+        }
+      );
 
       setGroups(groups);
     } catch (e) {
@@ -311,7 +316,7 @@ function CombinerPage() {
         title: 'Copy link',
         icon: IconSymbols.Link,
         onClick: () => {
-          copyToClipboard(generateLink(routes.index, groupFilter));
+          copyToClipboard(stringifyFullUrl(routes.index, groupFilter));
         }
       },
       {
@@ -369,6 +374,12 @@ function CombinerPage() {
           />
         </>
       )}
+      <SaveToWatchListModal
+        open={isSaveModalOpen}
+        filter={groupFilter}
+        totalAlerts={totalAlerts}
+        onClose={() => setIsSaveModalOpen(false)}
+      />
     </BaseLayout>
   );
 }

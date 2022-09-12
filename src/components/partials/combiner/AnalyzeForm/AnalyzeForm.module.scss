@@ -1,3 +1,4 @@
+@import 'src/assets/styles/colors';
 @import 'src/assets/styles/mixins/remify';
 @import 'src/assets/styles/mixins/typography';
 
@@ -13,7 +14,7 @@
   }
 
   .description {
-    @include body();
+    @include body-md();
 
     color: $color-neutral-60;
     margin-top: 0;

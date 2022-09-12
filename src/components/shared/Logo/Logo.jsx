@@ -9,7 +9,7 @@ import LogoImage from '@assets/images/logo.svg';
 import { PROJECT_NAME } from '@constants/common';
 
 const SIZE_MAP = {
-  md: 21
+  md: { height: 21, width: 105 }
 };
 
 function Logo({ size = 'md', href = '/', className }) {
@@ -19,7 +19,7 @@ function Logo({ size = 'md', href = '/', className }) {
 
   return (
     <Element className={cn(styles.root, className)} {...props}>
-      <img src={LogoImage} alt={PROJECT_NAME} height={SIZE_MAP[size]} />
+      <img src={LogoImage} alt={PROJECT_NAME} {...SIZE_MAP[size]} />
     </Element>
   );
 }

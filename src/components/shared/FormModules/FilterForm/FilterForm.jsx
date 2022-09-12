@@ -158,7 +158,7 @@ function FilterForm({
                 chainId={values.chainId}
                 address={address}
                 checked={true}
-                disabled={!editable || lockedAddresses.includes(address)}
+                clickable={editable && !lockedAddresses.includes(address)}
                 onCheckedChange={() =>
                   handleChange({
                     addresses: addresses.filter((a) => a !== address)

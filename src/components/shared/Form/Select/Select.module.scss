@@ -1,6 +1,5 @@
 @use 'sass:color';
 @use 'src/components/shared/Form/Input/Input.mixins' as Input;
-@use 'src/components/shared/Form/Select/Select.mixins' as Select;
 
 @import 'src/assets/styles/colors';
 @import 'src/assets/styles/mixins/remify';
@@ -8,6 +7,7 @@
 
 $input-padding-x: rem(16px);
 
+.global,
 .container {
   :global {
     .select {
@@ -18,7 +18,7 @@ $input-padding-x: rem(16px);
         padding: 0;
         width: 100%;
         cursor: pointer;
-        // fix incorrect height that caused by border width
+        // fix incorrect height caused by border width
         margin: -1px;
 
         &:hover:not(.select__control--is-focused) {

@@ -16,7 +16,7 @@ const Input = forwardRef(function Input(
     type = 'text',
     value,
     icon,
-    variant,
+    variant = 'dark',
     placeholder,
     components,
     invalid,
@@ -154,7 +154,7 @@ const Input = forwardRef(function Input(
 });
 
 Input.propTypes = {
-  variant: PropTypes.oneOf(['light', 'dark']).isRequired,
+  variant: PropTypes.oneOf(['light', 'dark']),
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   name: PropTypes.string.isRequired,
   type: PropTypes.string,

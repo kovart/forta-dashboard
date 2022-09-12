@@ -29,15 +29,16 @@ const getIndicatorColor = (transactionCount) => {
 function Address({
   address,
   chainId,
+  clickable = !!onCheckedChange,
   checked = false,
-  disabled = false,
-  onCheckedChange = () => {},
+  onCheckedChange,
   className
 }) {
   const { getAddressMeta } = useContext(AppContext);
   const [meta, setMeta] = useState(null);
-
   const { isContract, transactionCount } = meta || {};
+  const Element = clickable ? 'button' : 'div';
+  const props = clickable ? { onClick: () => onCheckedChange(!checked) } : {};
 
   useEffect(() => {
     (async () => {
@@ -51,11 +52,11 @@ function Address({
         [styles.checked]: checked
       })}
     >
-      <button
-        onClick={() => onCheckedChange(!checked)}
+      <Element
         className={cn(styles.body, {
-          [styles.disabled]: disabled
+          [styles.clickable]: clickable
         })}
+        {...props}
       >
         <Icon
           size={null}
@@ -84,7 +85,7 @@ function Address({
             )}
           </Fade>
         </span>
-      </button>
+      </Element>
       <div className={styles.actions}>
         <Menu
           preferredWidth={180}
@@ -136,9 +137,9 @@ function Address({
 Address.propTypes = {
   address: PropTypes.string.isRequired,
   chainId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-  checked: PropTypes.bool.isRequired,
+  checked: PropTypes.bool,
+  clickable: PropTypes.bool,
   className: PropTypes.string,
-  disabled: PropTypes.bool,
   onCheckedChange: PropTypes.func
 };
 

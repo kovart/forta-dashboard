@@ -1,16 +1,22 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import dayjs from 'dayjs';
 import useUrlState from '@ahooksjs/use-url-state';
 
 import BaseLayout from '@components/layouts/BaseLayout/BaseLayout';
 import AlertGroup from '@components/shared/AlertGroup/AlertGroup';
+import SaveToWatchListModal from '@components/modals/SaveToWatchListModal/SaveToWatchListModal';
 import useExplorerQuery from '@hooks/useExplorerQuery';
 import { CHAIN, SYSTEM_DATE_FORMAT } from '@constants/common';
 import { IconSymbols } from '@components/shared/Icon/Icon';
-import { copyToClipboard, generateLink, scrollToElement } from '@utils/helpers';
+import {
+  copyToClipboard,
+  stringifyFullUrl,
+  scrollToElement
+} from '@utils/helpers';
 import routes from '@constants/routes';
 
 function ExplorerPage() {
+  const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
   const [filter, setFilter] = useUrlState(
     () => ({
       chainId: CHAIN.mainnet,
@@ -39,6 +45,10 @@ function ExplorerPage() {
 
   const isReloading = isFetching && !isFetchingNextPage;
 
+  useEffect(() => {
+    scrollToElement('alerts');
+  }, [isReloading]);
+
   const actions = useMemo(
     () => [
       {
@@ -52,21 +62,17 @@ function ExplorerPage() {
         title: 'Copy link',
         icon: IconSymbols.Link,
         onClick: () => {
-          copyToClipboard(generateLink(routes.index, filter));
+          copyToClipboard(stringifyFullUrl(routes.index, filter));
         }
       },
       {
         title: 'Save',
         icon: IconSymbols.Save,
-        onClick: () => alert('Not implemented yet')
+        onClick: () => setIsSaveModalOpen(true)
       }
     ],
     [isFetching]
   );
-
-  useEffect(() => {
-    scrollToElement('alerts');
-  }, [isReloading]);
 
   return (
     <BaseLayout>
@@ -91,6 +97,12 @@ function ExplorerPage() {
         onFilterChange={setFilter}
         canLoadMore={hasNextPage}
         onLoadMore={fetchNextPage}
+      />
+      <SaveToWatchListModal
+        open={isSaveModalOpen}
+        filter={filter}
+        totalAlerts={totalAlerts}
+        onClose={() => setIsSaveModalOpen(false)}
       />
     </BaseLayout>
   );

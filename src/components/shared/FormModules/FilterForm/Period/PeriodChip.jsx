@@ -8,7 +8,7 @@ import { APP_DATE_FORMAT, SYSTEM_DATE_FORMAT } from '@constants/common';
 import { IconSymbols } from '@components/shared/Icon/Icon.utils';
 import { CSS_COLOR } from '@utils/css';
 
-function PeriodChip({ value, editable, className, onChange }) {
+function PeriodChip({ value, editable = false, className, onChange }) {
   const [startDate, endDate] = value;
 
   const periodFormattedValue = useMemo(() => {
@@ -34,7 +34,7 @@ function PeriodChip({ value, editable, className, onChange }) {
           ref={ref}
           empty={!startDate && !endDate}
           clickable={editable}
-          removable={!!(startDate || endDate)}
+          removable={editable && !!(startDate || endDate)}
           icon={{
             symbol: IconSymbols.Calendar,
             color: CSS_COLOR.accentBlue2
