@@ -22,11 +22,11 @@ function AnalyzeForm({ values, submitting, className, onChange, onSubmit }) {
 
   return (
     <div className={cn(styles.root, className)}>
-      <h3 className={styles.title}>Search for attacks</h3>
+      <h3 className={styles.title}>Discover new attacks</h3>
       <p className={styles.description}>
         You are in{' '}
         <span style={{ color: CSS_COLOR.accentYellow }}>semi-automatic</span>{' '}
-        attack search mode. <br />
+        attack detection mode. <br />
         Please, select the network, the time period, and the set of bots to be
         analyzed.
       </p>
