@@ -148,8 +148,9 @@ function CombinerPage() {
           setProgress({
             text: `Fetching alerts: ${alerts.size}`,
             percent: createInterpolator({
-              inputRange: [0, 1e6],
-              outputRange: [5, 35]
+              inputRange: [0, 100_000],
+              outputRange: [5, 20],
+              extrapolate: 'clamp'
             })(alerts.size)
           })
       });
@@ -190,7 +191,7 @@ function CombinerPage() {
             text: `Grouping alerts: ${addressCounter}/${addresses.size}`,
             percent: createInterpolator({
               inputRange: [0, addresses.size],
-              outputRange: [35, 75]
+              outputRange: [20, 75]
             })(addressCounter)
           });
           await delay(1);
@@ -211,9 +212,6 @@ function CombinerPage() {
         if (stageLabelsSet.size >= 2) {
           groups.add({
             address,
-            chainId,
-            startDate,
-            endDate,
             stageLabels: [...stageLabelsSet],
             allStageLabels: stageLabels
           });
