@@ -6,7 +6,7 @@ import { FORTA_API_URL, SYSTEM_DATE_FORMAT } from '@constants/common';
 import { delay } from '@utils/helpers';
 import logger from '@utils/logger';
 
-const PARALLEL_REQUESTS = 5;
+const PARALLEL_REQUESTS = 20;
 const DEFAULT_CHUCK_SIZE = 5000;
 const RETRY_ATTEMPTS = 3;
 const RETRY_WAIT = 10 * 1000; // 10s
@@ -281,21 +281,24 @@ export class FortaExplorer {
     let chunkSize = variables.input.first;
     // eslint-disable-next-line no-constant-condition
     while (true) {
-      const response = await this.api.post(this.url, query);
-      const { errors } = response.data.data;
-      const data = response.data.data[key];
+      try {
+        const response = await this.api.post(this.url, query);
+        const { errors } = response.data.data;
+        const data = response.data.data[key];
 
-      if (!errors) {
-        return data;
-      }
-
-      attemptCounter++;
-      if (attemptCounter > RETRY_ATTEMPTS) {
-        return Promise.reject(errors);
-      } else {
-        chunkSize = Math.floor(chunkSize / 1.5);
-        logger.warn('Reducing size of chunk to', chunkSize);
-        await delay(RETRY_WAIT);
+        if (!errors) {
+          return data;
+        }
+      } catch (e) {
+        attemptCounter++;
+        logger.error('attempt #' + attemptCounter, e);
+        if (attemptCounter > RETRY_ATTEMPTS) {
+          return Promise.reject(e);
+        } else {
+          chunkSize = Math.floor(chunkSize / 1.5);
+          logger.warn('Reducing size of chunk to', chunkSize);
+          await delay(RETRY_WAIT);
+        }
       }
     }
   }

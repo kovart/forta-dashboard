@@ -19,6 +19,7 @@ module.exports = {
   entry: paths.entry,
   bail: true,
   mode: IS_DEVELOPMENT ? 'development' : 'production',
+  devtool: IS_DEVELOPMENT ? 'source-map' : false,
   target: 'web',
   output: {
     path: paths.output,
