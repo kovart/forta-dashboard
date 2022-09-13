@@ -31,6 +31,7 @@ module.exports = {
   plugins: [
     new HtmlWebPackPlugin({
       title: PROJECT_NAME,
+      favicon: paths.favicon,
       template: paths.template,
       filename: './index.html'
     }),
