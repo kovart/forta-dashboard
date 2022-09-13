@@ -15,7 +15,7 @@ import forta from '@utils/forta';
 import { IconSymbols } from '@components/shared/Icon/Icon.utils';
 
 const fetchBots = async ({ queryKey }) => {
-  const [search] = queryKey;
+  const search = queryKey[0].trim();
   const isAddress = search.indexOf('0x') === 0;
   const { bots } = await forta.getBots({
     ids: isAddress ? [search] : [],
@@ -34,8 +34,8 @@ function BotFilterModal({
 }) {
   const [isInitialized, setIsInitialized] = useState(false);
   const [search, searchQuery, setSearch] = useStateDebounce('');
-  const [localBotIds, setLocalBotIds] = useState([]);
   const [selectedBots, setSelectedBots] = useState([]);
+  const [selectedBotIds, setSelectedBotIds] = useState([]);
   const { data: searchedBots = [], isFetching } = useQuery(
     [searchQuery],
     fetchBots,
@@ -48,14 +48,14 @@ function BotFilterModal({
       [...selectedBots.filter(filter), ...searchedBots],
       (v) => v.id
     );
-  }, [search, searchedBots]);
+  }, [open, search, searchedBots]);
 
   useLayoutEffect(() => {
-    setLocalBotIds(open ? botIds : []);
-  }, [open]);
+    setSelectedBotIds(botIds);
+  }, [botIds]);
 
   useEffect(() => {
-    if (open && botIds.length > 0) {
+    if (botIds.length > 0) {
       (async () => {
         setIsInitialized(false);
         const { bots } = await forta.getBots({
@@ -68,19 +68,19 @@ function BotFilterModal({
     } else {
       setIsInitialized(true);
     }
-  }, [open]);
+  }, [botIds]);
 
   function handleBotCheckedChange(bot, isChecked) {
     setSelectedBots((v) =>
       isChecked ? v.filter((b) => b.id !== bot.id) : [bot, ...v]
     );
-    setLocalBotIds((v) =>
+    setSelectedBotIds((v) =>
       isChecked ? v.filter((id) => id !== bot.id) : [bot.id, ...v]
     );
   }
 
   function handleApply() {
-    onBotIdsChange(localBotIds);
+    onBotIdsChange(selectedBotIds);
     onClose();
   }
 
@@ -108,7 +108,7 @@ function BotFilterModal({
         <div className={styles.content}>
           <ul className={styles.list}>
             {bots.map((bot) => {
-              const isChecked = localBotIds.includes(bot.id);
+              const isChecked = selectedBotIds.includes(bot.id);
               return (
                 <li key={bot.id} className={styles.item}>
                   <BotItem
