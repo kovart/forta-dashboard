@@ -8,12 +8,17 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const aliases = require('./aliases');
-const { paths, PROJECT_NAME, HOMEPAGE } = require('./constants');
+const {
+  paths,
+  HOMEPAGE,
+  PROJECT_NAME,
+  IS_DEVELOPMENT
+} = require('./constants');
 
 module.exports = {
   entry: paths.entry,
   bail: true,
-  mode: 'production',
+  mode: IS_DEVELOPMENT ? 'development' : 'production',
   target: 'web',
   output: {
     path: paths.output,
@@ -43,6 +48,7 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebPackPlugin({
       title: PROJECT_NAME,
+      favicon: paths.favicon,
       template: paths.template,
       filename: './index.html',
       minify: {

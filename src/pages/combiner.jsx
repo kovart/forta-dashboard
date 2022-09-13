@@ -20,7 +20,7 @@ import db from '@utils/db';
 import {
   copyToClipboard,
   delay,
-  stringifyFullUrl,
+  getFullUrl,
   scrollToElement
 } from '@utils/helpers';
 import useExplorerQuery from '@hooks/useExplorerQuery';
@@ -316,13 +316,13 @@ function CombinerPage() {
         title: 'Copy link',
         icon: IconSymbols.Link,
         onClick: () => {
-          copyToClipboard(stringifyFullUrl(routes.index, groupFilter));
+          copyToClipboard(getFullUrl(routes.index, groupFilter));
         }
       },
       {
         title: 'Save',
         icon: IconSymbols.Save,
-        onClick: () => alert('Not implemented yet')
+        onClick: () => setIsSaveModalOpen(true)
       }
     ],
     [isFetching]

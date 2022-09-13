@@ -4,6 +4,8 @@ import { toast } from 'react-toastify';
 import copy from 'copy-to-clipboard';
 import queryString from 'query-string';
 
+import { HOMEPAGE } from '@constants/common';
+
 export function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -67,9 +69,16 @@ export function stringifyQuery(obj) {
   return queryString.stringify(obj, { arrayFormat: 'bracket' });
 }
 
-export function stringifyFullUrl(url, query) {
-  if (url.indexOf('http') === -1) {
-    url = new URL(url, window.location.origin).href;
-  }
-  return queryString.stringifyUrl({ url, query }, { arrayFormat: 'bracket' });
+export function getFullUrl(pathname, query) {
+  const location = window.location;
+  const isFileSystemLocation = location.protocol === 'file:';
+  const queryString = stringifyQuery(query);
+
+  return (
+    (isFileSystemLocation ? location.origin + location.pathname : HOMEPAGE) +
+    '#' +
+    pathname +
+    '?' +
+    queryString
+  );
 }

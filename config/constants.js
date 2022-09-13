@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
+const IS_DEVELOPMENT = process.env.NODE_ENV !== 'production';
 const APP_DIRECTORY = fs.realpathSync(process.cwd());
 const HOMEPAGE = require(path.resolve(APP_DIRECTORY, 'package.json')).homepage;
 const PROJECT_NAME = 'Forta Dashboard';
@@ -11,6 +12,7 @@ const paths = {
   env: path.resolve(__dirname, '../.env'),
   template: path.resolve(__dirname, '../public/index.html'),
   icons: path.resolve(__dirname, '../src/assets/icons/'),
+  favicon: path.resolve(__dirname, '../public/favicon.png'),
 
   // ALIASES
   assets: path.resolve(__dirname, '../src/assets/'),
@@ -28,5 +30,6 @@ module.exports = {
   paths,
   HOMEPAGE,
   PROJECT_NAME,
-  APP_DIRECTORY
+  APP_DIRECTORY,
+  IS_DEVELOPMENT
 };

@@ -8,11 +8,7 @@ import SaveToWatchListModal from '@components/modals/SaveToWatchListModal/SaveTo
 import useExplorerQuery from '@hooks/useExplorerQuery';
 import { CHAIN, SYSTEM_DATE_FORMAT } from '@constants/common';
 import { IconSymbols } from '@components/shared/Icon/Icon';
-import {
-  copyToClipboard,
-  stringifyFullUrl,
-  scrollToElement
-} from '@utils/helpers';
+import { copyToClipboard, scrollToElement, getFullUrl } from '@utils/helpers';
 import routes from '@constants/routes';
 
 function ExplorerPage() {
@@ -62,7 +58,7 @@ function ExplorerPage() {
         title: 'Copy link',
         icon: IconSymbols.Link,
         onClick: () => {
-          copyToClipboard(stringifyFullUrl(routes.index, filter));
+          copyToClipboard(getFullUrl(routes.index, filter));
         }
       },
       {

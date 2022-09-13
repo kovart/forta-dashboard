@@ -8,6 +8,7 @@ export const OPTIMISM_RPC_URL = process.env.OPTIMISM_RPC_URL;
 export const FANTOM_RPC_URL = process.env.FANTOM_RPC_URL;
 
 export const IS_DEVELOPMENT = process.env.NODE_ENV !== 'production';
+export const HOMEPAGE = process.env.HOMEPAGE;
 
 export const PROJECT_NAME = 'Forta Dashboard';
 
