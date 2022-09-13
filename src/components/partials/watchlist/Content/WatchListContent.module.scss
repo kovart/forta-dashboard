@@ -3,9 +3,19 @@
 @import 'src/assets/styles/mixins/typography';
 
 .notification {
-  @include h4();
+  @include h5();
 
   color: $color-neutral-60;
+}
+
+.loader {
+  display: flex;
+  align-items: center;
+  color: $color-neutral-60;
+
+  .spinner {
+    margin-right: rem(8px);
+  }
 }
 
 .list {

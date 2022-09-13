@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 
 import styles from './WatchListContent.module.scss';
 
-import Loader from '@components/shared/Loader/Loader';
+import Spinner from '@components/shared/Spinner/Spinner';
 import AlertGroupCard from '@components/shared/AlertGroupCard/AlertGroupCard';
 import logger from '@utils/logger';
 import db from '@utils/db';
@@ -37,12 +37,9 @@ function WatchListContent({ empty, loading, groups = [], onGroupsChange }) {
 
   if (loading) {
     return (
-      <Loader
-        bg="transparent"
-        height={200}
-        position="static"
-        spinner="asterisk"
-      />
+      <div className={styles.loader}>
+        <Spinner size="sm" className={styles.spinner} /> Loading database...
+      </div>
     );
   }
 

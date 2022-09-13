@@ -5,6 +5,7 @@ import WatchListForm from '@components/partials/watchlist/Form/WatchListForm';
 import WatchListContent from '@components/partials/watchlist/Content/WatchListContent';
 import db from '@utils/db';
 import logger from '@utils/logger';
+import { delay } from '@utils/helpers';
 
 function WatchListPage() {
   const [isInitialized, setIsInitialized] = useState(false);
@@ -29,6 +30,9 @@ function WatchListPage() {
       try {
         const watchGroups = await db.watchGroups.toArray();
         setGroups(watchGroups);
+        // loading can be so fast that the user will see a flicker,
+        // to avoid this we just add a little delay
+        await delay(400);
       } catch (e) {
         logger.error(e);
       } finally {

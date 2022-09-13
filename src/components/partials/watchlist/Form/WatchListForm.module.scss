@@ -11,13 +11,14 @@
 
     color: $color-neutral-99;
     margin: 0;
-    margin-bottom: rem(24px);
+    margin-bottom: rem(18px);
   }
 
   .lead {
     @include body-lg();
+    @include body-md();
 
     color: $color-neutral-50;
-    margin-bottom: rem(24px);
+    margin-bottom: rem(32px);
   }
 }

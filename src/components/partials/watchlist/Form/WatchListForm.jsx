@@ -10,10 +10,10 @@ import { IconSymbols } from '@components/shared/Icon/Icon';
 function WatchListForm({ values, onChange }) {
   return (
     <div className={styles.root}>
-      <h1 className={styles.title}>Watch List</h1>
+      <h1 className={styles.title}>Saved findings</h1>
       <p className={styles.lead}>
         Here you will find a list of your{' '}
-        <span style={{ color: CSS_COLOR.accentYellow }}>saved groups</span>.{' '}
+        <span style={{ color: CSS_COLOR.accentYellow }}>saved alerts</span>.{' '}
         <br />
         This is a great place to add suspicious findings or already detected
         attacks.
