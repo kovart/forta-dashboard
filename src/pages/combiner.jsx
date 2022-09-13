@@ -32,7 +32,7 @@ import { IconSymbols } from '@components/shared/Icon/Icon.utils';
 import { BURN_ADDRESSES } from '@constants/addresses';
 import routes from '@constants/routes';
 
-const TRANSACTION_THRESHOLD = 75;
+const TRANSACTION_THRESHOLD = 250;
 
 function CombinerPage() {
   const {
