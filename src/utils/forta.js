@@ -1,6 +1,7 @@
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { queue } from 'async';
+import { chunk } from 'lodash';
 
 import { FORTA_API_URL, SYSTEM_DATE_FORMAT } from '@constants/common';
 import { delay } from '@utils/helpers';
@@ -175,13 +176,14 @@ export class FortaExplorer {
 
     const items = new Set();
 
-    const requestQueue = queue(async (alertId, callback) => {
+    const requestQueue = queue(async ({ alertId, botIds }, callback) => {
       let pageInfo = null;
       while ((!pageInfo || pageInfo.hasNextPage) && items.size < limit) {
         const response = await this.request('alerts', query, {
           input: {
             ...input,
             alertId,
+            bots: botIds,
             first: Math.min(DEFAULT_CHUCK_SIZE, limit),
             after: pageInfo?.endCursor || endCursor
           }
@@ -196,11 +198,22 @@ export class FortaExplorer {
       callback();
     }, PARALLEL_REQUESTS);
 
-    if (alertIds.length > 0) {
-      requestQueue.push(alertIds);
-    } else {
-      // TODO check if works correctly
-      requestQueue.push(null);
+    // the explorer has limit to ~20 bots per request
+    const chunks = chunk(botIds, 20);
+    for (const chunk of chunks) {
+      if (alertIds.length > 0) {
+        requestQueue.push(
+          alertIds.map((alertId) => ({
+            alertId,
+            botIds: chunk
+          }))
+        );
+      } else {
+        requestQueue.push({
+          alertId: null,
+          botIds: chunk
+        });
+      }
     }
 
     await requestQueue.drain();
