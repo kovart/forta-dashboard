@@ -113,8 +113,8 @@ function CombinerPage() {
   }, [group]);
 
   useEffect(() => {
-    if (alerts?.length > 0 && isReloading) {
-      scrollToElement('alerts');
+    if (alerts?.length > 0 && isReloading && window.scrollY > 240) {
+      scrollToElement('alerts', -116);
     }
   }, [isReloading]);
 
@@ -169,6 +169,13 @@ function CombinerPage() {
       BURN_ADDRESSES.forEach((address) =>
         addresses.delete(address.toLowerCase())
       );
+      // remove dummy addresses
+      for (const address of addresses) {
+        // zero address with last any 5 characters
+        if (address.indexOf('0x00000000000000000000000000000000000') === 0) {
+          addresses.delete(address);
+        }
+      }
       logger.info('collected unique addresses', addresses.size);
 
       setProgress((v) => ({ ...v, text: 'Grouping alerts...' }));
@@ -261,7 +268,8 @@ function CombinerPage() {
       // transform Set to Array
       groups = [...groups];
       groups.sort(
-        (group1, group2) => group2.stages.length - group1.stages.length
+        (group1, group2) =>
+          group2.stageLabels.length - group1.stageLabels.length
       );
 
       if (groups.length === 0) {
@@ -272,6 +280,13 @@ function CombinerPage() {
 
       setProgress({ text: 'Done', percent: 100 });
 
+      const analysis = {
+        chainId,
+        startDate,
+        endDate,
+        stageKit: stageKit.key
+      };
+
       await db.transaction(
         'rw',
         [db.combinerAnalyses, db.combinerGroups],
@@ -279,16 +294,12 @@ function CombinerPage() {
           await db.combinerAnalyses.clear();
           await db.combinerGroups.clear();
 
-          const analysisId = await db.combinerAnalyses.add({
-            chainId,
-            startDate,
-            endDate,
-            stageKit: stageKit.key
-          });
+          const analysisId = await db.combinerAnalyses.add(analysis);
           db.combinerGroups.bulkAdd(groups.map((g) => ({ ...g, analysisId })));
         }
       );
 
+      setAnalysis(analysis);
       setGroups(groups);
     } catch (e) {
       logger.error(e);

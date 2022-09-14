@@ -5,6 +5,7 @@ import copy from 'copy-to-clipboard';
 import queryString from 'query-string';
 
 import { HOMEPAGE } from '@constants/common';
+import logger from '@utils/logger';
 
 export function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -44,10 +45,12 @@ export function changeSearchParams(params = {}, options = {}) {
   method({ path: url }, '', url);
 }
 
-export function scrollToElement(id, yOffset) {
+export function scrollToElement(id, yOffset = -24) {
   const element = document.getElementById(id);
-  const top =
-    element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+  const top = Math.max(
+    0,
+    element.getBoundingClientRect().top + window.pageYOffset + yOffset
+  );
 
   window.scrollTo({ top, behavior: 'smooth' });
 }
@@ -81,4 +84,22 @@ export function getFullUrl(pathname, query) {
     '?' +
     queryString
   );
+}
+
+export async function retry(fn, opts = {}) {
+  const { attempts = 3, wait = 5 * 1000 } = opts;
+  let attempt = 1;
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    try {
+      return await fn();
+    } catch (e) {
+      logger.error('attempt #' + attempt, e);
+      if (attempt > attempts) {
+        return e;
+      }
+      attempt++;
+      await delay(wait);
+    }
+  }
 }

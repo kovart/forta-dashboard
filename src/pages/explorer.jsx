@@ -42,7 +42,9 @@ function ExplorerPage() {
   const isReloading = isFetching && !isFetchingNextPage;
 
   useEffect(() => {
-    scrollToElement('alerts');
+    if (window.scrollY > 100) {
+      scrollToElement('alerts', 80);
+    }
   }, [isReloading]);
 
   const actions = useMemo(

@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import React, { useLayoutEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { uniqBy } from 'lodash';
@@ -48,13 +48,10 @@ function BotFilterModal({
       [...selectedBots.filter(filter), ...searchedBots],
       (v) => v.id
     );
-  }, [open, search, searchedBots]);
+  }, [isInitialized, search, searchedBots]);
 
   useLayoutEffect(() => {
     setSelectedBotIds(botIds);
-  }, [botIds]);
-
-  useEffect(() => {
     if (botIds.length > 0) {
       (async () => {
         setIsInitialized(false);
@@ -66,9 +63,10 @@ function BotFilterModal({
         setIsInitialized(true);
       })();
     } else {
+      setSelectedBots([]);
       setIsInitialized(true);
     }
-  }, [botIds]);
+  }, [open]);
 
   function handleBotCheckedChange(bot, isChecked) {
     setSelectedBots((v) =>
