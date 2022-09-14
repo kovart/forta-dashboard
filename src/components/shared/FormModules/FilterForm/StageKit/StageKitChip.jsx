@@ -1,25 +1,28 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import Menu from '@components/shared/Menu/Menu';
 import Chip from '@components/shared/Chip/Chip';
+import useStageKit from '@hooks/useStageKit';
 import { POPOVER_PLACEMENT } from '@components/shared/Popover/Popover.utils';
 import { IconSymbols } from '@components/shared/Icon/Icon.utils';
 import { CSS_COLOR } from '@utils/css';
 import { AppContext } from '@components/providers/AppContext/AppContext';
 
-function StageKitChip({ editable, removable, value, className, onChange }) {
+function StageKitChip({
+  editable,
+  removable,
+  value: stageKitKey,
+  className,
+  onChange
+}) {
   const {
     data: {
       stageKits: { forta: fortaStageKits }
     }
   } = useContext(AppContext);
 
-  const stageKit = useMemo(() => {
-    if (!value) return null;
-
-    return fortaStageKits.find((kit) => kit.key === value);
-  }, [value]);
+  const stageKit = useStageKit(stageKitKey);
 
   return (
     <Menu
@@ -27,7 +30,7 @@ function StageKitChip({ editable, removable, value, className, onChange }) {
       renderElement={({ ref, toggle }) => (
         <Chip
           ref={ref}
-          empty={!value}
+          empty={!stageKitKey}
           removable={removable}
           clickable={editable}
           startIcon={{
@@ -46,7 +49,7 @@ function StageKitChip({ editable, removable, value, className, onChange }) {
       {fortaStageKits.map((kit) => (
         <Menu.Item
           key={kit.key}
-          selected={kit.key === value}
+          selected={kit.key === stageKitKey}
           onClick={() => onChange(kit.key)}
         >
           {kit.name}

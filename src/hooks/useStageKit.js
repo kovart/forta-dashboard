@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 
 import { AppContext } from '@components/providers/AppContext/AppContext';
 
@@ -9,7 +9,7 @@ function useStageKit(key) {
     }
   } = useContext(AppContext);
 
-  return fortaStageKits.find((kit) => kit.key === key);
+  return useMemo(() => fortaStageKits.find((kit) => kit.key === key), [key]);
 }
 
 export default useStageKit;
