@@ -5,10 +5,11 @@ import LRU from 'lru-cache';
 
 import { CHAIN_RPC_URL } from '@constants/common';
 import {
-  FortaDeFiKit,
+  ExperimentalGeneralKit,
   FortaGeneralKit,
-  FortaGovernanceKit
+  FortaScamKit
 } from '@constants/stages';
+import { retry } from '@utils/helpers';
 
 export const AppContext = React.createContext({
   getProvider: () => null,
@@ -39,9 +40,15 @@ function AppContextProvider({ children }) {
           const [address, chainId] = key.split('.');
           let transactionCount, isContract;
           const provider = await providersCache.fetch(chainId);
-          isContract = (await provider.getCode(address)) !== '0x';
+          isContract = await retry(
+            async () => (await provider.getCode(address)) !== '0x',
+            { wait: 500 }
+          );
           if (!isContract) {
-            transactionCount = await provider.getTransactionCount(address);
+            transactionCount = await retry(
+              () => provider.getTransactionCount(address),
+              { wait: 500 }
+            );
           }
 
           return {
@@ -60,7 +67,7 @@ function AppContextProvider({ children }) {
         addressesCache.fetch(address + '.' + chainId),
       data: {
         stageKits: {
-          forta: [FortaGeneralKit, FortaDeFiKit, FortaGovernanceKit],
+          forta: [FortaGeneralKit, ExperimentalGeneralKit, FortaScamKit],
           // not implemented yet
           user: []
         }
