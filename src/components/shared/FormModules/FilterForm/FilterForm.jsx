@@ -23,6 +23,7 @@ import {
   FilterPermanentElementsType,
   FilterType
 } from '@constants/types';
+import { SEVERITY } from '@constants/common';
 
 const MODAL = {
   address: 'address',
@@ -115,12 +116,23 @@ function FilterForm({
           )}
         >
           <Menu.Item
+            startIcon={IconSymbols.CPU}
             disabled={!stageKit}
             onClick={() => {
               handleChange({ botIds: stageKit.botIds });
             }}
           >
-            Filter by Bots Kit
+            Stage Kit Bots
+          </Menu.Item>
+          <Menu.Item
+            startIcon={IconSymbols.Bell}
+            onClick={() => {
+              handleChange({
+                severities: [SEVERITY.medium, SEVERITY.high, SEVERITY.critical]
+              });
+            }}
+          >
+            Medium+ severities
           </Menu.Item>
         </Menu>
         <Menu
