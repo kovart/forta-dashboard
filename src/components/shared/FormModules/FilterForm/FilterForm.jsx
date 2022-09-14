@@ -15,6 +15,7 @@ import PeriodChip from '@components/shared/FormModules/FilterForm/Period/PeriodC
 import StageKitChip from '@components/shared/FormModules/FilterForm/StageKit/StageKitChip';
 import SeverityChip from '@components/shared/FormModules/FilterForm/Severity/SeverityChip';
 import BotChip from '@components/shared/FormModules/FilterForm/Bot/BotChip';
+import useStageKit from '@hooks/useStageKit';
 import { CSS_COLOR } from '@utils/css';
 import { IconSymbols } from '@components/shared/Icon/Icon';
 import {
@@ -43,6 +44,7 @@ function FilterForm({
   const { addresses = [] } = values;
   const { addresses: lockedAddresses = [] } = locked;
   const [modals, setModals] = useState({});
+  const stageKit = useStageKit(values.stageKit);
 
   const openModal = (key) => setModals((v) => ({ ...v, [key]: true }));
   const closeModal = (key) => setModals((v) => ({ ...v, [key]: false }));
@@ -94,18 +96,33 @@ function FilterForm({
             onChange={(severities) => handleChange({ severities })}
           />
         )}
-        <Button
-          type="button"
-          variant="secondary"
-          startIcon={{
-            symbol: IconSymbols.Star,
-            color: CSS_COLOR.accentOrange
-          }}
-          endIcon={{ symbol: IconSymbols.ChevronDown }}
-          className={styles.action}
+        <Menu
+          renderElement={({ ref, toggle }) => (
+            <Button
+              ref={ref}
+              type="button"
+              variant="secondary"
+              startIcon={{
+                symbol: IconSymbols.Star,
+                color: CSS_COLOR.accentOrange
+              }}
+              endIcon={{ symbol: IconSymbols.ChevronDown }}
+              className={styles.action}
+              onClick={toggle}
+            >
+              Presets
+            </Button>
+          )}
         >
-          Presets
-        </Button>
+          <Menu.Item
+            disabled={!stageKit}
+            onClick={() => {
+              handleChange({ botIds: stageKit.botIds });
+            }}
+          >
+            Filter by Bots Kit
+          </Menu.Item>
+        </Menu>
         <Menu
           preferredWidth={150}
           renderElement={({ ref, toggle }) => (

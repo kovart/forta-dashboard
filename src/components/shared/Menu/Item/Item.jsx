@@ -13,6 +13,7 @@ function MenuItem({
   startIcon,
   endIcon,
   href,
+  disabled = false,
   selected = false,
   children,
   onClick = () => {},
@@ -46,7 +47,10 @@ function MenuItem({
 
   return (
     <Element
-      className={cn(styles.root, className, { [styles.selected]: selected })}
+      disabled={disabled}
+      className={cn(styles.root, className, {
+        [styles.selected]: selected
+      })}
       onClick={handleClick}
       {...props}
     >
@@ -63,6 +67,7 @@ MenuItem.propTypes = {
   endIcon: PropTypes.string,
   href: PropTypes.string,
   selected: PropTypes.bool,
+  disabled: PropTypes.bool,
   children: PropTypes.any,
   className: PropTypes.string,
   onClick: PropTypes.func
