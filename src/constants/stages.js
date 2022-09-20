@@ -126,7 +126,6 @@ export const ExperimentalGeneralKit = {
     '0x4adff9a0ed29396d51ef3b16297070347aab25575f04a4e2bd62ec43ca4508d2', // money laundering
     '0x0ffe038c802784f739bb27fcd4274f71c384fea78de87c9ef8d5b3fb72b514c7', // high gas usage
     '0xe27867c40008e0e3533d6dba7d3c1f26a61a3923bc016747d131f868f8f34555', // high gas price
-    '0x3858be37e155f84e8e0d6212db1b47d4e83b1d41e8a2bebecb902651ed1125d6', // high gas usage #2 (NETHFORTA-1)
     '0xbf953b115fd214e1eb5c4d6f556ea30f0df47bd86bf35ce1fdaeff03dc7df5b7', // high value transaction
     '0x11b3d9ffb13a72b776e1aed26616714d879c481d7a463020506d1fb5f33ec1d4', // forta-text-messages-agent
     '0x20d57d727a2d7bf4b447d1952d7ea44efeda0920e45e779d298d5385f3b36cfa', // Transaction Volume Anomaly Detection
@@ -177,7 +176,6 @@ export const ExperimentalGeneralKit = {
       label: 'High Gas',
       color: STAGE_COLOR.green,
       alertIds: [
-        'NETHFORTA-1', // high value transaction
         'IMPOSSIBLE-2', // high gas usage (but really also high gas price)
         'FORTA-2' // high gas price
       ]
