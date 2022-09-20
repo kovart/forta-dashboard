@@ -303,12 +303,12 @@ export class FortaExplorer {
           return data;
         }
       } catch (e) {
+        logger.error('attempt #' + attemptCounter + 1, e);
         attemptCounter++;
-        logger.error('attempt #' + attemptCounter, e);
         if (attemptCounter > RETRY_ATTEMPTS) {
           return Promise.reject(e);
         } else {
-          chunkSize = Math.floor(chunkSize / 1.5);
+          chunkSize = Math.max(200, Math.floor(chunkSize / 1.5));
           logger.warn('Reducing size of chunk to', chunkSize);
           await delay(RETRY_WAIT);
         }
