@@ -155,28 +155,33 @@ function CombinerPage() {
           })
       });
 
-      setProgress((v) => ({ ...v, text: 'Collecting unique addresses...' }));
+      setProgress((v) => ({ ...v, text: 'Clustering alerts...' }));
       await delay(1);
 
-      let addresses = new Set();
+      let alertsByAddress = new Map();
       for (const alert of alerts) {
         for (const address of alert.addresses) {
-          addresses.add(address);
+          const alerts = alertsByAddress.get(address);
+          if (alerts) {
+            alerts.push(alert);
+          } else {
+            alertsByAddress.set(address, [alert]);
+          }
         }
       }
 
       // remove burn addresses
       BURN_ADDRESSES.forEach((address) =>
-        addresses.delete(address.toLowerCase())
+        alertsByAddress.delete(address.toLowerCase())
       );
       // remove dummy addresses
-      for (const address of addresses) {
+      for (const address of alertsByAddress.keys()) {
         // zero address with last any 5 characters
         if (address.indexOf('0x00000000000000000000000000000000000') === 0) {
-          addresses.delete(address);
+          alertsByAddress.delete(address);
         }
       }
-      logger.info('collected unique addresses', addresses.size);
+      logger.info('collected unique addresses', alertsByAddress.size);
 
       setProgress((v) => ({ ...v, text: 'Grouping alerts...' }));
       await delay(1);
@@ -191,13 +196,13 @@ function CombinerPage() {
 
       let addressCounter = 0;
       let groups = new Set();
-      for (const address of addresses) {
+      for (const [address, alerts] of alertsByAddress.entries()) {
         addressCounter++;
         if (addressCounter % 100 === 0) {
           setProgress({
-            text: `Grouping alerts: ${addressCounter}/${addresses.size}`,
+            text: `Grouping alerts: ${addressCounter}/${alertsByAddress.size}`,
             percent: createInterpolator({
-              inputRange: [0, addresses.size],
+              inputRange: [0, alertsByAddress.size],
               outputRange: [20, 75]
             })(addressCounter)
           });
@@ -207,8 +212,6 @@ function CombinerPage() {
         const stageLabels = [];
         const stageLabelsSet = new Set();
         for (const alert of alerts) {
-          if (!alert.addresses.has(address)) continue;
-
           const stageLabel = stageLabelsByAlertId.get(alert.alertId);
           if (stageLabel) {
             stageLabels.push(stageLabel);
