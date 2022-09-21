@@ -303,7 +303,7 @@ export class FortaExplorer {
           return data;
         }
       } catch (e) {
-        logger.error('attempt #' + attemptCounter + 1, e);
+        logger.error('attempt #' + (attemptCounter + 1), e);
         attemptCounter++;
         if (attemptCounter > RETRY_ATTEMPTS) {
           return Promise.reject(e);
