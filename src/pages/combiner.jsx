@@ -120,6 +120,7 @@ function CombinerPage() {
 
   async function handleFormSubmit(values) {
     setAnalyseForm(values);
+    setGroupIndex(0);
     await analyze(values);
   }
 
