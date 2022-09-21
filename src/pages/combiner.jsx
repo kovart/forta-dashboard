@@ -275,6 +275,10 @@ function CombinerPage() {
           group2.stageLabels.length - group1.stageLabels.length
       );
 
+      if (stageKit.sort) {
+        stageKit.sort(groups);
+      }
+
       if (groups.length === 0) {
         setProgress({ text: `No alerts were clustered`, percent: 100 });
         setIsAnalysing(false);

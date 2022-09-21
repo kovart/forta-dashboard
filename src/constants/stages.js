@@ -227,7 +227,23 @@ export const ExperimentalGeneralKit = {
         'forta-text-messages-possible-hack' // text message agent - high severity only
       ]
     }
-  ]
+  ],
+  sort: (groups) => {
+    groups.sort((g1, g2) => {
+      const calcScore = (g) => {
+        let score = g.stageLabels.length * 10;
+        score += Number(g.stageLabels.includes('Funding'));
+        score += Number(g.stageLabels.includes('Laundering'));
+        score += Number(
+          g.stageLabels.includes('Preparation') &&
+            g.stageLabels.includes('Exploitation')
+        );
+        return score;
+      };
+
+      return calcScore(g2) - calcScore(g1);
+    });
+  }
 };
 
 export const FortaScamKit = {
@@ -240,7 +256,6 @@ export const FortaScamKit = {
     '0x617c356a4ad4b755035ef8024a87d36d895ee3cb0864e7ce9b3cf694dd80c82a', // Tornado Cash Funded Account Interaction
     '0x4adff9a0ed29396d51ef3b16297070347aab25575f04a4e2bd62ec43ca4508d2', // money laundering
     '0x0ffe038c802784f739bb27fcd4274f71c384fea78de87c9ef8d5b3fb72b514c7', // high gas usage
-    '0x3858be37e155f84e8e0d6212db1b47d4e83b1d41e8a2bebecb902651ed1125d6', // high gas usage #2
     '0xe27867c40008e0e3533d6dba7d3c1f26a61a3923bc016747d131f868f8f34555', // high gas price
     '0xbf953b115fd214e1eb5c4d6f556ea30f0df47bd86bf35ce1fdaeff03dc7df5b7', // high value transaction
     '0x20d57d727a2d7bf4b447d1952d7ea44efeda0920e45e779d298d5385f3b36cfa', // Transaction Volume Anomaly Detection
@@ -250,7 +265,8 @@ export const FortaScamKit = {
     '0x2e51c6a89c2dccc16a813bb0c3bf3bbfe94414b6a0ea3fc650ad2a59e148f3c8', // anomalous transaction bot
     '0xee275019391109f9ce0de16b78e835c261af1118afeb1a1048a08ccbf67c3ea8', // social eng contract creation,
     '0x8badbf2ad65abc3df5b1d9cc388e419d9255ef999fb69aac6bf395646cf01c14', // Ice Phishing Detection 2.0,
-    '0x20d0cd9432c7e15cb625097a718c15cc07f463b5252e3c36ae23acb7ef98d54e' // NFT Sleep Minting Detection,
+    '0x20d0cd9432c7e15cb625097a718c15cc07f463b5252e3c36ae23acb7ef98d54e', // NFT Sleep Minting Detection,
+    '0xaa64eef3c1d2dbfb88c992896faf4e15a1dd443001ff19479c0f63601a861125' // forta-ae-suspicious-approvals
   ],
   stages: [
     {
@@ -278,7 +294,6 @@ export const FortaScamKit = {
       label: 'High Gas',
       color: STAGE_COLOR.green,
       alertIds: [
-        'NETHFORTA-1', // high value transaction
         'IMPOSSIBLE-2', // high gas usage (but really also high gas price)
         'FORTA-2' // high gas price
       ]
@@ -294,7 +309,8 @@ export const FortaScamKit = {
         'SUCCESSFUL-INTERNAL-TRANSACTION-VOL-INCREASE', // Transaction Volume Anomaly Detection
         'SUCCESSFUL-TRANSACTION-VOL-INCREASE', // Transaction Volume Anomaly Detection
         'FAILED-TRANSACTION-VOL-INCREASE', // Transaction Volume Anomaly Detection
-        'FAILED-TRANSACTION-VOL-INCREASE' // Transaction Volume Anomaly Detection
+        'FAILED-TRANSACTION-VOL-INCREASE', // Transaction Volume Anomaly Detection
+        'AE-SUSPICIOUS-APPROVALS' // forta-ae-suspicious-approvals
       ]
     },
     {
@@ -311,5 +327,21 @@ export const FortaScamKit = {
         'forta-text-messages-possible-hack' // text message agent - high severity only
       ]
     }
-  ]
+  ],
+  sort: (groups) => {
+    groups.sort((g1, g2) => {
+      const calcScore = (g) => {
+        let score = g.stageLabels.length * 10;
+        score += Number(g.stageLabels.includes('Funding'));
+        score += Number(g.stageLabels.includes('Laundering'));
+        score += Number(
+          g.stageLabels.includes('Preparation') &&
+            g.stageLabels.includes('Performance')
+        );
+        return score;
+      };
+
+      return calcScore(g2) - calcScore(g1);
+    });
+  }
 };
