@@ -94,6 +94,7 @@ export const FortaGeneralKit = {
         'FAILED-TRANSACTION-VOL-INCREASE', // Transaction Volume Anomaly Detection
         'FAILED-TRANSACTION-VOL-INCREASE', // Transaction Volume Anomaly Detection
         'FLASHLOAN-ATTACK', // Flashloan Detection Bot
+        'FLASHLOAN-ATTACK-WITH-HIGH-PROFIT', // Flashloan Detection Bot
         'HIGH-MINT-VALUE', // Large Mint Borrow Volume Anomaly Detection
         'HIGH-BORROW-VALUE', // Large Mint Borrow Volume Anomaly Detection
         'FLASHBOT-TRANSACTION', // Flashbot
@@ -208,6 +209,7 @@ export const ExperimentalGeneralKit = {
         'FAILED-TRANSACTION-VOL-INCREASE', // Transaction Volume Anomaly Detection
         'FAILED-TRANSACTION-VOL-INCREASE', // Transaction Volume Anomaly Detection
         'FLASHLOAN-ATTACK', // Flashloan Detection Bot
+        'FLASHLOAN-ATTACK-WITH-HIGH-PROFIT', // Flashloan Detection Bot
         'HIGH-MINT-VALUE', // Large Mint Borrow Volume Anomaly Detection
         'HIGH-BORROW-VALUE', // Large Mint Borrow Volume Anomaly Detection
         'FLASHBOT-TRANSACTION', // Flashbot
