@@ -55,7 +55,8 @@ export const FortaGeneralKit = {
     '0xe8527df509859e531e58ba4154e9157eb6d9b2da202516a66ab120deabd3f9f6', // attack simulation
     '0x4c7e56a9a753e29ca92bd57dd593bdab0c03e762bdd04e2bc578cb82b842c1f3', // unverified contract creation
     '0x2e51c6a89c2dccc16a813bb0c3bf3bbfe94414b6a0ea3fc650ad2a59e148f3c8', // anomalous transaction bot
-    '0xee275019391109f9ce0de16b78e835c261af1118afeb1a1048a08ccbf67c3ea8' // social eng contract creation
+    '0xee275019391109f9ce0de16b78e835c261af1118afeb1a1048a08ccbf67c3ea8', // social eng contract creation
+    '0xaf9ac4c204eabdd39e9b00f91c8383dc01ef1783e010763cad05cc39e82643bb' // large native transfer out
   ],
   stages: [
     {
@@ -108,6 +109,7 @@ export const FortaGeneralKit = {
       color: STAGE_COLOR.pink,
       alertIds: [
         'POSSIBLE-MONEY-LAUNDERING-TORNADO-CASH', // money laundering
+        'LARGE-TRANSFER-OUT', // Large Transfer Out
         'forta-text-messages-possible-hack' // text message agent - high severity only
       ]
     }
@@ -164,7 +166,8 @@ export const ExperimentalGeneralKit = {
     '0x2e51c6a89c2dccc16a813bb0c3bf3bbfe94414b6a0ea3fc650ad2a59e148f3c8', // anomalous transaction bot
     '0xee275019391109f9ce0de16b78e835c261af1118afeb1a1048a08ccbf67c3ea8', // social eng contract creation
     '0x8badbf2ad65abc3df5b1d9cc388e419d9255ef999fb69aac6bf395646cf01c14', // Ice Phishing Detection 2.0,
-    '0x20d0cd9432c7e15cb625097a718c15cc07f463b5252e3c36ae23acb7ef98d54e' // NFT Sleep Minting Detection,
+    '0x20d0cd9432c7e15cb625097a718c15cc07f463b5252e3c36ae23acb7ef98d54e', // NFT Sleep Minting Detection,
+    '0xaf9ac4c204eabdd39e9b00f91c8383dc01ef1783e010763cad05cc39e82643bb' // large native transfer out
   ],
   stages: [
     {
@@ -222,7 +225,8 @@ export const ExperimentalGeneralKit = {
       label: 'Laundering',
       color: STAGE_COLOR.pink,
       alertIds: [
-        'POSSIBLE-MONEY-LAUNDERING-TORNADO-CASH' // money laundering
+        'POSSIBLE-MONEY-LAUNDERING-TORNADO-CASH', // money laundering
+        'LARGE-TRANSFER-OUT' // Large Transfer Out
       ]
     },
     {
@@ -271,7 +275,8 @@ export const FortaScamKit = {
     '0xee275019391109f9ce0de16b78e835c261af1118afeb1a1048a08ccbf67c3ea8', // social eng contract creation,
     '0x8badbf2ad65abc3df5b1d9cc388e419d9255ef999fb69aac6bf395646cf01c14', // Ice Phishing Detection 2.0,
     '0x20d0cd9432c7e15cb625097a718c15cc07f463b5252e3c36ae23acb7ef98d54e', // NFT Sleep Minting Detection,
-    '0xaa64eef3c1d2dbfb88c992896faf4e15a1dd443001ff19479c0f63601a861125' // forta-ae-suspicious-approvals
+    '0xaa64eef3c1d2dbfb88c992896faf4e15a1dd443001ff19479c0f63601a861125', // forta-ae-suspicious-approvals
+    '0xaf9ac4c204eabdd39e9b00f91c8383dc01ef1783e010763cad05cc39e82643bb' // large native transfer out
   ],
   stages: [
     {
@@ -322,7 +327,8 @@ export const FortaScamKit = {
       label: 'Laundering',
       color: STAGE_COLOR.pink,
       alertIds: [
-        'POSSIBLE-MONEY-LAUNDERING-TORNADO-CASH' // money laundering
+        'POSSIBLE-MONEY-LAUNDERING-TORNADO-CASH', // money laundering
+        'LARGE-TRANSFER-OUT' // Large Transfer Out
       ]
     },
     {
