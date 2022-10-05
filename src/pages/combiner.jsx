@@ -176,10 +176,12 @@ function CombinerPage() {
       BURN_ADDRESSES.forEach((address) =>
         alertsByAddress.delete(address.toLowerCase())
       );
-      // remove dummy addresses
+      // remove dummy/burn addresses
       for (const address of alertsByAddress.keys()) {
-        // zero address with last any 5 characters
-        if (address.indexOf('0x00000000000000000000000000000000000') === 0) {
+        if (
+          address.indexOf('000000000000000000000000') !== -1 ||
+          address.indexOf('ffffffffffffffffffffffff') !== -1
+        ) {
           alertsByAddress.delete(address);
         }
       }
