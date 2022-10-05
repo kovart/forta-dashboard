@@ -107,7 +107,8 @@ function CombinerPage() {
         chainId: analysis.chainId,
         startDate: analysis.startDate,
         endDate: analysis.endDate,
-        stageKit: analysis.stageKit
+        stageKit: analysis.stageKit,
+        botIds: fortaStageKits.find((k) => k.key === analysis.stageKit)?.botIds
       });
     }
   }, [group]);
