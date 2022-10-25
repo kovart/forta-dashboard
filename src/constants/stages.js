@@ -14,7 +14,7 @@ export const FortaGeneralKit = {
   name: 'Forta General Kit',
   botIds: [
     '0xd9fe61cfe875470b80318a96cc0a94ba3adbe1eb4a14827fa018f14925e7da64', // ice phishing
-    '0x457aa09ca38d60410c8ffa1761f535f23959195a56c9b82e0207801e86b34d99', // suspicious contract creation
+    '0x0b241032ca430d9c02eaa6a52d217bbff046f0d1b3f3d2aa928e42a97150ec91', // suspicious contract creation
     '0xaedda4252616d971d570464a3ae4a9f0a9d72a57d8581945fff648d03cd30a7d', // blocklisted account tx
     '0x4cc272e78a685e27abcccdb40578f91f43baecc43e3c465460991a9dcdcb9756', // tornado cash withdrawl
     '0x617c356a4ad4b755035ef8024a87d36d895ee3cb0864e7ce9b3cf694dd80c82a', // Tornado Cash Funded Account Interaction
@@ -56,7 +56,9 @@ export const FortaGeneralKit = {
     '0x4c7e56a9a753e29ca92bd57dd593bdab0c03e762bdd04e2bc578cb82b842c1f3', // unverified contract creation
     '0x2e51c6a89c2dccc16a813bb0c3bf3bbfe94414b6a0ea3fc650ad2a59e148f3c8', // anomalous transaction bot
     '0xee275019391109f9ce0de16b78e835c261af1118afeb1a1048a08ccbf67c3ea8', // social eng contract creation
-    '0xaf9ac4c204eabdd39e9b00f91c8383dc01ef1783e010763cad05cc39e82643bb' // large native transfer out
+    '0xaf9ac4c204eabdd39e9b00f91c8383dc01ef1783e010763cad05cc39e82643bb', // large native transfer out,
+    '0x127e62dffbe1a9fa47448c29c3ef4e34f515745cb5df4d9324c2a0adae59eeef', // Aztec Protocol funded account interacted with contract
+    '0xdccd708fc89917168f3a793c605e837572c01a40289c063ea93c2b74182cd15f' // Aztec ML bot
   ],
   stages: [
     {
@@ -64,7 +66,8 @@ export const FortaGeneralKit = {
       color: STAGE_COLOR.blue,
       alertIds: [
         'AE-FORTA-0', //  tornado cash withdrawl
-        'TORNADO-CASH-FUNDED-ACCOUNT-INTERACTION' // tornado cash funding
+        'TORNADO-CASH-FUNDED-ACCOUNT-INTERACTION', // tornado cash funding,
+        'AK-AZTEC-PROTOCOL-FUNDED-ACCOUNT-INTERACTION-0' // aztec funding
       ]
     },
     {
@@ -93,7 +96,7 @@ export const FortaGeneralKit = {
         'SUCCESSFUL-INTERNAL-TRANSACTION-VOL-INCREASE', // Transaction Volume Anomaly Detection
         'SUCCESSFUL-TRANSACTION-VOL-INCREASE', // Transaction Volume Anomaly Detection
         'FAILED-TRANSACTION-VOL-INCREASE', // Transaction Volume Anomaly Detection
-        'FAILED-TRANSACTION-VOL-INCREASE', // Transaction Volume Anomaly Detection
+        'FAILED-INTERNAL-TRANSACTION-VOL-INCREASE', // Transaction Volume Anomaly Detection
         'FLASHLOAN-ATTACK', // Flashloan Detection Bot
         'FLASHLOAN-ATTACK-WITH-HIGH-PROFIT', // Flashloan Detection Bot
         'HIGH-MINT-VALUE', // Large Mint Borrow Volume Anomaly Detection
@@ -101,7 +104,8 @@ export const FortaGeneralKit = {
         'FLASHBOT-TRANSACTION', // Flashbot
         'BALANCE-DECREASE-ASSETS-ALL-REMOVED', // balance decrease for bridges
         'BALANCE-DECREASE-ASSETS-PORTION-REMOVED', // balance decrease for bridges
-        'ANOMALOUS-TOKEN-TRANSFERS-TX' // Anomalous Token Transfer
+        'ANOMALOUS-TOKEN-TRANSFERS-TX', // Anomalous Token Transfer
+        'AE-MALICIOUS-ADDR' // malicious address bot
       ]
     },
     {
@@ -109,6 +113,7 @@ export const FortaGeneralKit = {
       color: STAGE_COLOR.pink,
       alertIds: [
         'POSSIBLE-MONEY-LAUNDERING-TORNADO-CASH', // money laundering
+        'AK-AZTEC-PROTOCOL-POSSIBLE-MONEY-LAUNDERING-NATIVE', // aztec
         'LARGE-TRANSFER-OUT', // Large Transfer Out
         'forta-text-messages-possible-hack' // text message agent - high severity only
       ]
@@ -167,7 +172,10 @@ export const ExperimentalGeneralKit = {
     '0xee275019391109f9ce0de16b78e835c261af1118afeb1a1048a08ccbf67c3ea8', // social eng contract creation
     '0x8badbf2ad65abc3df5b1d9cc388e419d9255ef999fb69aac6bf395646cf01c14', // Ice Phishing Detection 2.0,
     '0x20d0cd9432c7e15cb625097a718c15cc07f463b5252e3c36ae23acb7ef98d54e', // NFT Sleep Minting Detection,
-    '0xaf9ac4c204eabdd39e9b00f91c8383dc01ef1783e010763cad05cc39e82643bb' // large native transfer out
+    '0xaf9ac4c204eabdd39e9b00f91c8383dc01ef1783e010763cad05cc39e82643bb', // large native transfer out
+    '0xd935a697faab13282b3778b2cb8dd0aa4a0dde07877f9425f3bf25ac7b90b895', // malicious address bot
+    '0x127e62dffbe1a9fa47448c29c3ef4e34f515745cb5df4d9324c2a0adae59eeef', // Aztec Protocol funded account interacted with contract
+    '0xdccd708fc89917168f3a793c605e837572c01a40289c063ea93c2b74182cd15f' // Aztec ML bot
   ],
   stages: [
     {
@@ -199,7 +207,9 @@ export const ExperimentalGeneralKit = {
         'SMART-PRICE-CHANGES', // Smart Price Change Bot
         'AK-ATTACK-SIMULATION-0', // Attack Simulation
         'UNVERIFIED-CODE-CONTRACT-CREATION', // unverified contract creation
-        'SOCIAL-ENG-CONTRACT-CREATION' // Social Engineering Contract Creation
+        'SOCIAL-ENG-CONTRACT-CREATION', // Social Engineering Contract Creation
+        'ICE-PHISHING-HIGH-NUM-APPROVALS', // ice phishing
+        'ICE-PHISHING-APPROVAL-FOR-ALL' // ice phishing
       ]
     },
     {
@@ -210,7 +220,7 @@ export const ExperimentalGeneralKit = {
         'SUCCESSFUL-INTERNAL-TRANSACTION-VOL-INCREASE', // Transaction Volume Anomaly Detection
         'SUCCESSFUL-TRANSACTION-VOL-INCREASE', // Transaction Volume Anomaly Detection
         'FAILED-TRANSACTION-VOL-INCREASE', // Transaction Volume Anomaly Detection
-        'FAILED-TRANSACTION-VOL-INCREASE', // Transaction Volume Anomaly Detection
+        'FAILED-INTERNAL-TRANSACTION-VOL-INCREASE', // Transaction Volume Anomaly Detection
         'FLASHLOAN-ATTACK', // Flashloan Detection Bot
         'FLASHLOAN-ATTACK-WITH-HIGH-PROFIT', // Flashloan Detection Bot
         'HIGH-MINT-VALUE', // Large Mint Borrow Volume Anomaly Detection
@@ -218,7 +228,9 @@ export const ExperimentalGeneralKit = {
         'FLASHBOT-TRANSACTION', // Flashbot
         'BALANCE-DECREASE-ASSETS-ALL-REMOVED', // balance decrease for bridges
         'BALANCE-DECREASE-ASSETS-PORTION-REMOVED', // balance decrease for bridges
-        'ANOMALOUS-TOKEN-TRANSFERS-TX' // Anomalous Token Transfer
+        'ANOMALOUS-TOKEN-TRANSFERS-TX', // Anomalous Token Transfer
+        'AE-MALICIOUS-ADDR', // malicious address bot
+        'ICE-PHISHING-PREV-APPROVED-TRANSFERED' // ice phishing
       ]
     },
     {
