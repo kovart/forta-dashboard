@@ -1,9 +1,9 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { ethers } from 'ethers';
 import LRU from 'lru-cache';
 
-import { CHAIN_RPC_URL } from '@constants/common';
+import { CHAIN_RPC_URLS } from '@constants/common';
 import {
   ExperimentalGeneralKit,
   FortaGeneralKit,
@@ -18,6 +18,8 @@ export const AppContext = React.createContext({
 });
 
 function AppContextProvider({ children }) {
+  const counterRef = useRef(0);
+
   const providersCache = useMemo(
     () =>
       new LRU({
@@ -25,7 +27,9 @@ function AppContextProvider({ children }) {
         ttl: 1000 * 60 * 30 /* 30min */,
         updateAgeOnGet: true,
         fetchMethod: (chainId) =>
-          new ethers.providers.JsonRpcProvider(CHAIN_RPC_URL[chainId])
+          CHAIN_RPC_URLS[chainId].map(
+            (url) => new ethers.providers.JsonRpcProvider(url)
+          )
       }),
     []
   );
@@ -38,16 +42,16 @@ function AppContextProvider({ children }) {
         updateAgeOnGet: true,
         fetchMethod: async (key) => {
           const [address, chainId] = key.split('.');
+          const providers = await providersCache.fetch(chainId);
+          const provider = providers[counterRef.current++ % providers.length];
+
           let transactionCount, isContract;
-          const provider = await providersCache.fetch(chainId);
           isContract = await retry(
-            async () => (await provider.getCode(address)) !== '0x',
-            { wait: 500 }
+            async () => (await provider.getCode(address)) !== '0x'
           );
           if (!isContract) {
-            transactionCount = await retry(
-              () => provider.getTransactionCount(address),
-              { wait: 500 }
+            transactionCount = await retry(() =>
+              provider.getTransactionCount(address)
             );
           }
 
@@ -62,9 +66,14 @@ function AppContextProvider({ children }) {
 
   const context = useMemo(
     () => ({
-      getProvider: (chainId) => providersCache.fetch(chainId),
-      getAddressMeta: (address, chainId) =>
-        addressesCache.fetch(address + '.' + chainId),
+      getProvider: (chainId) => {
+        const providers = providersCache.fetch(chainId);
+        return providers[counterRef.current++ % providers.length];
+      },
+      getAddressMeta: (address, chainId, context = {}) =>
+        addressesCache.fetch(address + '.' + chainId, {
+          fetchContext: context
+        }),
       data: {
         stageKits: {
           forta: [FortaGeneralKit, ExperimentalGeneralKit, FortaScamKit],

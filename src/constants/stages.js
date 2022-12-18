@@ -58,7 +58,8 @@ export const FortaGeneralKit = {
     '0xee275019391109f9ce0de16b78e835c261af1118afeb1a1048a08ccbf67c3ea8', // social eng contract creation
     '0xaf9ac4c204eabdd39e9b00f91c8383dc01ef1783e010763cad05cc39e82643bb', // large native transfer out,
     '0x127e62dffbe1a9fa47448c29c3ef4e34f515745cb5df4d9324c2a0adae59eeef', // Aztec Protocol funded account interacted with contract
-    '0xdccd708fc89917168f3a793c605e837572c01a40289c063ea93c2b74182cd15f' // Aztec ML bot
+    '0xdccd708fc89917168f3a793c605e837572c01a40289c063ea93c2b74182cd15f', // Aztec ML bot
+    '0xf496e3f522ec18ed9be97b815d94ef6a92215fc8e9a1a16338aee9603a5035fb' // cex funding
   ],
   stages: [
     {
@@ -67,7 +68,8 @@ export const FortaGeneralKit = {
       alertIds: [
         'AE-FORTA-0', //  tornado cash withdrawl
         'TORNADO-CASH-FUNDED-ACCOUNT-INTERACTION', // tornado cash funding,
-        'AK-AZTEC-PROTOCOL-FUNDED-ACCOUNT-INTERACTION-0' // aztec funding
+        'AK-AZTEC-PROTOCOL-FUNDED-ACCOUNT-INTERACTION-0', // aztec funding
+        'CEX-FUNDING-1' // cex funding
       ]
     },
     {

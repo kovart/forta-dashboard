@@ -2,51 +2,52 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-import styles from './GroupPanel.module.scss';
+import styles from './ClusterPanel.module.scss';
 
 import Button from '@components/shared/Button/Button';
 import { IconSymbols } from '@components/shared/Icon/Icon';
 import useStageKit from '@hooks/useStageKit';
 
-function GroupPanel({
-  group,
-  groupIndex,
+function ClusterPanel({
+  cluster,
+  clusterIndex,
+  totalClusters,
   stageKit,
-  totalGroups,
-  onGroupIndexChange,
+  onClusterIndexChange,
   className
 }) {
   stageKit = useStageKit(stageKit);
+
   const { stageLabels, lastStageLabel } = useMemo(() => {
     const order = stageKit.stages.map((s) => s.label);
-    const stageLabels = group.stageLabels.slice();
+    const stageLabels = cluster.stageLabels.slice();
     stageLabels.sort((s1, s2) => order.indexOf(s1) - order.indexOf(s2));
 
     return {
-      stageLabels,
+      stageLabels: [...cluster.uniqueStageSet],
       lastStageLabel: stageLabels[stageLabels.length - 1]
     };
-  }, [group, stageKit]);
+  }, [cluster, stageKit]);
 
   return (
     <div className={cn(styles.root, className)}>
       <div className={cn(styles.item, styles.group)}>
         <div className={styles.label}>Group</div>
         <div className={styles.value}>
-          {groupIndex + 1}/{totalGroups}
+          {clusterIndex + 1}/{totalClusters}
         </div>
         <div className={styles.actions}>
           <Button
             icon={IconSymbols.ArrowLeft}
-            disabled={groupIndex <= 0}
-            onClick={() => onGroupIndexChange(groupIndex - 1)}
+            disabled={clusterIndex <= 0}
+            onClick={() => onClusterIndexChange(clusterIndex - 1)}
             variant="icon-md"
           />
           <Button
             variant="icon-md"
             icon={IconSymbols.ArrowRight}
-            disabled={groupIndex + 1 >= totalGroups}
-            onClick={() => onGroupIndexChange(groupIndex + 1)}
+            disabled={clusterIndex + 1 >= totalClusters}
+            onClick={() => onClusterIndexChange(clusterIndex + 1)}
           />
         </div>
       </div>
@@ -74,15 +75,16 @@ function GroupPanel({
   );
 }
 
-GroupPanel.propTypes = {
-  groupIndex: PropTypes.number,
-  group: PropTypes.shape({
-    stageLabels: PropTypes.arrayOf(PropTypes.string)
+ClusterPanel.propTypes = {
+  clusterIndex: PropTypes.number,
+  cluster: PropTypes.shape({
+    stageLabels: PropTypes.arrayOf(PropTypes.string),
+    uniqueStageSet: PropTypes.instanceOf(Set)
   }),
   stageKit: PropTypes.string,
-  totalGroups: PropTypes.number,
-  onGroupIndexChange: PropTypes.func,
+  totalClusters: PropTypes.number,
+  onClusterIndexChange: PropTypes.func,
   className: PropTypes.string
 };
 
-export default GroupPanel;
+export default ClusterPanel;

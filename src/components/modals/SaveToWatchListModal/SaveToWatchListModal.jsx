@@ -36,7 +36,7 @@ function SaveToWatchListModal({
 
   async function handleSubmit(values) {
     try {
-      await db.watchGroups.add({
+      await db.watchClusters.add({
         ...values,
         totalAlerts,
         filter

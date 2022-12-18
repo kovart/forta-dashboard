@@ -11,7 +11,7 @@ import dayjs from 'dayjs';
 
 import BaseLayout from '@components/layouts/BaseLayout/BaseLayout';
 import AnalyzeForm from '@components/partials/combiner/AnalyzeForm/AnalyzeForm';
-import GroupPanel from '@components/partials/combiner/GroupPanel/GroupPanel';
+import ClusterPanel from '@components/partials/combiner/ClusterPanel/ClusterPanel';
 import Progress from '@components/shared/Progress/Progress';
 import AlertGroup from '@components/shared/AlertGroup/AlertGroup';
 import SaveToWatchListModal from '@components/modals/SaveToWatchListModal/SaveToWatchListModal';
@@ -26,7 +26,11 @@ import {
 import useExplorerQuery from '@hooks/useExplorerQuery';
 import logger from '@utils/logger';
 import forta, { FortaExplorer } from '@utils/forta';
-import { CHAIN, SYSTEM_DATE_FORMAT } from '@constants/common';
+import {
+  CHAIN,
+  ENTITY_CLUSTER_BOT_ID,
+  SYSTEM_DATE_FORMAT
+} from '@constants/common';
 import { FortaGeneralKit } from '@constants/stages';
 import { IconSymbols } from '@components/shared/Icon/Icon.utils';
 import { BURN_ADDRESSES } from '@constants/addresses';
@@ -49,13 +53,16 @@ function CombinerPage() {
     stageKit: FortaGeneralKit.key
   }));
   const [analysis, setAnalysis] = useState(null);
-  const [groups, setGroups] = useState([]); // array
-  const [groupIndex, setGroupIndex] = useState(0);
-  const [groupFilter, setGroupFilter] = useState({}); // alerts filter
+  const [clusters, setClusters] = useState([]); // array
+  const [clusterIndex, setClusterIndex] = useState(0);
+  const [clusterFilter, setClusterFilter] = useState({}); // alerts filter
   const [progress, setProgress] = useState(null);
   const [isAnalysing, setIsAnalysing] = useState(false);
   const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
-  const group = useMemo(() => groups[groupIndex] || null, [groups, groupIndex]);
+  const cluster = useMemo(
+    () => clusters[clusterIndex] || null,
+    [clusters, clusterIndex]
+  );
 
   const {
     alerts,
@@ -65,7 +72,7 @@ function CombinerPage() {
     hasNextPage,
     fetchNextPage,
     refetch
-  } = useExplorerQuery({ filter: groupFilter, enabled: !!group });
+  } = useExplorerQuery({ filter: clusterFilter, enabled: !!cluster });
 
   const isReloading = isFetching && !isFetchingNextPage;
 
@@ -79,11 +86,11 @@ function CombinerPage() {
           text: 'Restoring previous analysis',
           percent: 60
         });
-        const groups = await db.combinerGroups
+        const groups = await db.combinerClusters
           .where({ analysisId: lastAnalysis.id })
           .toArray();
         setAnalysis(lastAnalysis);
-        setGroups(groups);
+        setClusters(groups);
         setAnalyseForm({
           chainId: lastAnalysis.chainId,
           startDate: lastAnalysis.startDate,
@@ -101,9 +108,9 @@ function CombinerPage() {
   }, []);
 
   useEffect(() => {
-    if (group) {
-      setGroupFilter({
-        addresses: [group.address],
+    if (cluster) {
+      setClusterFilter({
+        addresses: cluster.addresses,
         chainId: analysis.chainId,
         startDate: analysis.startDate,
         endDate: analysis.endDate,
@@ -111,7 +118,7 @@ function CombinerPage() {
         botIds: fortaStageKits.find((k) => k.key === analysis.stageKit)?.botIds
       });
     }
-  }, [group]);
+  }, [cluster]);
 
   useEffect(() => {
     if (alerts?.length > 0 && isReloading && window.scrollY > 240) {
@@ -121,8 +128,26 @@ function CombinerPage() {
 
   async function handleFormSubmit(values) {
     setAnalyseForm(values);
-    setGroupIndex(0);
+    setClusterIndex(0);
     await analyze(values);
+  }
+
+  function getEntityClusters(entityAlerts) {
+    const map = new Map();
+
+    for (const alert of entityAlerts) {
+      const entityAddresses = (alert.metadata?.entityAddresses || '')
+        .split(',')
+        .map((a) => a.toLowerCase());
+
+      for (const address of entityAddresses) {
+        const arr = map.get(address) || [];
+        arr.push(entityAddresses);
+        map.set(address, arr);
+      }
+    }
+
+    return map;
   }
 
   async function analyze(values) {
@@ -139,7 +164,35 @@ function CombinerPage() {
         throw new Error('Cannot find stage kit');
       }
 
-      const alerts = await forta.getAllAlerts({
+      const analysisDays =
+        dayjs(
+          endDate || dayjs().format(SYSTEM_DATE_FORMAT),
+          SYSTEM_DATE_FORMAT
+        ).diff(dayjs(startDate || endDate, SYSTEM_DATE_FORMAT), 'day') + 1;
+
+      const entityClusterAlerts = await forta.getAllAlerts({
+        startDate: dayjs(startDate, SYSTEM_DATE_FORMAT)
+          .subtract(7, 'day')
+          .format(SYSTEM_DATE_FORMAT),
+        endDate,
+        botIds: [ENTITY_CLUSTER_BOT_ID],
+        query: FortaExplorer.metaAlertQuery,
+        onPageLoaded: (_, alerts) =>
+          setProgress({
+            text: `Fetching entities: ${alerts.size}`,
+            percent: createInterpolator({
+              inputRange: [0, (analysisDays + 5) * 100],
+              outputRange: [5, 8],
+              extrapolate: 'clamp'
+            })(alerts.size)
+          })
+      });
+
+      const clustersByAddress = getEntityClusters(entityClusterAlerts);
+
+      logger.log('clusters', clustersByAddress);
+
+      const botsAlerts = await forta.getAllAlerts({
         chainId,
         startDate,
         endDate,
@@ -150,8 +203,8 @@ function CombinerPage() {
           setProgress({
             text: `Fetching alerts: ${alerts.size}`,
             percent: createInterpolator({
-              inputRange: [0, 100_000],
-              outputRange: [5, 20],
+              inputRange: [0, analysisDays * 100_000],
+              outputRange: [8, 25],
               extrapolate: 'clamp'
             })(alerts.size)
           })
@@ -161,7 +214,7 @@ function CombinerPage() {
       await delay(1);
 
       let alertsByAddress = new Map();
-      for (const alert of alerts) {
+      for (const alert of botsAlerts) {
         for (const address of alert.addresses) {
           const alerts = alertsByAddress.get(address);
           if (alerts) {
@@ -176,21 +229,49 @@ function CombinerPage() {
       BURN_ADDRESSES.forEach((address) =>
         alertsByAddress.delete(address.toLowerCase())
       );
-      // remove dummy/burn addresses
       for (const address of alertsByAddress.keys()) {
         if (
-          address.indexOf('000000000000000000000000') !== -1 ||
-          address.indexOf('ffffffffffffffffffffffff') !== -1
+          address.indexOf('0000000000') !== -1 ||
+          address.indexOf('ffffffffff') !== -1
         ) {
+          // remove dummy/burn addresses
           alertsByAddress.delete(address);
+        } else {
+          // add single-address cluster if the address was not involved to any other clusters
+          const clusters = clustersByAddress.get(address) || [[address]];
+          clustersByAddress.set(address, clusters);
         }
       }
-      logger.info('collected unique addresses', alertsByAddress.size);
 
-      setProgress((v) => ({ ...v, text: 'Grouping alerts...' }));
+      const joinSymbol = '.';
+      const clustersById = new Map();
+      // collect unique clusters
+      for (const clusters of clustersByAddress.values()) {
+        for (const cluster of clusters) {
+          // sort addresses
+          cluster.sort((a, b) => a.localeCompare(b));
+          // generate id hash
+          const id = cluster.join(joinSymbol);
+          clustersById.set(id, cluster);
+        }
+      }
+
+      // clear out clusters which addresses are present in bigger ones
+      for (const id of clustersById.keys()) {
+        const addresses = id.split(joinSymbol);
+        for (let i = 0; i < addresses.length; i++) {
+          const narrowerId = addresses.slice(0, i).join(joinSymbol);
+          clustersById.delete(narrowerId);
+        }
+      }
+
+      // memory optimization
+      clustersByAddress.clear();
+
+      setProgress((v) => ({ ...v, text: 'Clustering alerts...' }));
       await delay(1);
 
-      // micro optimization
+      // optimization
       const stageLabelsByAlertId = new Map();
       stageKit.stages.forEach((stage) => {
         stage.alertIds.forEach((id) =>
@@ -198,92 +279,140 @@ function CombinerPage() {
         );
       });
 
-      let addressCounter = 0;
-      let groups = new Set();
-      for (const [address, alerts] of alertsByAddress.entries()) {
-        addressCounter++;
-        if (addressCounter % 100 === 0) {
-          setProgress({
-            text: `Grouping alerts: ${addressCounter}/${alertsByAddress.size}`,
-            percent: createInterpolator({
-              inputRange: [0, alertsByAddress.size],
-              outputRange: [20, 75]
-            })(addressCounter)
-          });
-          await delay(1);
+      const getClusterInfo = (cluster) => {
+        const alertSet = new Set();
+
+        for (const address of cluster) {
+          const alerts = alertsByAddress.get(address) || [];
+          for (const alert of alerts) {
+            alertSet.add(alert);
+          }
         }
 
+        const alerts = [...alertSet];
+
+        // sort alerts to make the order of the stages more informative
+        alerts.sort(
+          (a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt)
+        );
+
+        // ordered all stages
         const stageLabels = [];
-        const stageLabelsSet = new Set();
+        // unique stages
+        const uniqueStageSet = new Set();
         for (const alert of alerts) {
           const stageLabel = stageLabelsByAlertId.get(alert.alertId);
           if (stageLabel) {
             stageLabels.push(stageLabel);
-            stageLabelsSet.add(stageLabel);
+            uniqueStageSet.add(stageLabel);
           }
         }
 
-        if (stageLabelsSet.size >= 2) {
-          groups.add({
-            address,
-            stageLabels: [...stageLabelsSet],
-            allStageLabels: stageLabels
+        return {
+          stageLabels,
+          uniqueStageSet
+        };
+      };
+
+      let clusterCounter = 0;
+      const potentialClusterSet = new Set();
+      for (const cluster of clustersById.values()) {
+        clusterCounter++;
+
+        // update progress
+        if (clusterCounter % 100 === 0) {
+          setProgress({
+            text: `Clustering alerts: ${clusterCounter}/${clustersById.size}`,
+            percent: createInterpolator({
+              inputRange: [0, alertsByAddress.size],
+              outputRange: [25, 30]
+            })(clusterCounter)
           });
+          await delay(1);
+        }
+
+        const { uniqueStageSet } = getClusterInfo(cluster);
+
+        if (uniqueStageSet.size >= 2) {
+          potentialClusterSet.add(cluster);
         }
       }
-      logger.info('grouped alerts', groups.size);
 
-      setProgress((v) => ({ ...v, text: 'Filtering groups...' }));
-      await delay(1);
+      logger.log('clusters with 2+ stages', potentialClusterSet.size);
 
-      const parallelRequests = 40;
-      const totalGroups = groups.size;
+      setProgress((v) => ({ ...v, text: 'Filtering addresses...' }));
 
-      let groupsQueueCounter = 0;
-      const groupsQueue = queue(async (group, callback) => {
+      const addressSet = new Set();
+      for (const addresses of potentialClusterSet) {
+        for (const address of addresses) {
+          addressSet.add(address);
+        }
+      }
+
+      logger.log('clusters addresses', addressSet.size);
+
+      const parallelRequests = 10;
+      const totalAddresses = addressSet.size;
+
+      let addressCounter = 0;
+      const potentialAddressSet = new Set();
+      const addressQueue = queue(async (address, callback) => {
         setProgress({
-          text: `Filtering groups: ${++groupsQueueCounter}/${totalGroups}`,
+          text: `Filtering addresses: ${++addressCounter}/${totalAddresses}`,
           percent: createInterpolator({
-            inputRange: [0, totalGroups],
-            outputRange: [75, 98]
-          })(groupsQueueCounter)
+            inputRange: [0, totalAddresses],
+            outputRange: [30, 90]
+          })(addressCounter)
         });
-        const meta = await getAddressMeta(group.address, chainId);
-        if (meta.isContract || meta.transactionCount > TRANSACTION_THRESHOLD) {
-          groups.delete(group);
+
+        const meta = await getAddressMeta(address, chainId);
+        if (
+          !meta.isContract &&
+          meta.transactionCount <= TRANSACTION_THRESHOLD
+        ) {
+          potentialAddressSet.add(address);
         }
         callback();
       }, parallelRequests);
 
       // memory optimization
-      let groupsLoopCounter = 0;
-      for (const group of groups) {
-        groupsLoopCounter++;
-        groupsQueue.push(group);
-        if (groupsLoopCounter % parallelRequests === 0) {
-          await groupsQueue.unsaturated();
-        }
+      addressQueue.push([...addressSet]);
+      if (addressQueue.length() > 0) await addressQueue.drain();
+
+      const clusterSet = new Set();
+      for (const addresses of potentialClusterSet) {
+        const cluster = addresses.filter((a) => potentialAddressSet.has(a));
+        const { stageLabels, uniqueStageSet } = getClusterInfo(cluster);
+
+        clusterSet.add({
+          addresses: cluster,
+          stageLabels,
+          uniqueStageSet
+        });
       }
-      await groupsQueue.drain();
 
-      logger.info('removed groups', totalGroups - groups.size);
-      logger.info('final groups', groups.size);
+      logger.info('final clusters', clusterSet.size);
 
-      setProgress((v) => ({ ...v, text: `Sorting groups...` }));
+      setProgress((v) => ({ ...v, text: `Sorting clusters...` }));
       await delay(1);
 
       // transform Set to Array
-      groups = [...groups];
-      groups.sort(
+      const clusters = [...clusterSet];
+      clusters.sort(
         (group1, group2) =>
-          group2.stageLabels.length - group1.stageLabels.length
+          group2.uniqueStageSet.size - group1.uniqueStageSet.size
+      );
+
+      logger.log(
+        'clusters with 2+ addresses',
+        clusters.filter((c) => c.addresses.length > 1)
       );
 
       if (stageKit.sort) {
-        stageKit.sort(groups);
+        stageKit.sort(clusters);
       }
 
-      if (groups.length === 0) {
+      if (clusters.length === 0) {
         setProgress({ text: `No alerts were clustered`, percent: 100 });
         setIsAnalysing(false);
         return;
@@ -300,18 +429,20 @@ function CombinerPage() {
 
       await db.transaction(
         'rw',
-        [db.combinerAnalyses, db.combinerGroups],
+        [db.combinerAnalyses, db.combinerClusters],
         async () => {
           await db.combinerAnalyses.clear();
-          await db.combinerGroups.clear();
+          await db.combinerClusters.clear();
 
           const analysisId = await db.combinerAnalyses.add(analysis);
-          db.combinerGroups.bulkAdd(groups.map((g) => ({ ...g, analysisId })));
+          db.combinerClusters.bulkAdd(
+            clusters.map((g) => ({ ...g, analysisId }))
+          );
         }
       );
 
       setAnalysis(analysis);
-      setGroups(groups);
+      setClusters(clusters);
     } catch (e) {
       logger.error(e);
       setProgress({
@@ -336,7 +467,7 @@ function CombinerPage() {
         title: 'Copy link',
         icon: IconSymbols.Link,
         onClick: () => {
-          copyToClipboard(getFullUrl(routes.index, groupFilter));
+          copyToClipboard(getFullUrl(routes.index, clusterFilter));
         }
       },
       {
@@ -356,7 +487,7 @@ function CombinerPage() {
         onChange={setAnalyseForm}
         onSubmit={handleFormSubmit}
       />
-      {(!group || isAnalysing) && (
+      {(!cluster || isAnalysing) && (
         <Progress
           value={
             progress || {
@@ -367,14 +498,14 @@ function CombinerPage() {
           maxWidth={600}
         />
       )}
-      {group && !isAnalysing && (
+      {cluster && !isAnalysing && (
         <>
-          <GroupPanel
-            group={group}
-            groupIndex={groupIndex}
+          <ClusterPanel
+            cluster={cluster}
+            clusterIndex={clusterIndex}
+            totalClusters={clusters.length}
             stageKit={analysis.stageKit}
-            totalGroups={groups.length}
-            onGroupIndexChange={setGroupIndex}
+            onClusterIndexChange={setClusterIndex}
           />
           <AlertGroup
             id="alerts"
@@ -385,18 +516,18 @@ function CombinerPage() {
             loading={isReloading}
             loadingMore={isFetchingNextPage}
             canLoadMore={hasNextPage}
-            filter={groupFilter}
+            filter={clusterFilter}
             filterEditable={true}
             filterVisible={true}
             actions={actions}
             onLoadMore={fetchNextPage}
-            onFilterChange={setGroupFilter}
+            onFilterChange={setClusterFilter}
           />
         </>
       )}
       <SaveToWatchListModal
         open={isSaveModalOpen}
-        filter={groupFilter}
+        filter={clusterFilter}
         totalAlerts={totalAlerts}
         onClose={() => setIsSaveModalOpen(false)}
       />

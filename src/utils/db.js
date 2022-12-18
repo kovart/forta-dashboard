@@ -6,8 +6,8 @@ const db = new Dexie(DB_NAME);
 
 db.version(DB_VERSION).stores({
   combinerAnalyses: '++id, chainId, startDate, endDate, stageKit',
-  combinerGroups: '++id, analysisId',
-  watchGroups: '++id'
+  combinerClusters: '++id, analysisId',
+  watchClusters: '++id'
 });
 
 export default db;

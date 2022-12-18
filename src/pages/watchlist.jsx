@@ -28,8 +28,8 @@ function WatchListPage() {
   useEffect(() => {
     (async () => {
       try {
-        const watchGroups = await db.watchGroups.toArray();
-        setGroups(watchGroups);
+        const watchClusters = await db.watchClusters.toArray();
+        setGroups(watchClusters);
         // loading can be so fast that the user will see a flicker,
         // to avoid this we just add a little delay
         await delay(400);

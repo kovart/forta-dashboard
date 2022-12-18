@@ -7,7 +7,7 @@ import { FORTA_API_URL, SYSTEM_DATE_FORMAT } from '@constants/common';
 import { delay } from '@utils/helpers';
 import logger from '@utils/logger';
 
-const PARALLEL_REQUESTS = 20;
+const PARALLEL_REQUESTS = 40;
 const DEFAULT_CHUCK_SIZE = 5000;
 const RETRY_ATTEMPTS = 3;
 const RETRY_WAIT = 10 * 1000; // 10s
@@ -35,6 +35,22 @@ export class FortaExplorer {
             alertId
             createdAt
             addresses
+          }
+        }
+      }`;
+
+  static metaAlertQuery = `query fetchAlerts($input: AlertsInput) {
+       alerts(input: $input) {
+          pageInfo {
+            hasNextPage
+            endCursor {
+              alertId
+              blockNumber
+            }
+          }
+          alerts {
+            createdAt
+            metadata
           }
         }
       }`;
@@ -156,8 +172,8 @@ export class FortaExplorer {
     addresses,
     severities,
     projectIds,
-    botIds,
-    alertIds,
+    botIds = [],
+    alertIds = [],
     query = FortaExplorer.detailedAlertQuery,
     limit = Infinity,
     endCursor,

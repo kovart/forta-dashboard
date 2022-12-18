@@ -87,7 +87,7 @@ export function getFullUrl(pathname, query) {
 }
 
 export async function retry(fn, opts = {}) {
-  const { attempts = 3, wait = 5 * 1000 } = opts;
+  const { attempts = 5, wait = 60 * 1000 } = opts;
   let attempt = 1;
   // eslint-disable-next-line no-constant-condition
   while (true) {

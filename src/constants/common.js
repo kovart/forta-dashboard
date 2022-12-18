@@ -1,18 +1,20 @@
 export const FORTA_API_URL = process.env.FORTA_API_URL;
-export const MAINNET_RPC_URL = process.env.MAINNET_RPC_URL;
-export const POLYGON_RPC_URL = process.env.POLYGON_RPC_URL;
-export const BSC_RPC_URL = process.env.BSC_RPC_URL;
-export const AVALANCHE_RPC_URL = process.env.AVALANCHE_RPC_URL;
-export const ARBITRUM_RPC_URL = process.env.ARBITRUM_RPC_URL;
-export const OPTIMISM_RPC_URL = process.env.OPTIMISM_RPC_URL;
-export const FANTOM_RPC_URL = process.env.FANTOM_RPC_URL;
+export const MAINNET_RPC_URLS = process.env.MAINNET_RPC_URLS;
+export const POLYGON_RPC_URLS = process.env.POLYGON_RPC_URLS;
+export const BSC_RPC_URLS = process.env.BSC_RPC_URLS;
+export const AVALANCHE_RPC_URLS = process.env.AVALANCHE_RPC_URLS;
+export const ARBITRUM_RPC_URLS = process.env.ARBITRUM_RPC_URLS;
+export const OPTIMISM_RPC_URLS = process.env.OPTIMISM_RPC_URLS;
+export const FANTOM_RPC_URLS = process.env.FANTOM_RPC_URLS;
+
+export const ENTITY_CLUSTER_BOT_ID = process.env.ENTITY_CLUSTER_BOT_ID;
 
 export const IS_DEVELOPMENT = process.env.NODE_ENV !== 'production';
 export const HOMEPAGE = process.env.HOMEPAGE;
 
 export const PROJECT_NAME = 'Forta Dashboard';
 
-export const DB_VERSION = 1;
+export const DB_VERSION = 2;
 export const DB_NAME = 'forta-explorer';
 
 export const SYSTEM_DATE_FORMAT = 'YYYY-MM-DD';
@@ -56,14 +58,14 @@ export const CHAIN_NAMES = {
   [CHAIN.fantom]: 'Fantom'
 };
 
-export const CHAIN_RPC_URL = {
-  [CHAIN.mainnet]: MAINNET_RPC_URL,
-  [CHAIN.polygon]: POLYGON_RPC_URL,
-  [CHAIN.bsc]: BSC_RPC_URL,
-  [CHAIN.avalanche]: AVALANCHE_RPC_URL,
-  [CHAIN.arbitrium]: ARBITRUM_RPC_URL,
-  [CHAIN.optimism]: OPTIMISM_RPC_URL,
-  [CHAIN.fantom]: FANTOM_RPC_URL
+export const CHAIN_RPC_URLS = {
+  [CHAIN.mainnet]: MAINNET_RPC_URLS.split(','),
+  [CHAIN.polygon]: POLYGON_RPC_URLS.split(','),
+  [CHAIN.bsc]: BSC_RPC_URLS.split(','),
+  [CHAIN.avalanche]: AVALANCHE_RPC_URLS.split(','),
+  [CHAIN.arbitrium]: ARBITRUM_RPC_URLS.split(','),
+  [CHAIN.optimism]: OPTIMISM_RPC_URLS.split(','),
+  [CHAIN.fantom]: FANTOM_RPC_URLS.split(',')
 };
 
 import EthereumImage from '@assets/images/chains/ethereum.jpg';

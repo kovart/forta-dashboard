@@ -19,7 +19,7 @@ function WatchListContent({ empty, loading, groups = [], onGroupsChange }) {
   async function handleDelete(group) {
     try {
       setIsDeletingByGroupId((v) => ({ ...v, [group.id]: true }));
-      await db.watchGroups.delete(group.id);
+      await db.watchClusters.delete(group.id);
       onGroupsChange(groups.filter((g) => g.id !== group.id));
     } catch (e) {
       logger.error(e);
